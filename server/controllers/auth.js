@@ -5,7 +5,7 @@ const User = require('../models/User')
 //@access  Public
 exports.register = async (req, res, next) => {
 	try {
-		const { username, email, password, role="user" } = req.body
+		const { username, email, password, role = 'user' } = req.body
 
 		//Create user
 		const user = await User.create({
@@ -30,21 +30,21 @@ exports.login = async (req, res, next) => {
 
 	//Validate email & password
 	if (!username || !password) {
-		return res.status(400).json({ success: false, msg: 'Please provide an email and password' })
+		return res.status(400).json('Please provide an email and password')
 	}
 
 	//Check for user
 	const user = await User.findOne({ username }).select('+password')
 	console.log(user)
 	if (!user) {
-		return res.status(400).json({ success: false, msg: 'Invalid credentials' })
+		return res.status(400).json('Invalid credentials')
 	}
 
 	//Check if password matches
 	const isMatch = await user.matchPassword(password)
 
 	if (!isMatch) {
-		return res.status(401).json({ success: false, msg: 'Invalid credentials' })
+		return res.status(401).json('Invalid credentials')
 	}
 
 	sendTokenResponse(user, 200, res)
@@ -84,14 +84,14 @@ exports.getMe = async (req, res, next) => {
 //@route 	GET /auth/logout
 //@access	Private
 exports.logout = async (req, res, next) => {
-	res.cookie('token','none', {
-		expires: new Date(Date.now() + 10*1000),
+	res.cookie('token', 'none', {
+		expires: new Date(Date.now() + 10 * 1000),
 		httpOnly: true
 	})
 
 	res.status(200).json({
 		success: true,
-		data:{}
+		data: {}
 	})
 }
 

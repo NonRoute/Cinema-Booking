@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
 	const navigate = useNavigate()
+	const [errorsMessage, setErrorsMessage] = useState('')
 
 	const {
 		register,
@@ -16,9 +19,12 @@ const Register = () => {
 		try {
 			const response = await axios.post('/auth/register', data)
 			console.log(response.data)
+            toast.success('Registration successful!')
 			navigate('/')
 		} catch (error) {
 			console.error(error.response.data)
+			setErrorsMessage(error.response.data)
+            toast.error('Error')
 		}
 	}
 
@@ -37,10 +43,18 @@ const Register = () => {
 					{errors.username && <span className="text-red-500 text-sm">Username is required</span>}
 					<input name="email" type="email" autoComplete="email" {...register('email', { required: true })} className={inputClasses`${errors.email ? 'border-red-500' : ''}`} placeholder="Email" />
 					{errors.username && <span className="text-red-500 text-sm">Email is required</span>}
-					<input name="password" type="password" autoComplete="current-password" {...register('password', { required: true })} className={inputClasses`${errors.password ? 'border-red-500' : ''}`} placeholder="Password" />
-					{errors.password && <span className="text-red-500 text-sm">Password is required</span>}
+					<input
+						name="password"
+						type="password"
+						autoComplete="current-password"
+						{...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Password must be at least 6 characters long' } })}
+						className={inputClasses`${errors.password ? 'border-red-500' : ''}`}
+						placeholder="Password"
+					/>
+					{errors.password && <span className="text-red-500 text-sm">{errors.password?.message}</span>}
 					<div>
-						<button type="submit" className="w-full py-2 px-4 text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+						{errorsMessage && <span className="text-red-500 text-sm">{errorsMessage}</span>}
+						<button type="submit" className="w-full py-2 px-4 text-sm mt-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
 							Register
 						</button>
 					</div>
