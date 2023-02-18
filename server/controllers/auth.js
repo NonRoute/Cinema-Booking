@@ -5,7 +5,7 @@ const User = require('../models/User')
 //@access  Public
 exports.register = async (req, res, next) => {
 	try {
-		const { username, email, password, role } = req.body
+		const { username, email, password, role="user" } = req.body
 
 		//Create user
 		const user = await User.create({
