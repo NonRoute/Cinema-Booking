@@ -5,11 +5,11 @@ const User = require('../models/User')
 //@access  Public
 exports.register = async (req, res, next) => {
 	try {
-		const { name, email, password, role } = req.body
+		const { username, email, password, role } = req.body
 
 		//Create user
 		const user = await User.create({
-			name,
+			username,
 			email,
 			password,
 			role
@@ -26,15 +26,15 @@ exports.register = async (req, res, next) => {
 //@route	POST /auth/login
 //@access	Public
 exports.login = async (req, res, next) => {
-	const { email, password } = req.body
+	const { username, password } = req.body
 
 	//Validate email & password
-	if (!email || !password) {
+	if (!username || !password) {
 		return res.status(400).json({ success: false, msg: 'Please provide an email and password' })
 	}
 
 	//Check for user
-	const user = await User.findOne({ email }).select('+password')
+	const user = await User.findOne({ username }).select('+password')
 	console.log(user)
 	if (!user) {
 		return res.status(400).json({ success: false, msg: 'Invalid credentials' })
