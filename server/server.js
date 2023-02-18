@@ -5,6 +5,9 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 require('dotenv').config()
 
+const auth = require('./routes/auth')
+const hospitals = require(`./routes/hospitals`)
+
 mongoose.set('strictQuery', false)
 mongoose
 	.connect(process.env.DATABASE, { autoIndex: true })
@@ -20,6 +23,9 @@ app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({ origin: true, credentials: true }))
+
+app.use('/auth', auth)
+app.use('/hospitals', hospitals)
 
 const port = process.env.PORT || 8080
 
