@@ -16,9 +16,9 @@ const theaterSchema = new mongoose.Schema({
 			type: Number,
 			required: [true, 'Please add a seatPlan row']
 		},
-		number: {
+		column: {
 			type: Number,
-			required: [true, 'Please add a seatPlan number']
+			required: [true, 'Please add a seatPlan column']
 		}
 	},
 	seats: [{ type: mongoose.Schema.ObjectId, ref: 'Seat' }]
