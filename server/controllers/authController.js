@@ -17,8 +17,7 @@ exports.register = async (req, res, next) => {
 
 		sendTokenResponse(user, 200, res)
 	} catch (err) {
-		res.status(400).json(err.message)
-		console.log(err.stack)
+		res.status(400).json({ success: false, message: err })
 	}
 }
 
@@ -35,7 +34,7 @@ exports.login = async (req, res, next) => {
 
 	//Check for user
 	const user = await User.findOne({ username }).select('+password')
-	console.log(user)
+
 	if (!user) {
 		return res.status(400).json('Invalid credentials')
 	}
@@ -90,8 +89,7 @@ exports.logout = async (req, res, next) => {
 	})
 
 	res.status(200).json({
-		success: true,
-		data: {}
+		success: true
 	})
 }
 
@@ -118,6 +116,6 @@ exports.deleteUser = async (req, res, next) => {
 		}
 		res.status(200).json({ success: true })
 	} catch (err) {
-		res.status(400).json({ success: false })
+		res.status(400).json({ success: false, message: err })
 	}
 }
