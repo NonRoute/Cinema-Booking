@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const auth = require('./routes/auth')
-const hospitals = require(`./routes/hospitals`)
+const cinemas = require(`./routes/cinema`)
 
 mongoose.set('strictQuery', false)
 mongoose
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors({ origin: true, credentials: true }))
 
 app.use('/auth', auth)
-app.use('/hospitals', hospitals)
+app.use('/cinemas', cinemas)
 
 const port = process.env.PORT || 8080
 
