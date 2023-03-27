@@ -5,7 +5,7 @@ const Cinema = require('../models/Cinema')
 //@access   Public
 exports.getCinemas = async (req, res, next) => {
 	try {
-		const cinemas = await Cinema.find()
+		const cinemas = await Cinema.find().populate('theaters')
 		res.status(200).json({ success: true, count: cinemas.length, data: cinemas })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })
@@ -17,7 +17,7 @@ exports.getCinemas = async (req, res, next) => {
 //@access   Public
 exports.getCinema = async (req, res, next) => {
 	try {
-		const cinema = await Cinema.findById(req.params.id)
+		const cinema = await Cinema.findById(req.params.id).populate('theaters')
 
 		if (!cinema) {
 			return res.status(400).json({ success: false, message: `Cinema not found with id of ${req.params.id}` })
