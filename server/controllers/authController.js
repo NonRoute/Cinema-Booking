@@ -30,7 +30,7 @@ exports.login = async (req, res, next) => {
 
 	//Validate email & password
 	if (!username || !password) {
-		return res.status(400).json('Please provide an email and password')
+		return res.status(400).json('Please provide an username and password')
 	}
 
 	//Check for user
@@ -104,4 +104,20 @@ exports.getAll = async (req, res, next) => {
 		success: true,
 		data: user
 	})
+}
+
+//@desc		Delete user
+//@route 	DELETE /auth/user/:id
+//@access	Private
+exports.deleteUser = async (req, res, next) => {
+	try {
+		const user = await User.findByIdAndDelete(req.params.id)
+
+		if (!user) {
+			return res.status(400).json({ success: false })
+		}
+		res.status(200).json({ success: true })
+	} catch (err) {
+		res.status(400).json({ success: false })
+	}
 }
