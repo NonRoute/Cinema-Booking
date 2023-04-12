@@ -13,7 +13,8 @@ const theaterSchema = new mongoose.Schema({
 	],
 	seatPlan: {
 		row: {
-			type: Number,
+			type: String,
+			maxlength: 1,
 			required: [true, 'Please add a seatPlan row']
 		},
 		column: {
@@ -21,7 +22,14 @@ const theaterSchema = new mongoose.Schema({
 			required: [true, 'Please add a seatPlan column']
 		}
 	},
-	seats: [{ type: mongoose.Schema.ObjectId, ref: 'Seat' }]
+	seats: [
+		{
+			row: { type: String, required: [true, 'Please add a seat row'] },
+			number: { type: Number, required: [true, 'Please add a seat number'] },
+			status: { type: Number, required: [true, 'Please add a seat status'] },
+			user: { type: mongoose.Schema.ObjectId, ref: 'User' }
+		}
+	]
 })
 
 module.exports = mongoose.model('Theater', theaterSchema)
