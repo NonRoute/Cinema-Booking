@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Login = () => {
 	const navigate = useNavigate()
@@ -39,17 +39,40 @@ const Login = () => {
 					<h2 className="mt-4 text-center text-4xl font-extrabold text-gray-900">Login</h2>
 				</div>
 				<form className="mt-8 space-y-4" onSubmit={handleSubmit(onSubmit)}>
-					<input name="username" type="text" autoComplete="username" {...register('username', { required: true })} className={inputClasses `${errors.username ? 'border-red-500' : ''}`} placeholder="Username" />
+					<input
+						name="username"
+						type="text"
+						autoComplete="username"
+						{...register('username', { required: true })}
+						className={inputClasses`${errors.username ? 'border-red-500' : ''}`}
+						placeholder="Username"
+					/>
 					{errors.username && <span className="text-red-500 text-sm">Username is required</span>}
-					<input name="password" type="password" autoComplete="current-password" {...register('password', { required: true })} className={inputClasses `${errors.password ? 'border-red-500' : ''}`} placeholder="Password" />
+					<input
+						name="password"
+						type="password"
+						autoComplete="current-password"
+						{...register('password', { required: true })}
+						className={inputClasses`${errors.password ? 'border-red-500' : ''}`}
+						placeholder="Password"
+					/>
 					{errors.password && <span className="text-red-500 text-sm">Password is required</span>}
 
 					<div>
 						{errorsMessage && <span className="text-red-500 text-sm">{errorsMessage}</span>}
-						<button type="submit" className="w-full py-2 px-4 text-sm mt-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+						<button
+							type="submit"
+							className="w-full py-2 px-4 text-sm mt-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+						>
 							Login
 						</button>
 					</div>
+					<p className="text-right">
+						Don’t have an account?{' '}
+						<Link to={'/register'} className="text-blue-600 font-bold">
+							Register here
+						</Link>
+					</p>
 				</form>
 			</div>
 		</div>

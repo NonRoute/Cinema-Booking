@@ -1,8 +1,17 @@
+import { Link } from 'react-router-dom'
+
 const Navbar = () => {
 	return (
 		<nav className="flex bg-gray-900 py-3 px-5 justify-between items-center drop-shadow-lg">
 			<div className="flex gap-2">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#FFF" className="w-8 h-8">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					strokeWidth={1.5}
+					stroke="#FFF"
+					className="w-8 h-8"
+				>
 					<path
 						strokeLinecap="round"
 						strokeLinejoin="round"
@@ -12,7 +21,9 @@ const Navbar = () => {
 				<h1 className="text-white text-xl">Cinema</h1>
 			</div>
 			<div>
-				<button className="bg-blue-600 hover:bg-blue-500 rounded-lg py-1 px-2 text-white border-2">Register</button>
+				<button className="bg-blue-600 hover:bg-blue-500 rounded-lg py-1 px-2 text-white border-2">
+					<Link to={'/login'}>Login</Link>
+				</button>
 			</div>
 		</nav>
 	)
