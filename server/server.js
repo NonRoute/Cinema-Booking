@@ -8,6 +8,7 @@ require('dotenv').config()
 const auth = require('./routes/auth')
 const cinema = require('./routes/cinema')
 const theater = require('./routes/theater')
+const movie = require('./routes/movie')
 
 mongoose.set('strictQuery', false)
 mongoose
@@ -28,6 +29,7 @@ app.use(cors({ origin: true, credentials: true }))
 app.use('/auth', auth)
 app.use('/cinema', cinema)
 app.use('/theater', theater)
+app.use('/movie', movie)
 
 const port = process.env.PORT || 8080
 
