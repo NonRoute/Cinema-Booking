@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { AuthContext } from './context/AuthContext'
 
 const Login = () => {
 	const navigate = useNavigate()
+	const { auth, setAuth } = useContext(AuthContext)
 	const [errorsMessage, setErrorsMessage] = useState('')
 
 	const {
@@ -20,6 +22,7 @@ const Login = () => {
 			const response = await axios.post('/auth/login', data)
 			console.log(response.data)
 			toast.success('Login successful!')
+			setAuth((prev) => ({ ...prev, token: response.data.token }))
 			navigate('/')
 		} catch (error) {
 			console.error(error.response.data)

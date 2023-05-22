@@ -1,6 +1,29 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { toast } from 'react-toastify'
+import axios from 'axios'
+import { AuthContext } from '../context/AuthContext'
 
 const Navbar = () => {
+	const { auth, setAuth } = useContext(AuthContext)
+	const [username, setUsername] = useState('')
+
+	const navigate = useNavigate()
+
+	const onLogout = async () => {
+		try {
+			const response = await axios.get('/auth/logout')
+			console.log(response)
+			setAuth({ username: null, email: null, role: null, token: null })
+			setUsername('')
+			navigate('/')
+			toast.success('Logout successful!')
+		} catch (error) {
+			console.error(error)
+			toast.error('Error')
+		}
+	}
+
 	return (
 		<nav className="flex bg-gray-900 py-3 px-5 justify-between items-center drop-shadow-lg">
 			<div className="flex gap-2">
@@ -20,10 +43,21 @@ const Navbar = () => {
 				</svg>
 				<h1 className="text-white text-xl">Cinema</h1>
 			</div>
-			<div>
-				<button className="bg-blue-600 hover:bg-blue-500 rounded-lg py-1 px-2 text-white border-2">
-					<Link to={'/login'}>Login</Link>
-				</button>
+
+			<div className="flex items-center gap-3">
+				{auth.username && <p className="text-white leading-none text-md">Welcome {auth.username}!</p>}
+				{auth.token ? (
+					<button
+						className="bg-blue-600 hover:bg-blue-500 rounded-lg py-1 px-2 text-white border-2"
+						onClick={() => onLogout()}
+					>
+						<p>Logout</p>
+					</button>
+				) : (
+					<button className="bg-blue-600 hover:bg-blue-500 rounded-lg py-1 px-2 text-white border-2">
+						<Link to={'/login'}>Login</Link>
+					</button>
+				)}
 			</div>
 		</nav>
 	)
