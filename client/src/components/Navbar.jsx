@@ -27,7 +27,7 @@ const Navbar = () => {
 	return (
 		<nav className="flex bg-gray-900 py-3 px-5 justify-between items-center drop-shadow-lg">
 			<div className="flex gap-2">
-				<button className="flex flex-row gap-2" onClick={() => navigate('/')}>
+				<button className="flex flex-row items-center gap-2" onClick={() => navigate('/')}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
