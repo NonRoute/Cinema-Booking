@@ -50,17 +50,16 @@ const Navbar = () => {
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
-						stroke-width="1.5"
+						strokeWidth="1.5"
 						stroke="currentColor"
-						class="w-6 h-6"
+						className="w-6 h-6"
 					>
 						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
+							strokeLinecap="round"
+							strokeLinejoin="round"
 							d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
 						/>
 					</svg>
-
 					<Link to={'/management'}>Cinema management</Link>
 				</button>
 			</div>
@@ -68,13 +67,13 @@ const Navbar = () => {
 				{auth.username && <p className="text-white leading-none text-md">Welcome {auth.username}!</p>}
 				{auth.token ? (
 					<button
-						className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 rounded-lg py-1 px-2 text-white"
+						className="bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-400 rounded-lg py-1 px-2 text-white drop-shadow-md"
 						onClick={() => onLogout()}
 					>
 						<p>Logout</p>
 					</button>
 				) : (
-					<button className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 rounded-lg py-1 px-2 text-white">
+					<button className="bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-400 rounded-lg py-1 px-2 text-white drop-shadow-md">
 						<Link to={'/login'}>Login</Link>
 					</button>
 				)}
