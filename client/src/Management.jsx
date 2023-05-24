@@ -4,8 +4,8 @@ import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthContext } from './context/AuthContext'
 import { useContext, useEffect, useState } from 'react'
+import CinemaLists from './components/CinemaLists'
 import Cinema from './components/Cinema'
-import Theater from './components/Theater'
 
 const Management = () => {
 	const { auth } = useContext(AuthContext)
@@ -28,10 +28,10 @@ const Management = () => {
 
 	const props = { cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCinemas, auth }
 	return (
-		<div className="flex flex-col gap-8 bg-gradient-to-br from-indigo-900 to-blue-500 min-h-screen pb-8">
+		<div className="flex flex-col gap-4 sm:gap-8 bg-gradient-to-br from-indigo-900 to-blue-500 min-h-screen pb-8">
 			<Navbar />
-			<Cinema {...props} />
-			{cinemas[selectedCinemaIndex]?.name && <Theater {...props} />}
+			<CinemaLists {...props} />
+			{cinemas[selectedCinemaIndex]?.name && <Cinema {...props} />}
 		</div>
 	)
 }
