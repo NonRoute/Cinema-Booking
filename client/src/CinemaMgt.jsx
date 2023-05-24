@@ -1,5 +1,4 @@
 import Navbar from './components/Navbar'
-import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthContext } from './context/AuthContext'
@@ -7,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import CinemaLists from './components/CinemaLists'
 import Cinema from './components/Cinema'
 
-const Management = () => {
+const CinemaMgt = () => {
 	const { auth } = useContext(AuthContext)
 	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(null)
 	const [cinemas, setCinemas] = useState([])
@@ -36,4 +35,4 @@ const Management = () => {
 	)
 }
 
-export default Management
+export default CinemaMgt

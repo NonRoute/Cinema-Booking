@@ -4,8 +4,8 @@ import Register from './Register'
 import Home from './home'
 import axios from 'axios'
 import { ToastContainer } from 'react-toastify'
-import Management from './Management'
 import AdminRoute from './AdminRoute'
+import CinemaMgt from './CinemaMgt'
 
 axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.withCredentials = true
@@ -19,10 +19,18 @@ function App() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route
-					path="/management"
+					path="/cinema-mgt"
 					element={
 						<AdminRoute>
-							<Management />
+							<CinemaMgt />
+						</AdminRoute>
+					}
+				/>
+				<Route
+					path="/movie-mgt"
+					element={
+						<AdminRoute>
+							<CinemaMgt />
 						</AdminRoute>
 					}
 				/>

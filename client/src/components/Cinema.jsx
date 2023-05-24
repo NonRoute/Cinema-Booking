@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Movie from './Movie'
+import { TrashIcon, ArrowsUpDownIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/solid'
 import { useForm } from 'react-hook-form'
 import Theater from './Theater'
 
@@ -97,18 +97,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 							onClick={() => handleDelete(cinemas[selectedCinemaIndex])}
 						>
 							DELETE
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 20 20"
-								fill="currentColor"
-								className="w-5 h-5"
-							>
-								<path
-									fillRule="evenodd"
-									d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z"
-									clipRule="evenodd"
-								/>
-							</svg>
+							<TrashIcon className="h-5 w-5" />
 						</button>
 					</div>
 				</div>
@@ -119,20 +108,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 							<div className="flex flex-wrap gap-4 drop-shadow-md items-center justify-end bg-gradient-to-br from-indigo-100 to-white p-2 rounded-md">
 								<div className="flex flex-wrap gap-4 justify-end">
 									<div className="flex flex-wrap gap-2">
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											fill="none"
-											viewBox="0 0 24 24"
-											strokeWidth="1.5"
-											stroke="currentColor"
-											className="w-6 h-6"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"
-											/>
-										</svg>
+										<ArrowsUpDownIcon className="h-6 w-6" />
 										<div className="flex flex-col items-end my-1">
 											<label className="font-semibold text-lg leading-5">Last Row :</label>
 											<label className="font-semibold text-xs">(A-Z)</label>
@@ -150,20 +126,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 										/>
 									</div>
 									<div className="flex flex-wrap gap-2">
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											fill="none"
-											viewBox="0 0 24 24"
-											strokeWidth="1.5"
-											stroke="currentColor"
-											className="w-6 h-6"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
-											/>
-										</svg>
+										<ArrowsRightLeftIcon className="h-6 w-6" />
 										<div className="flex flex-col items-end my-1">
 											<label className="font-semibold text-lg leading-5">Last Column :</label>
 											<label className="font-semibold text-xs">(1-500)</label>
