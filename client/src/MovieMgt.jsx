@@ -98,11 +98,8 @@ const MovieMgt = () => {
 								min="1"
 								max="2000"
 								maxLength="3"
-								required
 								className="flex-grow w-full sm:w-auto rounded py-1 px-3 font-semibold drop-shadow-sm"
-								{...register('length', {
-									required: true
-								})}
+								{...register('length')}
 							/>
 						</div>
 						<div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
@@ -124,28 +121,33 @@ const MovieMgt = () => {
 						ADD +
 					</button>
 				</form>
-				<div className="flex gap-4 flex-wrap bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md rounded-md mt-6">
-					{movies.map((movie, index) => {
-						return (
-							<div key={index} className="flex flex-grow min-w-fit bg-white drop-shadow-md rounded-md">
-								<img src={movie.img} className="h-48 drop-shadow-md rounded-md object-contain" />
-								<div className="flex flex-grow flex-col justify-between p-2">
-									<div>
-										<h2 className="text-xl font-semibold">{movie.name}</h2>
-										<h2 className="">length : {movie.length} min.</h2>
+				{!!movies.length && (
+					<div className="flex gap-4 flex-wrap bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md rounded-md mt-6">
+						{movies.map((movie, index) => {
+							return (
+								<div
+									key={index}
+									className="flex flex-grow min-w-fit bg-white drop-shadow-md rounded-md"
+								>
+									<img src={movie.img} className="h-48 drop-shadow-md rounded-md object-contain" />
+									<div className="flex flex-grow flex-col justify-between p-2">
+										<div>
+											<h2 className="text-xl font-semibold">{movie.name}</h2>
+											<h2 className="">length : {movie.length || '-'} min.</h2>
+										</div>
+										<button
+											className="self-end flex gap-1 items-center text-white text-sm font-medium bg-gradient-to-r from-red-700 to-rose-700 hover:from-red-700 hover:to-rose-600 rounded-md pl-2 pr-1.5 py-1 w-fit"
+											onClick={() => handleDelete(movie)}
+										>
+											DELETE
+											<TrashIcon className="h-5 w-5" />
+										</button>
 									</div>
-									<button
-										className="self-end flex gap-1 items-center text-white text-sm font-medium bg-gradient-to-r from-red-700 to-rose-700 hover:from-red-700 hover:to-rose-600 rounded-md pl-2 pr-1.5 py-1 w-fit"
-										onClick={() => handleDelete(movie)}
-									>
-										DELETE
-										<TrashIcon className="h-5 w-5" />
-									</button>
 								</div>
-							</div>
-						)
-					})}
-				</div>
+							)
+						})}
+					</div>
+				)}
 			</div>
 		</div>
 	)
