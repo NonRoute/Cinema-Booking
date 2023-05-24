@@ -44,7 +44,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 				{
 					cinema: cinemas[selectedCinemaIndex]._id,
 					number: cinemas[selectedCinemaIndex].theaters.length + 1,
-					row: data.row,
+					row: data.row.toUpperCase(),
 					column: data.column
 				},
 				{
@@ -56,6 +56,31 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 			console.log(response.data)
 			fetchCinemas()
 			toast.success('Increase theater successful!')
+		} catch (error) {
+			console.error(error)
+			toast.error(errors)
+		}
+	}
+
+	const handleDecreaseTheater = (cinema) => {
+		const confirmed = window.confirm(
+			`Do you want to delete theater ${cinemas[selectedCinemaIndex].theaters.length}?`
+		)
+		if (confirmed) {
+			onDecreaseTheater()
+		}
+	}
+
+	const onDecreaseTheater = async () => {
+		try {
+			const response = await axios.delete(`/theater/${cinemas[selectedCinemaIndex].theaters.slice(-1)[0]._id}`, {
+				headers: {
+					Authorization: `Bearer ${auth.token}`
+				}
+			})
+			console.log(response.data)
+			fetchCinemas()
+			toast.success('Decrease theater successful!')
 		} catch (error) {
 			console.error(error)
 			toast.error('Error')
@@ -87,12 +112,12 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 						</button>
 					</div>
 				</div>
-				<div className="p-4 sm:p-6 drop-shadow-xl">
+				<div className="flex flex-col p-4 sm:p-6 gap-6 drop-shadow-xl">
 					<form className="flex flex-col gap-2" onSubmit={handleSubmit(onIncreaseTheater)}>
 						<div className="flex flex-wrap gap-x-4 gap-y-2 items-center justify-between">
 							<h2 className="text-gray-900 font-bold text-3xl">Theaters</h2>
-							<div className="flex flex-wrap gap-4 drop-shadow-md items-center justify-end">
-								<div className="flex flex-wrap gap-4">
+							<div className="flex flex-wrap gap-4 drop-shadow-md items-center justify-end bg-gradient-to-br from-indigo-100 to-white p-2 rounded-md">
+								<div className="flex flex-wrap gap-4 justify-end">
 									<div className="flex flex-wrap gap-2">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -113,11 +138,15 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 											<label className="font-semibold text-xs">(A-Z)</label>
 										</div>
 										<input
+											title="A to Z"
 											type="text"
 											maxLength="1"
 											required
 											className="rounded py-1 px-3 w-32 font-semibold text-2xl"
-											{...register('row', { required: true })}
+											{...register('row', {
+												required: true,
+												pattern: /^[a-zA-Z]$/
+											})}
 										/>
 									</div>
 									<div className="flex flex-wrap gap-2">
@@ -140,6 +169,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 											<label className="font-semibold text-xs">(1-500)</label>
 										</div>
 										<input
+											title="1 to 500"
 											type="number"
 											min="1"
 											max="500"
@@ -150,24 +180,25 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 										/>
 									</div>
 								</div>
-								<div className="flex gap-4">
-									<button
-										className="flex items-center text-white font-medium bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500 rounded-md px-2 py-1"
-										type="submit"
-									>
-										INCREASE +
-									</button>
-									<button className="flex items-center text-white font-medium bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 rounded-md px-2 py-1 w-fit">
-										DECREASE -
-									</button>
-								</div>
+								<button
+									className="drop-shadow-md flex items-center text-white font-medium bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500 rounded-md px-2 py-1"
+									type="submit"
+								>
+									INCREASE +
+								</button>
 							</div>
 						</div>
 					</form>
-					<div className="flex flex-col gap-6 pt-4">
-						{cinemas[selectedCinemaIndex].theaters.map((theater, index) => {
-							return <Theater key={index} theater={theater} />
-						})}
+					{cinemas[selectedCinemaIndex].theaters.map((theater, index) => {
+						return <Theater key={index} theater={theater} />
+					})}
+					<div className="flex justify-center">
+						<button
+							className="drop-shadow-md text-white font-medium bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 rounded-md px-2 py-1 w-fit"
+							onClick={() => handleDecreaseTheater()}
+						>
+							DECREASE -
+						</button>
 					</div>
 				</div>
 			</div>
