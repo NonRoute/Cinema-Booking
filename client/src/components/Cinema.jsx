@@ -142,7 +142,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 											type="text"
 											maxLength="1"
 											required
-											className="rounded py-1 px-3 w-32 font-semibold text-2xl"
+											className="rounded py-1 px-3 w-10 font-semibold text-2xl"
 											{...register('row', {
 												required: true,
 												pattern: /^[a-zA-Z]$/
@@ -175,7 +175,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 											max="500"
 											maxLength="3"
 											required
-											className="rounded py-1 px-3 w-32 font-semibold text-2xl"
+											className="rounded py-1 px-3 w-24 font-semibold text-2xl"
 											{...register('column', { required: true })}
 										/>
 									</div>
