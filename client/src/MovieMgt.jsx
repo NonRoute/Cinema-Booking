@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { AuthContext } from './context/AuthContext'
 import { toast } from 'react-toastify'
+import { TrashIcon } from '@heroicons/react/24/solid'
 
 const MovieMgt = () => {
 	const { auth } = useContext(AuthContext)
@@ -41,6 +42,29 @@ const MovieMgt = () => {
 			console.log(response.data)
 			fetchMovies()
 			toast.success('Add movie successful!')
+		} catch (error) {
+			console.error(error)
+			toast.error('Error')
+		}
+	}
+
+	const handleDelete = (movie) => {
+		const confirmed = window.confirm(`Do you want to delete movie ${movie.name}?`)
+		if (confirmed) {
+			onDeleteMovie(movie._id)
+		}
+	}
+
+	const onDeleteMovie = async (id) => {
+		try {
+			const response = await axios.delete(`/movie/${id}`, {
+				headers: {
+					Authorization: `Bearer ${auth.token}`
+				}
+			})
+			console.log(response.data)
+			fetchMovies()
+			toast.success('Delete movie successful!')
 		} catch (error) {
 			console.error(error)
 			toast.error('Error')
@@ -105,9 +129,18 @@ const MovieMgt = () => {
 						return (
 							<div key={index} className="flex flex-grow min-w-fit bg-white drop-shadow-md rounded-md">
 								<img src={movie.img} className="h-48 drop-shadow-md rounded-md object-contain" />
-								<div className="p-2">
-									<h2 className="text-xl font-semibold">{movie.name}</h2>
-									<h2 className="">length : {movie.length} min.</h2>
+								<div className="flex flex-grow flex-col justify-between p-2">
+									<div>
+										<h2 className="text-xl font-semibold">{movie.name}</h2>
+										<h2 className="">length : {movie.length} min.</h2>
+									</div>
+									<button
+										className="self-end flex gap-1 items-center text-white text-sm font-medium bg-gradient-to-r from-red-700 to-rose-700 hover:from-red-700 hover:to-rose-600 rounded-md pl-2 pr-1.5 py-1 w-fit"
+										onClick={() => handleDelete(movie)}
+									>
+										DELETE
+										<TrashIcon className="h-5 w-5" />
+									</button>
 								</div>
 							</div>
 						)
