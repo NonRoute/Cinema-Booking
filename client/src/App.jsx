@@ -6,6 +6,7 @@ import axios from 'axios'
 import { ToastContainer } from 'react-toastify'
 import AdminRoute from './AdminRoute'
 import CinemaMgt from './CinemaMgt'
+import MovieMgt from './MovieMgt'
 
 axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.withCredentials = true
@@ -30,7 +31,7 @@ function App() {
 					path="/movie-mgt"
 					element={
 						<AdminRoute>
-							<CinemaMgt />
+							<MovieMgt />
 						</AdminRoute>
 					}
 				/>
