@@ -68,11 +68,14 @@ exports.updateCinema = async (req, res, next) => {
 //@access   Private Admin
 exports.deleteCinema = async (req, res, next) => {
 	try {
-		const cinema = await Cinema.findByIdAndDelete(req.params.id)
+		const cinema = await Cinema.findById(req.params.id)
 
 		if (!cinema) {
 			return res.status(400).json({ success: false, message: `Cinema not found with id of ${req.params.id}` })
 		}
+		
+		await cinema.remove()
+
 		res.status(200).json({ success: true })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })

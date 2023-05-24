@@ -35,7 +35,7 @@ exports.getTheater = async (req, res, next) => {
 //@access   Private
 exports.createTheater = async (req, res, next) => {
 	try {
-		const { cinema: cinemaId, number, row, column } = req.body
+		const { cinema: cinemaId, row, column } = req.body
 		const cinema = await Cinema.findById(cinemaId)
 
 		if (!cinema) {
@@ -60,7 +60,7 @@ exports.createTheater = async (req, res, next) => {
 			}
 		}
 
-		const theater = await Theater.create({ number, seatPlan: { row, column }, seats })
+		const theater = await Theater.create({ seatPlan: { row, column }, seats })
 
 		cinema.theaters.push(theater._id)
 

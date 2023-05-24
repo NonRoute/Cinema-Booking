@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
 const theaterSchema = new mongoose.Schema({
-	number: {
-		type: Number,
-		required: [true, 'Please add a theater number']
-	},
 	movies: [
 		{
 			movie: { type: mongoose.Schema.ObjectId, ref: 'Movie' },
