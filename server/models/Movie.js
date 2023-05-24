@@ -7,6 +7,9 @@ const movieSchema = new mongoose.Schema({
 	},
 	length: {
 		type: Number
+	},
+	img: {
+		type: String
 	}
 })
 
