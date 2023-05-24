@@ -9,10 +9,10 @@ import Theater from './components/Theater'
 
 const Management = () => {
 	const { auth } = useContext(AuthContext)
-	const [selectedCinema, setSelectedCinema] = useState({})
+	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(null)
 	const [cinemas, setCinemas] = useState([])
 
-	const fetchCinema = async (data) => {
+	const fetchCinemas = async (data) => {
 		try {
 			const response = await axios.get('/cinema')
 			console.log(response.data.data)
@@ -23,23 +23,15 @@ const Management = () => {
 	}
 
 	useEffect(() => {
-		fetchCinema()
+		fetchCinemas()
 	}, [])
 
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors }
-	} = useForm()
-
-	const props = { cinemas, selectedCinema, setSelectedCinema, fetchCinema, auth }
-
+	const props = { cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCinemas, auth }
 	return (
 		<div className="flex flex-col gap-8 bg-gradient-to-br from-indigo-900 to-blue-500 min-h-screen pb-8">
 			<Navbar />
 			<Cinema {...props} />
-			{selectedCinema?.name && <Theater {...props} />}
+			{cinemas[selectedCinemaIndex]?.name && <Theater {...props} />}
 		</div>
 	)
 }
