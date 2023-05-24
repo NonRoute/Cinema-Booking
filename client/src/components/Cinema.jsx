@@ -1,35 +1,15 @@
-import Navbar from './components/Navbar'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { AuthContext } from './context/AuthContext'
-import { useContext, useEffect, useState } from 'react'
 
-const Cinema = ({ setSelectedCinema, selectedCinema }) => {
-	const { auth, setAuth } = useContext(AuthContext)
+const Cinema = ({ cinemas, selectedCinema, setSelectedCinema, fetchCinema, auth }) => {
 	const {
 		register,
 		handleSubmit,
 		reset,
 		formState: { errors }
 	} = useForm()
-
-	const [cinemas, setCinemas] = useState([])
-
-	const fetchCinema = async (data) => {
-		try {
-			const response = await axios.get('/cinema')
-			console.log(response.data.data)
-			setCinemas(response.data.data)
-		} catch (error) {
-			console.error(error)
-		}
-	}
-
-	useEffect(() => {
-		fetchCinema()
-	}, [])
 
 	const onAddCinema = async (data) => {
 		try {
@@ -64,7 +44,7 @@ const Cinema = ({ setSelectedCinema, selectedCinema }) => {
 					</div>
 				</form>
 				<div className="flex flex-wrap items-center gap-3 pt-2">
-					{cinemas.map((cinema, index) => {
+					{cinemas?.map((cinema, index) => {
 						return selectedCinema?.name === cinema.name ? (
 							<button
 								className="bg-gradient-to-br from-indigo-800 to-blue-700 hover:from-indigo-700 hover:to-blue-600 rounded-md drop-shadow-xl w-fit px-2.5 py-1.5 text-white font-medium text-lg"
