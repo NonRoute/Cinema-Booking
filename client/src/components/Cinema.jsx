@@ -178,7 +178,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 						return (
 							<Theater
 								key={index}
-								theater={theater}
+								theaterId={theater}
 								number={index + 1}
 								movies={movies}
 								selectedDate={selectedDate}

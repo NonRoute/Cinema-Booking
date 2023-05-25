@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
 
-const Theater = ({ theater, number, movies, selectedDate }) => {
+const Theater = ({ theaterId, number, movies, selectedDate }) => {
 	const {
 		register,
 		handleSubmit,
@@ -15,6 +15,22 @@ const Theater = ({ theater, number, movies, selectedDate }) => {
 	} = useForm()
 
 	const { auth } = useContext(AuthContext)
+
+	const [theater, setTheater] = useState({})
+
+	const fetchTheater = async (data) => {
+		try {
+			const response = await axios.get(`/theater/${theaterId}`)
+			console.log(response.data.data)
+			setTheater(response.data.data)
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	useEffect(() => {
+		fetchTheater()
+	}, [])
 
 	const onAddShowtime = async (data) => {
 		try {
@@ -47,14 +63,18 @@ const Theater = ({ theater, number, movies, selectedDate }) => {
 				<div className="flex flex-col sm:flex-row items-center gap-x-3 sm:gap-x-6 bg-gradient-to-br from-indigo-800 to-blue-700 text-white font-semibold sm:font-bold sm:text-lg rounded-tr-2xl sm:rounded-t-2xl w-fit px-4 py-0.5">
 					<div className="flex gap-2 items-center">
 						<ArrowsUpDownIcon className="h-6 w-6" />
-						{theater.seatPlan.row === 'A' ? <h4>Row : A</h4> : <h4>Row : A - {theater.seatPlan.row}</h4>}
+						{theater?.seatPlan?.row === 'A' ? (
+							<h4>Row : A</h4>
+						) : (
+							<h4>Row : A - {theater?.seatPlan?.row}</h4>
+						)}
 					</div>
 					<div className="flex gap-2 items-center">
 						<ArrowsRightLeftIcon className="h-6 w-6" />
-						{theater.seatPlan.column === 1 ? (
+						{theater?.seatPlan?.column === 1 ? (
 							<h4>Column : 1</h4>
 						) : (
-							<h4>Column : 1 - {theater.seatPlan.column}</h4>
+							<h4>Column : 1 - {theater?.seatPlan?.column}</h4>
 						)}
 					</div>
 				</div>
