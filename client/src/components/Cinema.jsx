@@ -5,6 +5,7 @@ import { TrashIcon, ArrowsUpDownIcon, ArrowsRightLeftIcon } from '@heroicons/rea
 import { useForm } from 'react-hook-form'
 import Theater from './Theater'
 import { useEffect, useState } from 'react'
+import DatePicker from './DatePicker'
 
 const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCinemas, auth }) => {
 	const {
@@ -15,6 +16,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 	} = useForm()
 
 	const [movies, setMovies] = useState()
+	const [selectedDate, setSelectedDate] = useState(new Date())
 
 	const fetchMovies = async (data) => {
 		try {
@@ -105,7 +107,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 	}
 	return (
 		<>
-			<div className="bg-gradient-to-br from-indigo-200 to-blue-100 h-fit mx-4 sm:mx-8 rounded-md">
+			<div className="bg-gradient-to-br from-indigo-200 to-blue-100 h-fit mx-4 sm:mx-8 rounded-md drop-shadow-md">
 				<div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-t-md text-white text-center py-1.5 px-2 text-2xl font-semibold">
 					<div className="flex justify-center items-center">
 						<span className="flex-grow">{cinemas[selectedCinemaIndex]?.name}</span>
@@ -118,11 +120,14 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 						</button>
 					</div>
 				</div>
-				<div className="flex flex-col p-4 sm:p-6 gap-6 drop-shadow-xl">
+				<div className="flex flex-col p-4 sm:p-6 gap-6 drop-shadow-md">
+					<div className="bg-gradient-to-br from-indigo-800 to-blue-700 p-2 rounded-md">
+						<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+					</div>
 					<form className="flex flex-col gap-2" onSubmit={handleSubmit(onIncreaseTheater)}>
 						<div className="flex flex-wrap gap-x-4 gap-y-2 items-center justify-between">
 							<h2 className="text-gray-900 font-bold text-3xl">Theaters</h2>
-							<div className="flex flex-wrap gap-4 drop-shadow-md items-center justify-end bg-gradient-to-br from-indigo-100 to-white p-2 rounded-md">
+							<div className="flex flex-wrap gap-4 items-center justify-end bg-gradient-to-br from-indigo-100 to-white p-2 rounded-md">
 								<div className="flex flex-wrap gap-4 justify-end">
 									<div className="flex flex-wrap gap-2">
 										<ArrowsUpDownIcon className="h-6 w-6" />
