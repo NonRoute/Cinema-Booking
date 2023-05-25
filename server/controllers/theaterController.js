@@ -1,4 +1,5 @@
 const Cinema = require('../models/Cinema')
+const Movie = require('../models/Movie')
 const Theater = require('../models/Theater')
 
 //@desc     GET all theaters
@@ -42,29 +43,69 @@ exports.createTheater = async (req, res, next) => {
 			return res.status(400).json({ success: false, message: `Cinema not found with id of ${cinemaId}` })
 		}
 
-		const rowRegex = /^[A-Z]$/
+		const rowRegex = /^[A-Z]{1,2}$/
 		if (!rowRegex.test(row)) {
-			return res.status(400).json({ success: false, message: `Row is not a valid letter between A to Z` })
+			return res.status(400).json({ success: false, message: `Row is not a valid letter between A to ZZ` })
 		}
 
 		if (column <= 0 || column > 500) {
 			return res.status(400).json({ success: false, message: `Column is not a valid number between 1 to 500` })
 		}
 
-		// let seats = []
-		// for (let i = 65; i <= row.charCodeAt(0); i++) {
-		// 	const letter = String.fromCharCode(i)
-		// 	for (let j = 1; j <= column; j++) {
-		// 		const seat = { row: letter, number: j, status: 1 }
-		// 		seats.push(seat)
-		// 	}
-		// }
-
 		const theater = await Theater.create({ seatPlan: { row, column } })
 
 		cinema.theaters.push(theater._id)
 
 		await cinema.save()
+
+		res.status(201).json({
+			success: true,
+			data: theater
+		})
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
+//@desc     Add Showtime
+//@route    POST /theater/showtime
+//@access   Private
+exports.addShowtime = async (req, res, next) => {
+	try {
+		const { movie: movieId, showtime, theater: theaterId } = req.body
+
+		const theater = await Theater.findById(theaterId)
+
+		if (!theater) {
+			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
+		}
+
+		const movie = await Movie.findById(movieId)
+
+		if (!movie) {
+			return res.status(400).json({ success: false, message: `Movie not found with id of ${movieId}` })
+		}
+
+		const row = theater.seatPlan.row
+		const column = theater.seatPlan.column
+		let seats = []
+		for (let k = 64; k <= (row.length === 2 ? row.charCodeAt(0) : 64); k++) {
+			for (
+				let i = 65;
+				i <= (k === row.charCodeAt(0) || row.length === 1 ? row.charCodeAt(row.length - 1) : 90);
+				i++
+			) {
+				const letter = k === 64 ? String.fromCharCode(i) : String.fromCharCode(k) + String.fromCharCode(i)
+				for (let j = 1; j <= column; j++) {
+					const seat = { row: letter, number: j, status: 1 }
+					seats.push(seat)
+				}
+			}
+		}
+
+		theater.showtimes.push({ movie: movie._id, showtime, seats })
+
+		await theater.save()
 
 		res.status(201).json({
 			success: true,

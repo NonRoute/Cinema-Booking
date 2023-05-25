@@ -4,7 +4,7 @@ const theaterSchema = new mongoose.Schema({
 	seatPlan: {
 		row: {
 			type: String,
-			maxlength: 1,
+			maxlength: 2,
 			required: [true, 'Please add a seatPlan row']
 		},
 		column: {
@@ -14,7 +14,7 @@ const theaterSchema = new mongoose.Schema({
 	},
 	showtimes: [
 		{
-			movies: { type: mongoose.Schema.ObjectId, ref: 'Movie' },
+			movie: { type: mongoose.Schema.ObjectId, ref: 'Movie' },
 			showtime: Date,
 			seats: [
 				{

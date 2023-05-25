@@ -45,13 +45,13 @@ const Navbar = () => {
 				{auth.username && <p className="text-white leading-none text-md">Welcome {auth.username}!</p>}
 				{auth.token ? (
 					<button
-						className="bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-400 rounded-lg py-1 px-2 text-white drop-shadow-md"
+						className="bg-gradient-to-br from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-400 rounded-lg py-1 px-2 text-white drop-shadow-md"
 						onClick={() => onLogout()}
 					>
 						<p>Logout</p>
 					</button>
 				) : (
-					<button className="bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-400 rounded-lg py-1 px-2 text-white drop-shadow-md">
+					<button className="bg-gradient-to-br from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-400 rounded-lg py-1 px-2 text-white drop-shadow-md">
 						<Link to={'/login'}>Login</Link>
 					</button>
 				)}

@@ -111,17 +111,17 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 										<ArrowsUpDownIcon className="h-6 w-6" />
 										<div className="flex flex-col items-end my-1">
 											<label className="font-semibold text-lg leading-5">Last Row :</label>
-											<label className="font-semibold text-xs">(A-Z)</label>
+											<label className="font-semibold text-xs">(A-ZZ)</label>
 										</div>
 										<input
-											title="A to Z"
+											title="A to ZZ"
 											type="text"
-											maxLength="1"
+											maxLength="2"
 											required
-											className="rounded py-1 px-3 w-10 font-semibold text-2xl drop-shadow-sm"
+											className="rounded py-1 px-3 w-14 font-semibold text-2xl drop-shadow-sm"
 											{...register('row', {
 												required: true,
-												pattern: /^[a-zA-Z]$/
+												pattern: /^[a-zA-Z]{1,2}$/
 											})}
 										/>
 									</div>

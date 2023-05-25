@@ -115,7 +115,7 @@ const MovieMgt = () => {
 						</div>
 					</div>
 					<button
-						className="drop-shadow-md w-full lg:w-20 lg:h-32 text-centeritems-center text-white font-medium bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500 rounded-md px-2 py-1"
+						className="drop-shadow-md w-full lg:w-20 lg:h-32 text-centeritems-center text-white font-medium bg-gradient-to-br from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500 rounded-md px-2 py-1"
 						type="submit"
 					>
 						ADD +
@@ -136,7 +136,7 @@ const MovieMgt = () => {
 											<h2 className="">length : {movie.length || '-'} min.</h2>
 										</div>
 										<button
-											className="self-end flex gap-1 items-center text-white text-sm font-medium bg-gradient-to-r from-red-700 to-rose-700 hover:from-red-700 hover:to-rose-600 rounded-md pl-2 pr-1.5 py-1 w-fit"
+											className="self-end flex gap-1 items-center text-white text-sm font-medium bg-gradient-to-br from-red-700 to-rose-700 hover:from-red-700 hover:to-rose-600 rounded-md pl-2 pr-1.5 py-1 w-fit"
 											onClick={() => handleDelete(movie)}
 										>
 											DELETE
