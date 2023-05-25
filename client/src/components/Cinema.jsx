@@ -175,7 +175,15 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 						</div>
 					</form>
 					{cinemas[selectedCinemaIndex].theaters.map((theater, index) => {
-						return <Theater key={index} theater={theater} number={index + 1} movies={movies} />
+						return (
+							<Theater
+								key={index}
+								theater={theater}
+								number={index + 1}
+								movies={movies}
+								selectedDate={selectedDate}
+							/>
+						)
 					})}
 					<div className="flex justify-center">
 						<button

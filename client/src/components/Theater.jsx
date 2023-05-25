@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Movie from './Movie'
 import axios from 'axios'
 import { ArrowsUpDownIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/solid'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import { AuthContext } from '../context/AuthContext'
 
-const Theater = ({ theater, number, movies }) => {
+const Theater = ({ theater, number, movies, selectedDate }) => {
 	const {
 		register,
 		handleSubmit,
@@ -13,21 +14,24 @@ const Theater = ({ theater, number, movies }) => {
 		formState: { errors }
 	} = useForm()
 
+	const { auth } = useContext(AuthContext)
+
 	const onAddShowtime = async (data) => {
 		try {
-			console.log(data)
-			// const response = await axios.post(
-			// 	'/theater/showtime',
-			// 	{ movie: data.movie },
-			// 	{
-			// 		headers: {
-			// 			Authorization: `Bearer ${auth.token}`
-			// 		}
-			// 	}
-			// )
-			// console.log(response.data)
-			// fetchCinemas()
-			toast.success('Add cinema successful!')
+			let showtime = new Date(selectedDate)
+			const [hours, minutes] = data.showtime.split(':')
+			showtime.setHours(hours, minutes, 0)
+			const response = await axios.post(
+				'/theater/showtime',
+				{ movie: data.movie, showtime, theater: theater._id },
+				{
+					headers: {
+						Authorization: `Bearer ${auth.token}`
+					}
+				}
+			)
+			console.log(response.data)
+			toast.success('Add showtime successful!')
 		} catch (error) {
 			console.error(error)
 			toast.error('Error')
