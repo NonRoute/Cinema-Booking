@@ -67,6 +67,44 @@ exports.createTheater = async (req, res, next) => {
 	}
 }
 
+//@desc     Update theaters
+//@route    PUT /theater/:id
+//@access   Private Admin
+exports.updateTheater = async (req, res, next) => {
+	try {
+		const theater = await Theater.findByIdAndUpdate(req.params.id, req.body, {
+			new: true,
+			runValidators: true
+		})
+
+		if (!theater) {
+			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
+		}
+		res.status(200).json({ success: true, data: theater })
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
+//@desc     Delete all theaters
+//@route    DELETE /theater/:id
+//@access   Private Admin
+exports.deleteTheater = async (req, res, next) => {
+	try {
+		const theater = await Theater.findByIdAndDelete(req.params.id)
+
+		if (!theater) {
+			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
+		}
+
+		await Cinema.updateMany({ theaters: theater._id }, { $pull: { theaters: theater._id } })
+
+		res.status(200).json({ success: true })
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
 //@desc     Add Showtime
 //@route    POST /theater/showtime
 //@access   Private
@@ -116,39 +154,25 @@ exports.addShowtime = async (req, res, next) => {
 	}
 }
 
-//@desc     Update theaters
-//@route    PUT /theater/:id
-//@access   Private Admin
-exports.updateTheater = async (req, res, next) => {
+//@desc     GET single showtime
+//@route    GET /theater/showtime/:id
+//@access   Public
+exports.getShowtime = async (req, res, next) => {
 	try {
-		const theater = await Theater.findByIdAndUpdate(req.params.id, req.body, {
-			new: true,
-			runValidators: true
-		})
+		const { theater: theaterId } = req.body
+
+		const theater = await Theater.findById(theaterId)
 
 		if (!theater) {
-			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
-		}
-		res.status(200).json({ success: true, data: theater })
-	} catch (err) {
-		res.status(400).json({ success: false, message: err })
-	}
-}
-
-//@desc     Delete all theaters
-//@route    DELETE /theater/:id
-//@access   Private Admin
-exports.deleteTheater = async (req, res, next) => {
-	try {
-		const theater = await Theater.findByIdAndDelete(req.params.id)
-
-		if (!theater) {
-			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Theater not found with id of ${theaterId}` })
 		}
 
-		await Cinema.updateMany({ theaters: theater._id }, { $pull: { theaters: theater._id } });
+		const showtime = theater.showtimes.find((element) => element._id.toString() === req.params.id)
+		if (!showtime) {
+			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+		}
 
-		res.status(200).json({ success: true })
+		res.status(200).json({ success: true, data: showtime })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })
 	}
