@@ -21,7 +21,7 @@ const Theater = ({ theaterId, number, movies, selectedDate }) => {
 	const fetchTheater = async (data) => {
 		try {
 			const response = await axios.get(`/theater/${theaterId}`)
-			console.log(response.data.data)
+			// console.log(response.data.data)
 			setTheater(response.data.data)
 		} catch (error) {
 			console.error(error)
@@ -46,7 +46,7 @@ const Theater = ({ theaterId, number, movies, selectedDate }) => {
 					}
 				}
 			)
-			console.log(response.data)
+			// console.log(response.data)
 			fetchTheater()
 			toast.success('Add showtime successful!')
 		} catch (error) {

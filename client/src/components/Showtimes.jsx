@@ -1,13 +1,13 @@
 const Showtimes = ({ showtimes, movies, selectedDate }) => {
 	const sortedShowtimes = showtimes?.reduce((result, showtime) => {
-		const { movie, showtime: showDateTime, seats } = showtime
+		const { movie, showtime: showDateTime, seats, _id } = showtime
 
 		if (new Date(showDateTime).getDay() === selectedDate.getDay()) {
 			if (!result[movie]) {
 				result[movie] = []
 			}
 
-			result[movie].push({ showtime: showDateTime, seats })
+			result[movie].push({ showtime: showDateTime, seats, _id })
 		}
 		return result
 	}, {})
@@ -34,7 +34,7 @@ const Showtimes = ({ showtimes, movies, selectedDate }) => {
 								<div className="flex flex-wrap items-center gap-2 pt-1">
 									{sortedShowtimes[movie._id]?.map((showtime, index) => {
 										return (
-											<div className="bg-gradient-to-br from-gray-600 to-gray-500 rounded-md drop-shadow-sm text-white px-2 py-1 text-lg">
+											<button className="bg-gradient-to-br from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400 rounded-md drop-shadow-sm text-white px-2 py-1 text-lg">
 												{`${new Date(showtime.showtime)
 													.getHours()
 													.toString()
@@ -42,7 +42,7 @@ const Showtimes = ({ showtimes, movies, selectedDate }) => {
 													.getMinutes()
 													.toString()
 													.padStart(2, '0')}`}
-											</div>
+											</button>
 										)
 									})}
 								</div>
