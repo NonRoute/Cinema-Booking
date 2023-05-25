@@ -36,11 +36,11 @@ const Theater = ({ theater, number, movies }) => {
 
 	return (
 		<div className="flex flex-col">
-			<div className="flex justify-between">
-				<h3 className="bg-gradient-to-br from-gray-800 to-gray-700 text-white font-bold text-2xl rounded-t-2xl w-fit px-8 py-0.5">
+			<div className="flex sm:justify-between">
+				<h3 className="flex items-center bg-gradient-to-br from-gray-800 to-gray-700 text-white font-bold text-2xl rounded-tl-2xl sm:rounded-t-2xl w-fit px-4 sm:px-8 py-0.5">
 					{number}
 				</h3>
-				<div className="flex items-center gap-6 bg-gradient-to-br from-indigo-800 to-blue-700 text-white font-bold text-lg rounded-t-2xl w-fit px-4 py-0.5">
+				<div className="flex flex-col sm:flex-row items-center gap-x-3 sm:gap-x-6 bg-gradient-to-br from-indigo-800 to-blue-700 text-white font-semibold sm:font-bold sm:text-lg rounded-tr-2xl sm:rounded-t-2xl w-fit px-4 py-0.5">
 					<div className="flex gap-2 items-center">
 						<ArrowsUpDownIcon className="h-6 w-6" />
 						{theater.seatPlan.row === 'A' ? <h4>Row : A</h4> : <h4>Row : A - {theater.seatPlan.row}</h4>}
@@ -55,12 +55,12 @@ const Theater = ({ theater, number, movies }) => {
 					</div>
 				</div>
 			</div>
-			<div className="bg-gradient-to-br from-indigo-100 to-white rounded-b-md flex flex-col gap-4 py-4">
+			<div className="bg-gradient-to-br from-indigo-100 to-white rounded-tr-md sm:rounded-tr-none rounded-b-md flex flex-col gap-4 py-4">
 				<form className="flex flex-col md:flex-row gap-y-2 gap-x-4 mx-4" onSubmit={handleSubmit(onAddShowtime)}>
 					<div className="flex gap-2 items-center grow-[5]">
 						<label className="font-semibold text-lg leading-5">Movie :</label>
 						<select
-							className="bg-white flex-grow drop-shadow-sm text-gray-900 font-medium rounded-md px-2 py-1"
+							className="bg-white flex-grow drop-shadow-sm text-gray-900 font-medium rounded-md px-2 py-1 w-12"
 							{...register('movie', { required: true })}
 						>
 							<option value="" selected>
@@ -79,7 +79,7 @@ const Theater = ({ theater, number, movies }) => {
 						<label className="font-semibold text-lg leading-5">Showtime :</label>
 						<input
 							type="time"
-							className="flex-grow rounded px-2 py-1  font-semibold drop-shadow-sm"
+							className="flex-grow rounded px-2 py-1  font-semibold drop-shadow-sm w-12"
 							required
 							{...register('showtime', { required: true })}
 						/>
