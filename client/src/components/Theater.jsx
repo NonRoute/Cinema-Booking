@@ -30,7 +30,7 @@ const Theater = ({ theaterId, number, movies, selectedDate }) => {
 
 	useEffect(() => {
 		fetchTheater()
-	}, [])
+	}, [theaterId])
 
 	const onAddShowtime = async (data) => {
 		try {

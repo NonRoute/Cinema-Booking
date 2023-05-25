@@ -29,7 +29,7 @@ const Showtimes = ({ showtimes, movies, selectedDate }) => {
 							<div className="flex flex-col py-4 gap-2">
 								<div>
 									<h4 className="text-2xl font-semibold">{movie.name}</h4>
-									<p className="text-md font-medium">length : {movie.length} min</p>
+									<p className="text-md font-medium">length : {movie.length || '-'} min</p>
 								</div>
 								<div className="flex flex-wrap items-center gap-2 pt-1">
 									{sortedShowtimes[movie._id]?.map((showtime, index) => {
