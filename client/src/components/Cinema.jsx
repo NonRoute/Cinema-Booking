@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { TrashIcon, ArrowsUpDownIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/solid'
 import { useForm } from 'react-hook-form'
 import Theater from './Theater'
+import { useEffect, useState } from 'react'
 
 const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCinemas, auth }) => {
 	const {
@@ -12,6 +13,22 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 		reset,
 		formState: { errors }
 	} = useForm()
+
+	const [movies, setMovies] = useState()
+
+	const fetchMovies = async (data) => {
+		try {
+			const response = await axios.get('/movie')
+			console.log(response.data.data)
+			setMovies(response.data.data)
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	useEffect(() => {
+		fetchMovies()
+	}, [])
 
 	const handleDelete = (cinema) => {
 		const confirmed = window.confirm(`Do you want to delete cinema ${cinema.name}?`)
@@ -153,7 +170,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 						</div>
 					</form>
 					{cinemas[selectedCinemaIndex].theaters.map((theater, index) => {
-						return <Theater key={index} theater={theater} number={index + 1} />
+						return <Theater key={index} theater={theater} number={index + 1} movies={movies} />
 					})}
 					<div className="flex justify-center">
 						<button

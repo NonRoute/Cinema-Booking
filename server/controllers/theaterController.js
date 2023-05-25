@@ -107,7 +107,7 @@ exports.addShowtime = async (req, res, next) => {
 
 		await theater.save()
 
-		res.status(201).json({
+		res.status(200).json({
 			success: true,
 			data: theater
 		})
