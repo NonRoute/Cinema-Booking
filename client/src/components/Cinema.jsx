@@ -92,7 +92,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 
 	const onDecreaseTheater = async () => {
 		try {
-			const response = await axios.delete(`/theater/${cinemas[selectedCinemaIndex].theaters.slice(-1)[0]._id}`, {
+			const response = await axios.delete(`/theater/${cinemas[selectedCinemaIndex].theaters.slice(-1)[0]}`, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`
 				}

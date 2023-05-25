@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
-import Movie from './Movie'
 import axios from 'axios'
 import { ArrowsUpDownIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/solid'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
+import Showtimes from './Showtimes'
 
 const Theater = ({ theaterId, number, movies, selectedDate }) => {
 	const {
@@ -47,6 +47,7 @@ const Theater = ({ theaterId, number, movies, selectedDate }) => {
 				}
 			)
 			console.log(response.data)
+			fetchTheater()
 			toast.success('Add showtime successful!')
 		} catch (error) {
 			console.error(error)
@@ -115,8 +116,7 @@ const Theater = ({ theaterId, number, movies, selectedDate }) => {
 						ADD +
 					</button>
 				</form>
-				<Movie />
-				<Movie />
+				<Showtimes showtimes={theater.showtimes} movies={movies} selectedDate={selectedDate} />
 			</div>
 		</div>
 	)

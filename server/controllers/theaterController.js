@@ -7,7 +7,7 @@ const Theater = require('../models/Theater')
 //@access   Public
 exports.getTheaters = async (req, res, next) => {
 	try {
-		const theaters = await Theater.find().populate('showtimes.movie')
+		const theaters = await Theater.find()
 		res.status(200).json({ success: true, count: theaters.length, data: theaters })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })
@@ -19,7 +19,7 @@ exports.getTheaters = async (req, res, next) => {
 //@access   Public
 exports.getTheater = async (req, res, next) => {
 	try {
-		const theater = await Theater.findById(req.params.id).populate('showtimes.movie')
+		const theater = await Theater.findById(req.params.id)
 
 		if (!theater) {
 			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
@@ -145,6 +145,9 @@ exports.deleteTheater = async (req, res, next) => {
 		if (!theater) {
 			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
 		}
+
+		await Cinema.updateMany({ theaters: theater._id }, { $pull: { theaters: theater._id } });
+
 		res.status(200).json({ success: true })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })
