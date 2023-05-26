@@ -1,5 +1,6 @@
 const Cinema = require('../models/Cinema')
 const Movie = require('../models/Movie')
+const Seats = require('../models/Seats')
 const Theater = require('../models/Theater')
 
 //@desc     GET all theaters
@@ -141,7 +142,9 @@ exports.addShowtime = async (req, res, next) => {
 			}
 		}
 
-		theater.showtimes.push({ movie: movie._id, showtime, seats })
+		const seatsDoc = await Seats.create({ seats })
+
+		theater.showtimes.push({ movie: movie._id, showtime, seats: seatsDoc._id })
 
 		await theater.save()
 
@@ -168,12 +171,14 @@ exports.getShowtime = async (req, res, next) => {
 		}
 
 		const showtime = theater.showtimes.find((element) => element._id.toString() === req.params.id)
+
 		if (!showtime) {
 			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
 		}
 
 		res.status(200).json({ success: true, data: showtime })
 	} catch (err) {
+		console.log(err)
 		res.status(400).json({ success: false, message: err })
 	}
 }
