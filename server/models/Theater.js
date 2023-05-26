@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const theaterSchema = new mongoose.Schema({
 	cinema: { type: mongoose.Schema.ObjectId, ref: 'Cinema' },
+	number: { type: Number, required: true },
 	seatPlan: {
 		row: {
 			type: String,

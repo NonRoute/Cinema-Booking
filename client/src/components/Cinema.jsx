@@ -17,6 +17,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 
 	const [movies, setMovies] = useState()
 	const [selectedDate, setSelectedDate] = useState(new Date())
+	const [isIncreasing, SetIsIncreaseing] = useState(false)
 
 	const fetchMovies = async (data) => {
 		try {
@@ -58,6 +59,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 
 	const onIncreaseTheater = async (data) => {
 		try {
+			SetIsIncreaseing(true)
 			const response = await axios.post(
 				`/theater`,
 				{
@@ -75,6 +77,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 			console.log(response.data)
 			fetchCinemas()
 			toast.success('Increase theater successful!')
+			SetIsIncreaseing(false)
 		} catch (error) {
 			console.error(error)
 			toast.error(errors)
@@ -166,24 +169,17 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 									</div>
 								</div>
 								<button
-									className="drop-shadow-md flex items-center text-white font-medium bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500 rounded-md px-2 py-1"
+									disabled={isIncreasing}
+									className="disabled:from-slate-500 disabled:to-slate-400 drop-shadow-md flex items-center text-white font-medium bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500 rounded-md px-2 py-1"
 									type="submit"
 								>
-									INCREASE +
+									{isIncreasing ? 'Processing...' : 'INCREASE +'}
 								</button>
 							</div>
 						</div>
 					</form>
 					{cinemas[selectedCinemaIndex].theaters.map((theater, index) => {
-						return (
-							<Theater
-								key={index}
-								theaterId={theater}
-								number={index + 1}
-								movies={movies}
-								selectedDate={selectedDate}
-							/>
-						)
+						return <Theater key={index} theaterId={theater} movies={movies} selectedDate={selectedDate} />
 					})}
 					<div className="flex justify-center">
 						<button

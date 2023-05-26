@@ -8,7 +8,10 @@ const Theater = require('../models/Theater')
 //@access   Public
 exports.getTheaters = async (req, res, next) => {
 	try {
-		const theaters = await Theater.find().populate('showtimes')
+		const theaters = await Theater.find().populate([
+			{ path: 'showtimes', select: 'movie showtime' },
+			{ path: 'cinema', select: 'name' }
+		])
 		res.status(200).json({ success: true, count: theaters.length, data: theaters })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })
@@ -20,7 +23,10 @@ exports.getTheaters = async (req, res, next) => {
 //@access   Public
 exports.getTheater = async (req, res, next) => {
 	try {
-		const theater = await Theater.findById(req.params.id).populate('showtimes')
+		const theater = await Theater.findById(req.params.id).populate([
+			{ path: 'showtimes', select: 'movie showtime' },
+			{ path: 'cinema', select: 'name' }
+		])
 
 		if (!theater) {
 			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
@@ -38,22 +44,22 @@ exports.getTheater = async (req, res, next) => {
 exports.createTheater = async (req, res, next) => {
 	try {
 		const { cinema: cinemaId, row, column } = req.body
+		const rowRegex = /^[A-Z]{1,2}$/
+		if (!rowRegex.test(row)) {
+			return res.status(400).json({ success: false, message: `Row is not a valid letter between A to ZZ` })
+		}
+
+		if (column <= 1 || column > 500) {
+			return res.status(400).json({ success: false, message: `Column is not a valid number between 1 to 500` })
+		}
+
 		const cinema = await Cinema.findById(cinemaId)
 
 		if (!cinema) {
 			return res.status(400).json({ success: false, message: `Cinema not found with id of ${cinemaId}` })
 		}
 
-		const rowRegex = /^[A-Z]{1,2}$/
-		if (!rowRegex.test(row)) {
-			return res.status(400).json({ success: false, message: `Row is not a valid letter between A to ZZ` })
-		}
-
-		if (column <= 0 || column > 500) {
-			return res.status(400).json({ success: false, message: `Column is not a valid number between 1 to 500` })
-		}
-
-		const theater = await Theater.create({ cinema, seatPlan: { row, column } })
+		const theater = await Theater.create({ cinema, number: cinema.theaters.length + 1, seatPlan: { row, column } })
 
 		cinema.theaters.push(theater._id)
 

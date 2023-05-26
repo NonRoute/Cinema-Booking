@@ -56,8 +56,7 @@ exports.addShowtime = async (req, res, next) => {
 			}
 		}
 
-		const seatsDoc = await Seats.create({ seats })
-		const showtimeDoc = await Showtime.create({ theater, movie: movie._id, showtime, seats: seatsDoc._id })
+		const showtimeDoc = await Showtime.create({ theater, movie: movie._id, showtime, seats })
 
 		theater.showtimes.push(showtimeDoc._id)
 
@@ -68,6 +67,7 @@ exports.addShowtime = async (req, res, next) => {
 			data: theater
 		})
 	} catch (err) {
+		console.log(err)
 		res.status(400).json({ success: false, message: err })
 	}
 }

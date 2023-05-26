@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
 import Showtimes from './Showtimes'
 
-const Theater = ({ theaterId, number, movies, selectedDate }) => {
+const Theater = ({ theaterId, movies, selectedDate }) => {
 	const {
 		register,
 		handleSubmit,
@@ -59,7 +59,7 @@ const Theater = ({ theaterId, number, movies, selectedDate }) => {
 		<div className="flex flex-col">
 			<div className="flex sm:justify-between">
 				<h3 className="flex items-center bg-gradient-to-br from-gray-800 to-gray-700 text-white font-bold text-2xl rounded-tl-2xl sm:rounded-t-2xl w-fit px-4 sm:px-8 py-0.5">
-					{number}
+					{theater.number}
 				</h3>
 				<div className="flex flex-col sm:flex-row items-center gap-x-3 sm:gap-x-6 bg-gradient-to-br from-indigo-800 to-blue-700 text-white font-semibold sm:font-bold sm:text-lg rounded-tr-2xl sm:rounded-t-2xl w-fit px-4 py-0.5">
 					<div className="flex gap-2 items-center">
