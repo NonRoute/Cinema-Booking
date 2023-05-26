@@ -1,23 +1,14 @@
-const Cinema = require('../models/Cinema')
 const Movie = require('../models/Movie')
 const Seats = require('../models/Seats')
 const Showtime = require('../models/Showtime')
 const Theater = require('../models/Theater')
 
 //@desc     GET single showtime
-//@route    GET /theater/showtime/:id
+//@route    GET /showtime/:id
 //@access   Public
 exports.getShowtime = async (req, res, next) => {
 	try {
-		const { theater: theaterId } = req.body
-
-		const theater = await Theater.findById(theaterId)
-
-		if (!theater) {
-			return res.status(400).json({ success: false, message: `Theater not found with id of ${theaterId}` })
-		}
-
-		const showtime = theater.showtimes.find((element) => element._id.toString() === req.params.id)
+		const showtime = await Showtime.findById(req.params.id).populate(['movie', 'seats'])
 
 		if (!showtime) {
 			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
@@ -31,7 +22,7 @@ exports.getShowtime = async (req, res, next) => {
 }
 
 //@desc     Add Showtime
-//@route    POST /theater/showtime
+//@route    POST /showtime
 //@access   Private
 exports.addShowtime = async (req, res, next) => {
 	try {
