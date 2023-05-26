@@ -1,5 +1,4 @@
 const Movie = require('../models/Movie')
-const Seats = require('../models/Seats')
 const Showtime = require('../models/Showtime')
 const Theater = require('../models/Theater')
 
@@ -8,7 +7,7 @@ const Theater = require('../models/Theater')
 //@access   Public
 exports.getShowtime = async (req, res, next) => {
 	try {
-		const showtime = await Showtime.findById(req.params.id).populate(['movie', 'seats'])
+		const showtime = await Showtime.findById(req.params.id).populate('movie')
 
 		if (!showtime) {
 			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
@@ -58,7 +57,7 @@ exports.addShowtime = async (req, res, next) => {
 		}
 
 		const seatsDoc = await Seats.create({ seats })
-		const showtimeDoc = await Showtime.create({ movie: movie._id, showtime, seats: seatsDoc._id })
+		const showtimeDoc = await Showtime.create({ theater, movie: movie._id, showtime, seats: seatsDoc._id })
 
 		theater.showtimes.push(showtimeDoc._id)
 

@@ -1,6 +1,5 @@
 const Cinema = require('../models/Cinema')
 const Movie = require('../models/Movie')
-const Seats = require('../models/Seats')
 const Showtime = require('../models/Showtime')
 const Theater = require('../models/Theater')
 
@@ -54,7 +53,7 @@ exports.createTheater = async (req, res, next) => {
 			return res.status(400).json({ success: false, message: `Column is not a valid number between 1 to 500` })
 		}
 
-		const theater = await Theater.create({ seatPlan: { row, column } })
+		const theater = await Theater.create({ cinema, seatPlan: { row, column } })
 
 		cinema.theaters.push(theater._id)
 
@@ -108,7 +107,3 @@ exports.deleteTheater = async (req, res, next) => {
 		res.status(400).json({ success: false, message: err })
 	}
 }
-
-
-
-

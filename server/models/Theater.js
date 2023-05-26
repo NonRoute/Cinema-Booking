@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const theaterSchema = new mongoose.Schema({
+	cinema: { type: mongoose.Schema.ObjectId, ref: 'Cinema' },
 	seatPlan: {
 		row: {
 			type: String,
