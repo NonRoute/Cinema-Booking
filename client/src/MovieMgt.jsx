@@ -71,43 +71,43 @@ const MovieMgt = () => {
 		}
 	}
 	return (
-		<div className="flex flex-col sm:gap-8 bg-gradient-to-br from-indigo-900 to-blue-500 min-h-screen pb-8">
+		<div className="flex min-h-screen flex-col bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
-			<div className="flex flex-col bg-gradient-to-br from-indigo-200 to-blue-100 h-fit mx-4 sm:mx-8 p-4 sm:p-6 rounded-md drop-shadow-xl">
-				<h2 className="text-gray-900 font-bold text-3xl">Movie Lists</h2>
+			<div className="mx-4 flex h-fit flex-col rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
+				<h2 className="text-3xl font-bold text-gray-900">Movie Lists</h2>
 				<form
 					onSubmit={handleSubmit(onAddMovie)}
-					className="flex flex-col lg:flex-row gap-4 drop-shadow-md items-center justify-end bg-gradient-to-br from-indigo-100 to-white p-4 rounded-md mt-4"
+					className="mt-4 flex flex-col items-center justify-end gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:flex-row"
 				>
-					<div className="flex flex-col w-full flex-wrap gap-4 justify-start">
-						<div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
-							<label className="font-semibold text-lg leading-5">Name :</label>
+					<div className="flex w-full flex-col flex-wrap justify-start gap-4">
+						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
+							<label className="text-lg font-semibold leading-5">Name :</label>
 							<input
 								type="text"
 								required
-								className="flex-grow w-full sm:w-auto rounded py-1 px-3 font-semibold drop-shadow-sm"
+								className="w-full flex-grow rounded py-1 px-3 font-semibold drop-shadow-sm sm:w-auto"
 								{...register('name', {
 									required: true
 								})}
 							/>
 						</div>
-						<div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
-							<label className="font-semibold text-lg leading-5">Length (min.):</label>
+						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
+							<label className="text-lg font-semibold leading-5">Length (min.):</label>
 							<input
 								type="number"
 								min="1"
 								max="2000"
 								maxLength="3"
-								className="flex-grow w-full sm:w-auto rounded py-1 px-3 font-semibold drop-shadow-sm"
+								className="w-full flex-grow rounded py-1 px-3 font-semibold drop-shadow-sm sm:w-auto"
 								{...register('length')}
 							/>
 						</div>
-						<div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
-							<label className="font-semibold text-lg leading-5">Poster URL :</label>
+						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
+							<label className="text-lg font-semibold leading-5">Poster URL :</label>
 							<input
 								type="text"
 								required
-								className="flex-grow w-full sm:w-auto rounded py-1 px-3 font-semibold drop-shadow-sm"
+								className="w-full flex-grow rounded py-1 px-3 font-semibold drop-shadow-sm sm:w-auto"
 								{...register('img', {
 									required: true
 								})}
@@ -115,28 +115,28 @@ const MovieMgt = () => {
 						</div>
 					</div>
 					<button
-						className="drop-shadow-md w-full lg:w-20 lg:h-32 text-centeritems-center text-white font-medium bg-gradient-to-br from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500 rounded-md px-2 py-1"
+						className="text-centeritems-center w-full rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 lg:h-32 lg:w-20"
 						type="submit"
 					>
 						ADD +
 					</button>
 				</form>
 				{!!movies.length && (
-					<div className="flex gap-4 flex-wrap bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md rounded-md mt-6">
+					<div className="mt-6 flex flex-wrap gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md">
 						{movies.map((movie, index) => {
 							return (
 								<div
 									key={index}
-									className="flex flex-grow min-w-fit bg-white drop-shadow-md rounded-md"
+									className="flex min-w-fit flex-grow rounded-md bg-white drop-shadow-md"
 								>
-									<img src={movie.img} className="h-48 drop-shadow-md rounded-md object-contain" />
+									<img src={movie.img} className="h-48 rounded-md object-contain drop-shadow-md" />
 									<div className="flex flex-grow flex-col justify-between p-2">
 										<div>
 											<h2 className="text-xl font-semibold">{movie.name}</h2>
 											<h2 className="">length : {movie.length || '-'} min.</h2>
 										</div>
 										<button
-											className="self-end flex gap-1 items-center text-white text-sm font-medium bg-gradient-to-br from-red-700 to-rose-700 hover:from-red-700 hover:to-rose-600 rounded-md pl-2 pr-1.5 py-1 w-fit"
+											className="flex w-fit items-center gap-1 self-end rounded-md bg-gradient-to-br from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-700 hover:to-rose-600"
 											onClick={() => handleDelete(movie)}
 										>
 											DELETE

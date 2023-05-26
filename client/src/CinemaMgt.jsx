@@ -25,9 +25,15 @@ const CinemaMgt = () => {
 		fetchCinemas()
 	}, [])
 
-	const props = { cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCinemas, auth }
+	const props = {
+		cinemas,
+		selectedCinemaIndex,
+		setSelectedCinemaIndex,
+		fetchCinemas,
+		auth
+	}
 	return (
-		<div className="flex flex-col gap-4 sm:gap-8 bg-gradient-to-br from-indigo-900 to-blue-500 min-h-screen pb-8">
+		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
 			<CinemaLists {...props} />
 			{cinemas[selectedCinemaIndex]?.name && <Cinema {...props} />}

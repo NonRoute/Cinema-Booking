@@ -29,7 +29,7 @@ const Showtimes = ({ showtimes, movies, selectedDate }) => {
 					sortedShowtimes[movie._id] && (
 						<div key={index} className="flex items-center">
 							<img src={movie.img} className="w-32 px-4 drop-shadow-md" />
-							<div className="flex flex-col py-4 gap-2">
+							<div className="flex flex-col gap-2 py-4">
 								<div>
 									<h4 className="text-2xl font-semibold">{movie.name}</h4>
 									<p className="text-md font-medium">length : {movie.length || '-'} min</p>
@@ -39,7 +39,7 @@ const Showtimes = ({ showtimes, movies, selectedDate }) => {
 										return (
 											<button
 												key={index}
-												className="bg-gradient-to-br from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400 rounded-md drop-shadow-sm text-white px-2 py-1 text-lg"
+												className="rounded-md bg-gradient-to-br from-gray-600 to-gray-500 px-2 py-1 text-lg text-white drop-shadow-sm hover:from-gray-500 hover:to-gray-400"
 												onClick={() => {
 													navigate(`/showtime/${showtime._id}`)
 												}}

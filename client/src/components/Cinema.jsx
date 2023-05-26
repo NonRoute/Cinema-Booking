@@ -110,12 +110,12 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 	}
 	return (
 		<>
-			<div className="bg-gradient-to-br from-indigo-200 to-blue-100 h-fit mx-4 sm:mx-8 rounded-md drop-shadow-md">
-				<div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-t-md text-white text-center py-1.5 px-2 text-2xl font-semibold">
-					<div className="flex justify-center items-center">
+			<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 drop-shadow-md sm:mx-8">
+				<div className="rounded-t-md bg-gradient-to-br from-gray-900 to-gray-800 py-1.5 px-2 text-center text-2xl font-semibold text-white">
+					<div className="flex items-center justify-center">
 						<span className="flex-grow">{cinemas[selectedCinemaIndex]?.name}</span>
 						<button
-							className="flex gap-1 items-center text-white text-sm font-medium bg-gradient-to-r from-red-700 to-rose-700 hover:from-red-700 hover:to-rose-600 rounded-md pl-2 pr-1.5 py-1 w-fit"
+							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-700 hover:to-rose-600"
 							onClick={() => handleDelete(cinemas[selectedCinemaIndex])}
 						>
 							DELETE
@@ -123,27 +123,27 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 						</button>
 					</div>
 				</div>
-				<div className="flex flex-col p-4 sm:p-6 gap-6 drop-shadow-md">
-					<div className="bg-gradient-to-br from-indigo-800 to-blue-700 p-2 rounded-md">
+				<div className="flex flex-col gap-6 p-4 drop-shadow-md sm:p-6">
+					<div className="rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 p-2">
 						<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 					</div>
 					<form className="flex flex-col gap-2" onSubmit={handleSubmit(onIncreaseTheater)}>
-						<div className="flex flex-wrap gap-x-4 gap-y-2 items-center justify-between">
-							<h2 className="text-gray-900 font-bold text-3xl">Theaters</h2>
-							<div className="flex flex-wrap gap-4 items-center justify-end bg-gradient-to-br from-indigo-100 to-white p-2 rounded-md">
-								<div className="flex flex-wrap gap-4 justify-end">
+						<div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+							<h2 className="text-3xl font-bold text-gray-900">Theaters</h2>
+							<div className="flex flex-wrap items-center justify-end gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-2">
+								<div className="flex flex-wrap justify-end gap-4">
 									<div className="flex flex-wrap gap-2">
 										<ArrowsUpDownIcon className="h-6 w-6" />
-										<div className="flex flex-col items-end my-1">
-											<label className="font-semibold text-lg leading-5">Last Row :</label>
-											<label className="font-semibold text-xs">(A-ZZ)</label>
+										<div className="my-1 flex flex-col items-end">
+											<label className="text-lg font-semibold leading-5">Last Row :</label>
+											<label className="text-xs font-semibold">(A-ZZ)</label>
 										</div>
 										<input
 											title="A to ZZ"
 											type="text"
 											maxLength="2"
 											required
-											className="rounded py-1 px-3 w-14 font-semibold text-2xl drop-shadow-sm"
+											className="w-14 rounded py-1 px-3 text-2xl font-semibold drop-shadow-sm"
 											{...register('row', {
 												required: true,
 												pattern: /^[a-zA-Z]{1,2}$/
@@ -152,9 +152,9 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 									</div>
 									<div className="flex flex-wrap gap-2">
 										<ArrowsRightLeftIcon className="h-6 w-6" />
-										<div className="flex flex-col items-end my-1">
-											<label className="font-semibold text-lg leading-5">Last Column :</label>
-											<label className="font-semibold text-xs">(1-500)</label>
+										<div className="my-1 flex flex-col items-end">
+											<label className="text-lg font-semibold leading-5">Last Column :</label>
+											<label className="text-xs font-semibold">(1-500)</label>
 										</div>
 										<input
 											title="1 to 500"
@@ -163,14 +163,14 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 											max="500"
 											maxLength="3"
 											required
-											className="rounded py-1 px-3 w-24 font-semibold text-2xl drop-shadow-sm"
+											className="w-24 rounded py-1 px-3 text-2xl font-semibold drop-shadow-sm"
 											{...register('column', { required: true })}
 										/>
 									</div>
 								</div>
 								<button
 									disabled={isIncreasing}
-									className="disabled:from-slate-500 disabled:to-slate-400 drop-shadow-md flex items-center text-white font-medium bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500 rounded-md px-2 py-1"
+									className="flex items-center rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400"
 									type="submit"
 								>
 									{isIncreasing ? 'Processing...' : 'INCREASE +'}
@@ -183,7 +183,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 					})}
 					<div className="flex justify-center">
 						<button
-							className="drop-shadow-md text-white font-medium bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 rounded-md px-2 py-1 w-fit"
+							className="w-fit rounded-md bg-gradient-to-r from-red-600 to-rose-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-500 hover:to-rose-400"
 							onClick={() => handleDecreaseTheater()}
 						>
 							DECREASE -

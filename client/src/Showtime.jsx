@@ -22,21 +22,21 @@ const Showtime = () => {
 	}, [])
 
 	return (
-		<div className="flex flex-col gap-4 sm:gap-8 bg-gradient-to-br from-indigo-900 to-blue-500 min-h-screen pb-8">
+		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
-			<div className="bg-gradient-to-br from-indigo-200 to-blue-100 h-fit mx-4 sm:mx-8 p-4 sm:p-6 rounded-md drop-shadow-xl">
+			<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
 				<div className="flex justify-between">
-					<div className="items-center text-center bg-gradient-to-br from-gray-800 to-gray-700 text-white font-bold rounded-tl-2xl px-4 sm:px-8 py-0.5">
+					<div className="items-center rounded-tl-2xl bg-gradient-to-br from-gray-800 to-gray-700 px-4 py-0.5 text-center font-bold text-white sm:px-8">
 						<p className="text-sm">Theater</p>
 						<p className="text-3xl">{showtime?.theater?.number}</p>
 					</div>
-					<div className="grow flex items-center justify-center text-center bg-gradient-to-br from-indigo-800 to-blue-700 text-white font-bold text-xl sm:text-3xl rounded-tr-2xl w-fit px-4 py-0.5">
+					<div className="flex w-fit grow items-center justify-center rounded-tr-2xl bg-gradient-to-br from-indigo-800 to-blue-700 px-4 py-0.5 text-center text-xl font-bold text-white sm:text-3xl">
 						<p className="">{showtime?.theater?.cinema.name}</p>
 					</div>
 				</div>
 
-				<div className="flex flex-col sm:flex-row gap-y-2">
-					<div className="grow bg-gradient-to-br from-indigo-100 to-white drop-shadow-lg rounded-b-md sm:rounded-none sm:rounded-bl-md flex flex-col gap-4 py-4">
+				<div className="flex flex-col gap-y-2 sm:flex-row">
+					<div className="flex grow flex-col gap-4 rounded-b-md bg-gradient-to-br from-indigo-100 to-white py-4 drop-shadow-lg sm:rounded-none sm:rounded-bl-md">
 						<div className="flex items-center">
 							<img src={showtime?.movie?.img} className="w-32 px-4 drop-shadow-md" />
 							<div className="flex flex-col justify-between">
@@ -45,13 +45,15 @@ const Showtime = () => {
 							</div>
 						</div>
 					</div>
-					<div className="grow bg-gradient-to-br from-indigo-100 to-white drop-shadow-lg rounded-md sm:rounded-none sm:rounded-br-md flex flex-col text-center items-center justify-center gap-2 font-semibold text-2xl py-4">
+					<div className="flex grow flex-col items-center justify-center gap-2 rounded-md bg-gradient-to-br from-indigo-100 to-white py-4 text-center text-2xl font-semibold drop-shadow-lg sm:rounded-none sm:rounded-br-md">
 						<p className="">
 							{`${new Date(showtime?.showtime).toLocaleString('default', {
 								weekday: 'long'
 							})}
                                         ${new Date(showtime?.showtime).getDate()}
-                                        ${new Date(showtime?.showtime).toLocaleString('default', { month: 'long' })}
+                                        ${new Date(showtime?.showtime).toLocaleString('default', {
+											month: 'long'
+										})}
                                         ${new Date(showtime?.showtime).getFullYear()}
                                     
                                     `}

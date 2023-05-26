@@ -5,7 +5,12 @@ const AuthContext = createContext()
 
 const AuthContextProvider = ({ children }) => {
 	const [auth, setAuth] = useState(
-		JSON.parse(localStorage.getItem('auth')) || { username: null, email: null, role: null, token: null }
+		JSON.parse(localStorage.getItem('auth')) || {
+			username: null,
+			email: null,
+			role: null,
+			token: null
+		}
 	) //{username, email, role}
 
 	const getUser = async () => {

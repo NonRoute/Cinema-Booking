@@ -36,8 +36,8 @@ const Login = () => {
 	}
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-500 py-12 px-4 sm:px-6 lg:px-8">
-			<div className="max-w-md w-full space-y-8 bg-white p-4 rounded-2xl drop-shadow-2xl">
+		<div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-500 py-12 px-4 sm:px-6 lg:px-8">
+			<div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-4 drop-shadow-2xl">
 				<div>
 					<h2 className="mt-4 text-center text-4xl font-extrabold text-gray-900">Login</h2>
 				</div>
@@ -50,7 +50,7 @@ const Login = () => {
 						className={inputClasses`${errors.username ? 'border-red-500' : ''}`}
 						placeholder="Username"
 					/>
-					{errors.username && <span className="text-red-500 text-sm">Username is required</span>}
+					{errors.username && <span className="text-sm text-red-500">Username is required</span>}
 					<input
 						name="password"
 						type="password"
@@ -59,20 +59,20 @@ const Login = () => {
 						className={inputClasses`${errors.password ? 'border-red-500' : ''}`}
 						placeholder="Password"
 					/>
-					{errors.password && <span className="text-red-500 text-sm">Password is required</span>}
+					{errors.password && <span className="text-sm text-red-500">Password is required</span>}
 
 					<div>
-						{errorsMessage && <span className="text-red-500 text-sm">{errorsMessage}</span>}
+						{errorsMessage && <span className="text-sm text-red-500">{errorsMessage}</span>}
 						<button
 							type="submit"
-							className="w-full py-2 px-4 text-sm mt-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+							className="mt-4 w-full rounded-md bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 						>
 							Login
 						</button>
 					</div>
 					<p className="text-right">
 						Don’t have an account?{' '}
-						<Link to={'/register'} className="text-blue-600 font-bold">
+						<Link to={'/register'} className="font-bold text-blue-600">
 							Register here
 						</Link>
 					</p>
