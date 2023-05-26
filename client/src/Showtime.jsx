@@ -74,7 +74,7 @@ const Showtime = () => {
 							${new Date(showtime?.showtime).getFullYear()}
 							`}
 						</p>
-						<p className="mx-4 bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-5xl font-bold text-indigo-900 text-transparent">
+						<p className="mx-4 bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-5xl font-bold text-transparent">
 							{`${new Date(showtime?.showtime).getHours().toString().padStart(2, '0')} : ${new Date(
 								showtime?.showtime
 							)
@@ -85,9 +85,13 @@ const Showtime = () => {
 					</div>
 				</div>
 				<div className="mx-auto mt-4 flex flex-col items-center rounded-lg bg-gradient-to-br from-indigo-100 to-white p-4 text-center drop-shadow-lg">
-					<div className="text-lg font-semibold">Screen</div>
+					<div className="w-full rounded-lg bg-white">
+						<div className="bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-xl font-bold text-transparent">
+							Screen
+						</div>
+					</div>
 					<div className="flex w-full flex-col overflow-x-auto overflow-y-hidden">
-						<div className="m-auto">
+						<div className="m-auto my-2">
 							<div className="flex flex-col">
 								<div className="flex items-center">
 									<div className="flex h-8 w-8 items-center">
