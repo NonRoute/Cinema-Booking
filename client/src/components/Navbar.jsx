@@ -18,10 +18,18 @@ const Navbar = () => {
 			setAuth({ username: null, email: null, role: null, token: null })
 			setUsername('')
 			navigate('/')
-			toast.success('Logout successful!')
+			toast.success('Logout successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		} catch (error) {
 			console.error(error)
-			toast.error('Error')
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 

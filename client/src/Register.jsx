@@ -19,12 +19,20 @@ const Register = () => {
 		try {
 			const response = await axios.post('/auth/register', data)
 			console.log(response.data)
-			toast.success('Registration successful!')
+			toast.success('Registration successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 			navigate('/')
 		} catch (error) {
 			console.error(error.response.data)
 			setErrorsMessage(error.response.data)
-			toast.error('Error')
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 

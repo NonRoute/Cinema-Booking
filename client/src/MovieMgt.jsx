@@ -41,10 +41,18 @@ const MovieMgt = () => {
 			})
 			console.log(response.data)
 			fetchMovies()
-			toast.success('Add movie successful!')
+			toast.success('Add movie successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		} catch (error) {
 			console.error(error)
-			toast.error('Error')
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 
@@ -64,10 +72,18 @@ const MovieMgt = () => {
 			})
 			console.log(response.data)
 			fetchMovies()
-			toast.success('Delete movie successful!')
+			toast.success('Delete movie successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		} catch (error) {
 			console.error(error)
-			toast.error('Error')
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 	return (

@@ -21,13 +21,21 @@ const Login = () => {
 		try {
 			const response = await axios.post('/auth/login', data)
 			console.log(response.data)
-			toast.success('Login successful!')
+			toast.success('Login successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 			setAuth((prev) => ({ ...prev, token: response.data.token }))
 			navigate('/')
 		} catch (error) {
 			console.error(error.response.data)
 			setErrorsMessage(error.response.data)
-			toast.error('Error')
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 

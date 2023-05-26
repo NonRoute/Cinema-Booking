@@ -47,16 +47,11 @@ const Showtime = () => {
 					</div>
 					<div className="flex grow flex-col items-center justify-center gap-2 rounded-md bg-gradient-to-br from-indigo-100 to-white py-4 text-center text-2xl font-semibold drop-shadow-lg sm:rounded-none sm:rounded-br-md">
 						<p className="">
-							{`${new Date(showtime?.showtime).toLocaleString('default', {
-								weekday: 'long'
-							})}
-                                        ${new Date(showtime?.showtime).getDate()}
-                                        ${new Date(showtime?.showtime).toLocaleString('default', {
-											month: 'long'
-										})}
-                                        ${new Date(showtime?.showtime).getFullYear()}
-                                    
-                                    `}
+							{`${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}
+							${new Date(showtime?.showtime).getDate()}
+							${new Date(showtime?.showtime).toLocaleString('default', { month: 'long' })}
+							${new Date(showtime?.showtime).getFullYear()}
+							`}
 						</p>
 						<p className="">
 							{`${new Date(showtime?.showtime).getHours().toString().padStart(2, '0')} : ${new Date(

@@ -21,10 +21,18 @@ const CinemaLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fet
 			console.log(response.data)
 			reset()
 			fetchCinemas()
-			toast.success('Add cinema successful!')
+			toast.success('Add cinema successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		} catch (error) {
 			console.error(error)
-			toast.error('Error')
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 

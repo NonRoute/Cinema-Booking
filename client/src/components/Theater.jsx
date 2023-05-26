@@ -48,10 +48,18 @@ const Theater = ({ theaterId, movies, selectedDate }) => {
 			)
 			// console.log(response.data)
 			fetchTheater()
-			toast.success('Add showtime successful!')
+			toast.success('Add showtime successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		} catch (error) {
 			console.error(error)
-			toast.error('Error')
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 

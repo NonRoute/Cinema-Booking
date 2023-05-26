@@ -50,10 +50,18 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 			console.log(response.data)
 			setSelectedCinemaIndex(null)
 			fetchCinemas()
-			toast.success('Delete cinema successful!')
+			toast.success('Delete cinema successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		} catch (error) {
 			console.error(error)
-			toast.error('Error')
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 
@@ -76,11 +84,19 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 			)
 			console.log(response.data)
 			fetchCinemas()
-			toast.success('Increase theater successful!')
+			toast.success('Increase theater successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 			SetIsIncreaseing(false)
 		} catch (error) {
 			console.error(error)
-			toast.error(errors)
+			toast.error(errors, {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 
@@ -102,10 +118,18 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 			})
 			console.log(response.data)
 			fetchCinemas()
-			toast.success('Decrease theater successful!')
+			toast.success('Decrease theater successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		} catch (error) {
 			console.error(error)
-			toast.error('Error')
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 	return (
