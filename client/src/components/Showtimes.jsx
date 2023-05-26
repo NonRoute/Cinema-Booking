@@ -29,7 +29,7 @@ const Showtimes = ({ showtimes, movies, selectedDate }) => {
 					sortedShowtimes[movie._id] && (
 						<div key={index} className="flex items-center">
 							<img src={movie.img} className="w-32 px-4 drop-shadow-md" />
-							<div className="flex flex-col gap-2 py-4">
+							<div className="mr-4 flex flex-col gap-2 py-4">
 								<div>
 									<h4 className="text-2xl font-semibold">{movie.name}</h4>
 									<p className="text-md font-medium">length : {movie.length || '-'} min</p>

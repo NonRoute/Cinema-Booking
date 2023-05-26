@@ -9,7 +9,7 @@ exports.getShowtime = async (req, res, next) => {
 	try {
 		const showtime = await Showtime.findById(req.params.id).populate([
 			'movie',
-			{ path: 'theater', populate: { path: 'cinema', select: 'name' }, select: 'number cinema' }
+			{ path: 'theater', populate: { path: 'cinema', select: 'name' }, select: 'number cinema seatPlan' }
 		])
 
 		if (!showtime) {
