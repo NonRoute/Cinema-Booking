@@ -38,7 +38,7 @@ const Theater = ({ theaterId, number, movies, selectedDate }) => {
 			const [hours, minutes] = data.showtime.split(':')
 			showtime.setHours(hours, minutes, 0)
 			const response = await axios.post(
-				'/theater/showtime',
+				'/showtime',
 				{ movie: data.movie, showtime, theater: theater._id },
 				{
 					headers: {
@@ -88,7 +88,7 @@ const Theater = ({ theaterId, number, movies, selectedDate }) => {
 							className="bg-white flex-grow drop-shadow-sm text-gray-900 font-medium rounded-md px-2 py-1 w-12"
 							{...register('movie', { required: true })}
 						>
-							<option value="" selected>
+							<option value="" defaultValue>
 								Choose a movie
 							</option>
 							{movies?.map((movie, index) => {

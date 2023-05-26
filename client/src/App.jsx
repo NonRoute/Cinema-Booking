@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify'
 import AdminRoute from './AdminRoute'
 import CinemaMgt from './CinemaMgt'
 import MovieMgt from './MovieMgt'
+import Showtime from './Showtime'
 
 axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.withCredentials = true
@@ -35,6 +36,7 @@ function App() {
 						</AdminRoute>
 					}
 				/>
+				<Route path="/showtime/:id" element={<Showtime />} />
 			</Routes>
 		</>
 	)

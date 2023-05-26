@@ -12,7 +12,11 @@ const cinemaSchema = new mongoose.Schema({
 
 cinemaSchema.pre('remove', async function (next) {
 	// Remove theaters associated with the cinema being deleted
-	await this.model('Theater').deleteMany({ _id: { $in: this.theaters } })
+	const theaters = await this.model('Theater').find({ _id: { $in: this.theaters } })
+
+	for (const theater of theaters) {
+		await theater.remove()
+	}
 	next()
 })
 

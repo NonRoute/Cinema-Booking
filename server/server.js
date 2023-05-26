@@ -10,6 +10,7 @@ const cinema = require('./routes/cinema')
 const theater = require('./routes/theater')
 const movie = require('./routes/movie')
 const seats = require('./routes/seats')
+const showtime = require('./routes/showtime')
 
 mongoose.set('strictQuery', false)
 mongoose
@@ -32,6 +33,7 @@ app.use('/cinema', cinema)
 app.use('/theater', theater)
 app.use('/movie', movie)
 app.use('/seats', seats)
+app.use('/showtime', showtime)
 
 const port = process.env.PORT || 8080
 

@@ -1,6 +1,7 @@
 const Cinema = require('../models/Cinema')
 const Movie = require('../models/Movie')
 const Seats = require('../models/Seats')
+const Showtime = require('../models/Showtime')
 const Theater = require('../models/Theater')
 
 //@desc     GET all theaters
@@ -8,7 +9,7 @@ const Theater = require('../models/Theater')
 //@access   Public
 exports.getTheaters = async (req, res, next) => {
 	try {
-		const theaters = await Theater.find()
+		const theaters = await Theater.find().populate('showtimes')
 		res.status(200).json({ success: true, count: theaters.length, data: theaters })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })
@@ -20,7 +21,7 @@ exports.getTheaters = async (req, res, next) => {
 //@access   Public
 exports.getTheater = async (req, res, next) => {
 	try {
-		const theater = await Theater.findById(req.params.id)
+		const theater = await Theater.findById(req.params.id).populate('showtimes')
 
 		if (!theater) {
 			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
@@ -92,11 +93,13 @@ exports.updateTheater = async (req, res, next) => {
 //@access   Private Admin
 exports.deleteTheater = async (req, res, next) => {
 	try {
-		const theater = await Theater.findByIdAndDelete(req.params.id)
+		const theater = await Theater.findById(req.params.id)
 
 		if (!theater) {
 			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
 		}
+
+		await theater.remove()
 
 		await Cinema.updateMany({ theaters: theater._id }, { $pull: { theaters: theater._id } })
 
@@ -106,79 +109,6 @@ exports.deleteTheater = async (req, res, next) => {
 	}
 }
 
-//@desc     Add Showtime
-//@route    POST /theater/showtime
-//@access   Private
-exports.addShowtime = async (req, res, next) => {
-	try {
-		const { movie: movieId, showtime, theater: theaterId } = req.body
 
-		const theater = await Theater.findById(theaterId)
 
-		if (!theater) {
-			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
-		}
 
-		const movie = await Movie.findById(movieId)
-
-		if (!movie) {
-			return res.status(400).json({ success: false, message: `Movie not found with id of ${movieId}` })
-		}
-
-		const row = theater.seatPlan.row
-		const column = theater.seatPlan.column
-		let seats = []
-		for (let k = 64; k <= (row.length === 2 ? row.charCodeAt(0) : 64); k++) {
-			for (
-				let i = 65;
-				i <= (k === row.charCodeAt(0) || row.length === 1 ? row.charCodeAt(row.length - 1) : 90);
-				i++
-			) {
-				const letter = k === 64 ? String.fromCharCode(i) : String.fromCharCode(k) + String.fromCharCode(i)
-				for (let j = 1; j <= column; j++) {
-					const seat = { row: letter, number: j, status: 1 }
-					seats.push(seat)
-				}
-			}
-		}
-
-		const seatsDoc = await Seats.create({ seats })
-
-		theater.showtimes.push({ movie: movie._id, showtime, seats: seatsDoc._id })
-
-		await theater.save()
-
-		res.status(200).json({
-			success: true,
-			data: theater
-		})
-	} catch (err) {
-		res.status(400).json({ success: false, message: err })
-	}
-}
-
-//@desc     GET single showtime
-//@route    GET /theater/showtime/:id
-//@access   Public
-exports.getShowtime = async (req, res, next) => {
-	try {
-		const { theater: theaterId } = req.body
-
-		const theater = await Theater.findById(theaterId)
-
-		if (!theater) {
-			return res.status(400).json({ success: false, message: `Theater not found with id of ${theaterId}` })
-		}
-
-		const showtime = theater.showtimes.find((element) => element._id.toString() === req.params.id)
-
-		if (!showtime) {
-			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
-		}
-
-		res.status(200).json({ success: true, data: showtime })
-	} catch (err) {
-		console.log(err)
-		res.status(400).json({ success: false, message: err })
-	}
-}

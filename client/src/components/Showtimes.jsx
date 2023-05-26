@@ -1,4 +1,7 @@
+import { redirect, useNavigate } from 'react-router-dom'
+
 const Showtimes = ({ showtimes, movies, selectedDate }) => {
+	const navigate = useNavigate()
 	const sortedShowtimes = showtimes?.reduce((result, showtime) => {
 		const { movie, showtime: showDateTime, seats, _id } = showtime
 
@@ -34,7 +37,13 @@ const Showtimes = ({ showtimes, movies, selectedDate }) => {
 								<div className="flex flex-wrap items-center gap-2 pt-1">
 									{sortedShowtimes[movie._id]?.map((showtime, index) => {
 										return (
-											<button className="bg-gradient-to-br from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400 rounded-md drop-shadow-sm text-white px-2 py-1 text-lg">
+											<button
+												key={index}
+												className="bg-gradient-to-br from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400 rounded-md drop-shadow-sm text-white px-2 py-1 text-lg"
+												onClick={() => {
+													navigate(`/showtime/${showtime._id}`)
+												}}
+											>
 												{`${new Date(showtime.showtime)
 													.getHours()
 													.toString()
