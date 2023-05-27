@@ -44,13 +44,13 @@ exports.getTheater = async (req, res, next) => {
 exports.createTheater = async (req, res, next) => {
 	try {
 		const { cinema: cinemaId, row, column } = req.body
-		const rowRegex = /^([A-I][A-Z]|[A-Z])$/
+		const rowRegex = /^([A-C][A-Z]|[A-Z])$/
 		if (!rowRegex.test(row)) {
-			return res.status(400).json({ success: false, message: `Row is not a valid letter between A to ZZ` })
+			return res.status(400).json({ success: false, message: `Row is not a valid letter between A to CZ` })
 		}
 
 		if (column < 1 || column > 250) {
-			return res.status(400).json({ success: false, message: `Column is not a valid number between 1 to 500` })
+			return res.status(400).json({ success: false, message: `Column is not a valid number between 1 to 100` })
 		}
 
 		const cinema = await Cinema.findById(cinemaId)

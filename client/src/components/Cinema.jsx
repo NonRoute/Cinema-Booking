@@ -162,10 +162,10 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 										<ArrowsUpDownIcon className="h-6 w-6" />
 										<div className="my-1 flex flex-col items-end">
 											<label className="text-lg font-semibold leading-5">Last Row :</label>
-											<label className="text-xs font-semibold">(A-IZ)</label>
+											<label className="text-xs font-semibold">(A-CZ)</label>
 										</div>
 										<input
-											title={errors.row ? errors.row.message : 'A to IZ'}
+											title={errors.row ? errors.row.message : 'A to CZ'}
 											type="text"
 											maxLength="2"
 											required
@@ -174,7 +174,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 											{...register('row', {
 												required: true,
 												pattern: {
-													value: /^([A-Ia-i][A-Za-z]|[A-Za-z])$/,
+													value: /^([A-Ca-c][A-Za-z]|[A-Za-z])$/,
 													message: 'Invalid row'
 												}
 											})}
@@ -184,13 +184,13 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 										<ArrowsRightLeftIcon className="h-6 w-6" />
 										<div className="my-1 flex flex-col items-end">
 											<label className="text-lg font-semibold leading-5">Last Column :</label>
-											<label className="text-xs font-semibold">(1-250)</label>
+											<label className="text-xs font-semibold">(1-100)</label>
 										</div>
 										<input
 											title={errors.column ? errors.column.message : '1 to 250'}
 											type="number"
 											min="1"
-											max="250"
+											max="100"
 											maxLength="3"
 											required
 											className={`w-24 rounded py-1 px-3 text-2xl font-semibold drop-shadow-sm ${

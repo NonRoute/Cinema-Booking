@@ -2,11 +2,13 @@ import { useParams } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { StopIcon } from '@heroicons/react/24/solid'
+import Seat from './components/Seat'
+import { TicketIcon } from '@heroicons/react/24/solid'
 
 const Showtime = () => {
 	const { id } = useParams()
 	const [showtime, setShowtime] = useState({})
+	const [selectedSeats, setSelectedSeats] = useState([])
 
 	const fetchShowtime = async (data) => {
 		try {
@@ -53,20 +55,22 @@ const Showtime = () => {
 						<p className="text-3xl">{showtime?.theater?.number}</p>
 					</div>
 					<div className="flex w-fit grow items-center justify-center rounded-tr-lg bg-gradient-to-br from-indigo-800 to-blue-700 px-4 py-0.5 text-center text-xl font-bold text-white sm:text-3xl">
-						<p className="">{showtime?.theater?.cinema.name}</p>
+						<p>{showtime?.theater?.cinema.name}</p>
 					</div>
 				</div>
-				<div className="flex flex-col gap-y-2 sm:flex-row">
-					<div className="flex grow flex-col gap-4 rounded-b-lg bg-gradient-to-br from-indigo-100 to-white py-4 drop-shadow-lg sm:rounded-none sm:rounded-bl-lg">
+				<div className="flex flex-col gap-y-2 md:flex-row">
+					<div className="flex grow flex-col gap-4 rounded-b-lg bg-gradient-to-br from-indigo-100 to-white py-4 drop-shadow-lg md:rounded-none md:rounded-bl-lg">
 						<div className="flex items-center">
 							<img src={showtime?.movie?.img} className="w-32 px-4 drop-shadow-md" />
 							<div className="flex flex-col">
-								<h4 className="mr-4 text-3xl font-semibold">{showtime?.movie?.name}</h4>
-								<p className="text-lg font-medium">length : {showtime?.movie?.length || '-'} min</p>
+								<h4 className="mr-4 text-xl font-semibold sm:text-2xl md:text-3xl">
+									{showtime?.movie?.name}
+								</h4>
+								<p className="font-medium sm:text-lg">length : {showtime?.movie?.length || '-'} min</p>
 							</div>
 						</div>
 					</div>
-					<div className="flex flex-col items-center justify-center gap-y-1 rounded-lg bg-gradient-to-br from-indigo-100 to-white py-4 text-center text-2xl font-semibold drop-shadow-lg sm:rounded-none sm:rounded-br-lg">
+					<div className="flex min-w-fit flex-col items-center justify-center gap-y-1 rounded-lg bg-gradient-to-br from-indigo-100 to-white py-4 text-center text-2xl font-semibold drop-shadow-lg md:rounded-none md:rounded-br-lg">
 						<p className="mx-4">
 							{showtime?.showtime
 								? `${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}
@@ -88,6 +92,19 @@ const Showtime = () => {
 						</p>
 					</div>
 				</div>
+				{!!selectedSeats.length && (
+					<div className="mt-4 flex flex-col justify-between rounded-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
+						<div className="flex flex-col gap-x-2 py-2 px-4 md:flex-row">
+							<p className="font-semibold">Selected Seats : </p>
+							<p>{selectedSeats.sort().join(', ')}</p>
+							<p>({selectedSeats.length} seats)</p>
+						</div>
+						<button className="flex items-center justify-center gap-2 rounded-b-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-4 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 md:rounded-none md:rounded-r-lg">
+							<p>Purchase</p>
+							<TicketIcon className="h-7 w-7 text-white" />
+						</button>
+					</div>
+				)}
 				<div className="mx-auto mt-4 flex flex-col items-center rounded-lg bg-gradient-to-br from-indigo-100 to-white p-4 text-center drop-shadow-lg">
 					<div className="w-full rounded-lg bg-white">
 						<div className="bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-xl font-bold text-transparent">
@@ -119,9 +136,11 @@ const Showtime = () => {
 												.filter((seat) => seat.row === rowLetter)
 												.map((seat, index) => {
 													return (
-														<div key={index} className="w-fit">
-															<StopIcon className="h-8 w-8 text-red-500" />
-														</div>
+														<Seat
+															key={index}
+															seat={seat}
+															setSelectedSeats={setSelectedSeats}
+														/>
 													)
 												})}
 											<div className="flex h-8 w-8 items-center">
