@@ -29,7 +29,11 @@ const AuthContextProvider = ({ children }) => {
 				role: response.data.data.role
 			}
 
-			if (updatedAuth.username !== auth.username) {
+			if (
+				updatedAuth.username !== auth.username ||
+				updatedAuth.email !== auth.email ||
+				updatedAuth.role !== auth.role
+			) {
 				setAuth(updatedAuth)
 			}
 		} catch (error) {
