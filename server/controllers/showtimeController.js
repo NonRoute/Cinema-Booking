@@ -1,6 +1,7 @@
 const Movie = require('../models/Movie')
 const Showtime = require('../models/Showtime')
 const Theater = require('../models/Theater')
+const User = require('../models/User')
 
 //@desc     GET single showtime
 //@route    GET /showtime/:id
@@ -69,6 +70,55 @@ exports.addShowtime = async (req, res, next) => {
 			success: true,
 			data: theater
 		})
+	} catch (err) {
+		console.log(err)
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
+//@desc     Book seats
+//@route    POST /showtime/:id
+//@access   Public
+exports.bookSeats = async (req, res, next) => {
+	try {
+		const { seats, user: userId } = req.body
+		const user = await User.findById(userId)
+
+		if (!user) {
+			return res.status(400).json({ success: false, message: `User not found with id of ${userId}` })
+		}
+		const showtime = await Showtime.findById(req.params.id)
+
+		if (!showtime) {
+			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+		}
+
+		const seatUpdates = seats.map((seatNumber) => {
+			const [row, number] = seatNumber.match(/([A-Za-z]+)(\d+)/).slice(1)
+			return { row, number: parseInt(number, 10) }
+		})
+
+		showtime.seats.forEach((seat) => {
+			const matchingUpdate = seatUpdates.find(
+				(update) => update.row === seat.row && update.number === seat.number
+			)
+			if (matchingUpdate) {
+				seat.status = 2
+				seat.user = user._id
+			}
+		})
+
+		const updatedShowtime = await showtime.save()
+
+		const updatedUser = await User.findByIdAndUpdate(
+			userId,
+			{
+				$push: { tickets: { showtime, seats: seatUpdates } }
+			},
+			{ new: true }
+		)
+
+		res.status(200).json({ success: true, data: updatedShowtime, updatedUser })
 	} catch (err) {
 		console.log(err)
 		res.status(400).json({ success: false, message: err })

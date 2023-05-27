@@ -1,4 +1,6 @@
+const mongoose = require('mongoose')
 const Cinema = require('../models/Cinema')
+const User = require('../models/User')
 
 //@desc     GET all cinemas
 //@route    GET /cinema
@@ -63,7 +65,7 @@ exports.updateCinema = async (req, res, next) => {
 	}
 }
 
-//@desc     Delete all cinemas
+//@desc     Delete single cinema
 //@route    DELETE /cinema/:id
 //@access   Private Admin
 exports.deleteCinema = async (req, res, next) => {
@@ -73,11 +75,12 @@ exports.deleteCinema = async (req, res, next) => {
 		if (!cinema) {
 			return res.status(400).json({ success: false, message: `Cinema not found with id of ${req.params.id}` })
 		}
-		
+
 		await cinema.remove()
 
 		res.status(200).json({ success: true })
 	} catch (err) {
+		console.log(err)
 		res.status(400).json({ success: false, message: err })
 	}
 }

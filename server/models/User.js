@@ -28,8 +28,17 @@ const userSchema = new mongoose.Schema({
 		minlength: 6,
 		select: false
 	},
-	resetPasswordToken: String,
-	resetPasswordExpire: Date,
+	tickets: [
+		{
+			showtime: { type: mongoose.Schema.ObjectId, ref: 'Showtime' },
+			seats: [
+				{
+					row: { type: String },
+					number: { type: Number }
+				}
+			]
+		}
+	],
 	createdAt: {
 		type: Date,
 		default: Date.now
