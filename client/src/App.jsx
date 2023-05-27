@@ -8,6 +8,7 @@ import AdminRoute from './AdminRoute'
 import CinemaMgt from './CinemaMgt'
 import MovieMgt from './MovieMgt'
 import Showtime from './Showtime'
+import Purchase from './Purchase'
 
 axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.withCredentials = true
@@ -37,6 +38,7 @@ function App() {
 					}
 				/>
 				<Route path="/showtime/:id" element={<Showtime />} />
+				<Route path="/purchase/:id" element={<Purchase />} />
 			</Routes>
 		</>
 	)
