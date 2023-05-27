@@ -66,7 +66,11 @@ const Showtime = () => {
 								<h4 className="mr-4 text-xl font-semibold sm:text-2xl md:text-3xl">
 									{showtime?.movie?.name}
 								</h4>
-								<p className="font-medium sm:text-lg">length : {showtime?.movie?.length || '-'} min</p>
+								{showtime?.movie && (
+									<p className="font-medium sm:text-lg">
+										length : {showtime?.movie?.length || '-'} min
+									</p>
+								)}
 							</div>
 						</div>
 					</div>
@@ -92,19 +96,19 @@ const Showtime = () => {
 						</p>
 					</div>
 				</div>
-				{!!selectedSeats.length && (
-					<div className="mt-4 flex flex-col justify-between rounded-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
-						<div className="flex flex-col gap-x-2 py-2 px-4 md:flex-row">
-							<p className="font-semibold">Selected Seats : </p>
-							<p>{selectedSeats.sort().join(', ')}</p>
-							<p>({selectedSeats.length} seats)</p>
-						</div>
+				<div className="mt-4 flex flex-col justify-between rounded-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
+					<div className="flex flex-col items-center gap-x-4 py-2 px-4 md:flex-row">
+						<p className="font-semibold">Selected Seats : </p>
+						<p className="text-start">{selectedSeats.sort().join(', ')}</p>
+						{!!selectedSeats.length && <p className="whitespace-nowrap">({selectedSeats.length} seats)</p>}
+					</div>
+					{!!selectedSeats.length && (
 						<button className="flex items-center justify-center gap-2 rounded-b-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-4 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 md:rounded-none md:rounded-r-lg">
 							<p>Purchase</p>
 							<TicketIcon className="h-7 w-7 text-white" />
 						</button>
-					</div>
-				)}
+					)}
+				</div>
 				<div className="mx-auto mt-4 flex flex-col items-center rounded-lg bg-gradient-to-br from-indigo-100 to-white p-4 text-center drop-shadow-lg">
 					<div className="w-full rounded-lg bg-white">
 						<div className="bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-xl font-bold text-transparent">
