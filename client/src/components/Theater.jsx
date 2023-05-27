@@ -17,6 +17,7 @@ const Theater = ({ theaterId, movies, selectedDate }) => {
 	const { auth } = useContext(AuthContext)
 
 	const [theater, setTheater] = useState({})
+	const [isAddingShowtime, SetIsAddingShowtime] = useState(false)
 
 	const fetchTheater = async (data) => {
 		try {
@@ -34,6 +35,7 @@ const Theater = ({ theaterId, movies, selectedDate }) => {
 
 	const onAddShowtime = async (data) => {
 		try {
+			SetIsAddingShowtime(true)
 			let showtime = new Date(selectedDate)
 			const [hours, minutes] = data.showtime.split(':')
 			showtime.setHours(hours, minutes, 0)
@@ -53,6 +55,7 @@ const Theater = ({ theaterId, movies, selectedDate }) => {
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+			SetIsAddingShowtime(false)
 		} catch (error) {
 			console.error(error)
 			toast.error('Error', {
@@ -60,6 +63,7 @@ const Theater = ({ theaterId, movies, selectedDate }) => {
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+			SetIsAddingShowtime(false)
 		}
 	}
 
@@ -118,10 +122,11 @@ const Theater = ({ theaterId, movies, selectedDate }) => {
 						/>
 					</div>
 					<button
-						className="rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500"
+						disabled={isAddingShowtime}
+						className="rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400"
 						type="submit"
 					>
-						ADD +
+						{isAddingShowtime ? 'Processing...' : 'ADD +'}
 					</button>
 				</form>
 				<Showtimes showtimes={theater.showtimes} movies={movies} selectedDate={selectedDate} />

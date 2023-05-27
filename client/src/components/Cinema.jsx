@@ -97,6 +97,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+			SetIsIncreaseing(false)
 		}
 	}
 
@@ -132,6 +133,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 			})
 		}
 	}
+
 	return (
 		<>
 			<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 drop-shadow-md sm:mx-8">
@@ -147,7 +149,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 						</button>
 					</div>
 				</div>
-				<div className="flex flex-col gap-6 p-4 drop-shadow-md sm:p-6">
+				<div className="flex flex-col gap-6 p-4 sm:p-6">
 					<div className="rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 p-2">
 						<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 					</div>
@@ -160,17 +162,21 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 										<ArrowsUpDownIcon className="h-6 w-6" />
 										<div className="my-1 flex flex-col items-end">
 											<label className="text-lg font-semibold leading-5">Last Row :</label>
-											<label className="text-xs font-semibold">(A-ZZ)</label>
+											<label className="text-xs font-semibold">(A-IZ)</label>
 										</div>
 										<input
-											title="A to ZZ"
+											title={errors.row ? errors.row.message : 'A to IZ'}
 											type="text"
 											maxLength="2"
 											required
-											className="w-14 rounded py-1 px-3 text-2xl font-semibold drop-shadow-sm"
+											className={`w-14 rounded py-1 px-3 text-2xl font-semibold drop-shadow-sm
+													${errors.row && 'border-2 border-red-500'}`}
 											{...register('row', {
 												required: true,
-												pattern: /^[a-zA-Z]{1,2}$/
+												pattern: {
+													value: /^([A-Ia-i][A-Za-z]|[A-Za-z])$/,
+													message: 'Invalid row'
+												}
 											})}
 										/>
 									</div>
@@ -178,16 +184,18 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 										<ArrowsRightLeftIcon className="h-6 w-6" />
 										<div className="my-1 flex flex-col items-end">
 											<label className="text-lg font-semibold leading-5">Last Column :</label>
-											<label className="text-xs font-semibold">(1-500)</label>
+											<label className="text-xs font-semibold">(1-250)</label>
 										</div>
 										<input
-											title="1 to 500"
+											title={errors.column ? errors.column.message : '1 to 250'}
 											type="number"
 											min="1"
-											max="500"
+											max="250"
 											maxLength="3"
 											required
-											className="w-24 rounded py-1 px-3 text-2xl font-semibold drop-shadow-sm"
+											className={`w-24 rounded py-1 px-3 text-2xl font-semibold drop-shadow-sm ${
+												errors.column && 'border-2 border-red-500'
+											}`}
 											{...register('column', { required: true })}
 										/>
 									</div>

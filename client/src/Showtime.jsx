@@ -68,19 +68,23 @@ const Showtime = () => {
 					</div>
 					<div className="flex flex-col items-center justify-center gap-y-1 rounded-lg bg-gradient-to-br from-indigo-100 to-white py-4 text-center text-2xl font-semibold drop-shadow-lg sm:rounded-none sm:rounded-br-lg">
 						<p className="mx-4">
-							{`${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}
+							{showtime?.showtime
+								? `${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}
 							${new Date(showtime?.showtime).getDate()}
 							${new Date(showtime?.showtime).toLocaleString('default', { month: 'long' })}
 							${new Date(showtime?.showtime).getFullYear()}
-							`}
+							`
+								: ''}
 						</p>
 						<p className="mx-4 bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-5xl font-bold text-transparent">
-							{`${new Date(showtime?.showtime).getHours().toString().padStart(2, '0')} : ${new Date(
-								showtime?.showtime
-							)
-								.getMinutes()
-								.toString()
-								.padStart(2, '0')}`}
+							{showtime?.showtime
+								? `${new Date(showtime?.showtime).getHours().toString().padStart(2, '0')} : ${new Date(
+										showtime?.showtime
+								  )
+										.getMinutes()
+										.toString()
+										.padStart(2, '0')}`
+								: ''}
 						</p>
 					</div>
 				</div>
