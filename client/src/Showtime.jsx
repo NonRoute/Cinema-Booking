@@ -10,6 +10,24 @@ const Showtime = () => {
 	const { id } = useParams()
 	const [showtime, setShowtime] = useState({})
 	const [selectedSeats, setSelectedSeats] = useState([])
+	const sortedSelectedSeat = selectedSeats.sort((a, b) => {
+		const [rowA, numberA] = a.match(/([A-Za-z]+)(\d+)/).slice(1)
+		const [rowB, numberB] = b.match(/([A-Za-z]+)(\d+)/).slice(1)
+		if (rowA === rowB) {
+			if (parseInt(numberA) > parseInt(numberB)) {
+				return 1
+			} else {
+				return -1
+			}
+		} else if (rowA.length > rowB.length) {
+			return 1
+		} else if (rowA.length < rowB.length) {
+			return -1
+		} else if (rowA > rowB) {
+			return 1
+		}
+		return -1
+	})
 
 	const fetchShowtime = async (data) => {
 		try {
@@ -54,13 +72,16 @@ const Showtime = () => {
 				<div className="flex flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
 					<div className="flex flex-col items-center gap-x-4 py-2 px-4 md:flex-row">
 						<p className="font-semibold">Selected Seats : </p>
-						<p className="text-start">{selectedSeats.sort().join(', ')}</p>
+						<p className="text-start">{sortedSelectedSeat.join(', ')}</p>
 						{!!selectedSeats.length && <p className="whitespace-nowrap">({selectedSeats.length} seats)</p>}
 					</div>
 					{!!selectedSeats.length && (
 						<Link
 							to={`/purchase/${id}`}
-							state={{ selectedSeats: selectedSeats.sort(), showtime }}
+							state={{
+								selectedSeats: sortedSelectedSeat,
+								showtime
+							}}
 							className="flex items-center justify-center gap-2 rounded-b-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-4 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 md:rounded-none md:rounded-br-lg"
 						>
 							<p>Purchase</p>

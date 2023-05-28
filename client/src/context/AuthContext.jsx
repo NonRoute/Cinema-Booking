@@ -11,7 +11,7 @@ const AuthContextProvider = ({ children }) => {
 			role: null,
 			token: null
 		}
-	) //{username, email, role}
+	) //{username, email, role, token}
 
 	const getUser = async () => {
 		try {

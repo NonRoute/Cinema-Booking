@@ -76,17 +76,14 @@ exports.addShowtime = async (req, res, next) => {
 	}
 }
 
-//@desc     Book seats
+//@desc     Purchase seats
 //@route    POST /showtime/:id
-//@access   Public
-exports.bookSeats = async (req, res, next) => {
+//@access   Private
+exports.purchase = async (req, res, next) => {
 	try {
-		const { seats, user: userId } = req.body
-		const user = await User.findById(userId)
+		const { seats } = req.body
+		const user = req.user
 
-		if (!user) {
-			return res.status(400).json({ success: false, message: `User not found with id of ${userId}` })
-		}
 		const showtime = await Showtime.findById(req.params.id)
 
 		if (!showtime) {
@@ -111,7 +108,7 @@ exports.bookSeats = async (req, res, next) => {
 		const updatedShowtime = await showtime.save()
 
 		const updatedUser = await User.findByIdAndUpdate(
-			userId,
+			user._id,
 			{
 				$push: { tickets: { showtime, seats: seatUpdates } }
 			},
@@ -124,7 +121,6 @@ exports.bookSeats = async (req, res, next) => {
 		res.status(400).json({ success: false, message: err })
 	}
 }
-
 
 //@desc     Delete single showtime
 //@route    DELETE /showtime/:id
@@ -145,4 +141,3 @@ exports.deleteShowtime = async (req, res, next) => {
 		res.status(400).json({ success: false, message: err })
 	}
 }
-

@@ -16,7 +16,10 @@ const showtimeSchema = new mongoose.Schema({
 
 showtimeSchema.pre('remove', async function (next) {
 	const showtimeId = this._id
-	this.model('User').updateMany({ 'tickets.showtime': showtimeId }, { $pull: { tickets: { showtime: showtimeId } } })
+	await this.model('User').updateMany(
+		{ 'tickets.showtime': showtimeId },
+		{ $pull: { tickets: { showtime: showtimeId } } }
+	)
 	next()
 })
 

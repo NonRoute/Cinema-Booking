@@ -1,8 +1,16 @@
+import { CheckIcon } from '@heroicons/react/24/outline'
 import { memo, useState } from 'react'
 
 const Seat = ({ seat, setSelectedSeats }) => {
 	const [isSelected, setIsSelected] = useState(false)
-	return isSelected ? (
+	return seat.status === 2 ? (
+		<button
+			title={`${seat.row}${seat.number}`}
+			className="flex h-8 w-8 cursor-not-allowed items-center justify-center"
+		>
+			<div className="h-6 w-6 rounded bg-gray-500 drop-shadow-md"></div>
+		</button>
+	) : isSelected ? (
 		<button
 			title={`${seat.row}${seat.number}`}
 			className="flex h-8 w-8 items-center justify-center"
@@ -11,7 +19,9 @@ const Seat = ({ seat, setSelectedSeats }) => {
 				setSelectedSeats((prev) => prev.filter((e) => e !== `${seat.row}${seat.number}`))
 			}}
 		>
-			<div className="h-6 w-6 rounded bg-blue-500 drop-shadow-md"></div>
+			<div className="flex h-6 w-6 items-center justify-center rounded bg-blue-500 drop-shadow-md">
+				<CheckIcon className="h-5 w-5 stroke-[3] text-white" />
+			</div>
 		</button>
 	) : (
 		<button
