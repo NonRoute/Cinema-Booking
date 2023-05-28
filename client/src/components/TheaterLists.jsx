@@ -7,7 +7,7 @@ import Theater from './Theater'
 import { useEffect, useState } from 'react'
 import DatePicker from './DatePicker'
 
-const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCinemas, auth }) => {
+const TheaterLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCinemas, auth }) => {
 	const {
 		register,
 		handleSubmit,
@@ -227,4 +227,4 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 	)
 }
 
-export default Cinema
+export default TheaterLists

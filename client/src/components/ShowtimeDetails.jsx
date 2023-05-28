@@ -24,7 +24,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 				}
 			})
 			console.log(response.data)
-			navigate('/cinema-mgt')
+			navigate('/cinema')
 			toast.success('Delete showtime successful!', {
 				position: 'top-center',
 				autoClose: 2000,

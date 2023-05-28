@@ -6,7 +6,7 @@ import { AuthContext } from './context/AuthContext'
 import { toast } from 'react-toastify'
 import { TrashIcon } from '@heroicons/react/24/solid'
 
-const MovieMgt = () => {
+const Movie = () => {
 	const { auth } = useContext(AuthContext)
 	const {
 		register,
@@ -87,7 +87,7 @@ const MovieMgt = () => {
 		}
 	}
 	return (
-		<div className="flex min-h-screen flex-col bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
+		<div className="flex gap-4 min-h-screen flex-col bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
 			<div className="mx-4 flex h-fit flex-col rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
 				<h2 className="text-3xl font-bold text-gray-900">Movie Lists</h2>
@@ -169,4 +169,4 @@ const MovieMgt = () => {
 	)
 }
 
-export default MovieMgt
+export default Movie

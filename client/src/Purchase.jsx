@@ -26,7 +26,7 @@ const Purchase = () => {
 				}
 			)
 			// console.log(response.data)
-			navigate('/cinema-mgt')
+			navigate('/cinema')
 			toast.success('Purchase seats successful!', {
 				position: 'top-center',
 				autoClose: 2000,

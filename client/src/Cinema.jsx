@@ -4,9 +4,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import { AuthContext } from './context/AuthContext'
 import { useContext, useEffect, useState } from 'react'
 import CinemaLists from './components/CinemaLists'
-import Cinema from './components/Cinema'
+import TheaterLists from './components/TheaterLists'
 
-const CinemaMgt = () => {
+const Cinema = () => {
 	const { auth } = useContext(AuthContext)
 	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(
 		parseInt(localStorage.getItem('selectedCinemaIndex')) || 0
@@ -38,9 +38,9 @@ const CinemaMgt = () => {
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
 			<CinemaLists {...props} />
-			{cinemas[selectedCinemaIndex]?.name && <Cinema {...props} />}
+			{cinemas[selectedCinemaIndex]?.name && <TheaterLists {...props} />}
 		</div>
 	)
 }
 
-export default CinemaMgt
+export default Cinema
