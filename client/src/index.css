@@ -13,3 +13,9 @@
 	background-color: rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 0 0 1px #babac0;
 }
+
+body {
+	min-width: 350px; /* Suppose you want minimum width of 1000px */
+	width: auto !important; /* Firefox will set width as auto */
+	width: 350px; /* As IE6 ignores !important it will set width as 1000px; */
+}

@@ -87,7 +87,7 @@ const Movie = () => {
 		}
 	}
 	return (
-		<div className="flex gap-4 min-h-screen flex-col bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
+		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
 			<div className="mx-4 flex h-fit flex-col rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
 				<h2 className="text-3xl font-bold text-gray-900">Movie Lists</h2>
@@ -131,7 +131,7 @@ const Movie = () => {
 						</div>
 					</div>
 					<button
-						className="text-centeritems-center w-full rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 lg:h-32 lg:w-20"
+						className="text-centeritems-center w-full rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 lg:h-32 lg:w-20 xl:w-32 xl:text-xl"
 						type="submit"
 					>
 						ADD +
@@ -145,11 +145,14 @@ const Movie = () => {
 									key={index}
 									className="flex min-w-fit flex-grow rounded-md bg-white drop-shadow-md"
 								>
-									<img src={movie.img} className="h-48 rounded-md object-contain drop-shadow-md" />
+									<img
+										src={movie.img}
+										className="h-36 rounded-md object-contain drop-shadow-md sm:h-48"
+									/>
 									<div className="flex flex-grow flex-col justify-between p-2">
 										<div>
-											<h2 className="text-xl font-semibold">{movie.name}</h2>
-											<h2 className="">length : {movie.length || '-'} min.</h2>
+											<p className="text-lg font-semibold sm:text-xl">{movie.name}</p>
+											<p>length : {movie.length || '-'} min.</p>
 										</div>
 										<button
 											className="flex w-fit items-center gap-1 self-end rounded-md bg-gradient-to-br from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-700 hover:to-rose-600"
