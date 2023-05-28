@@ -202,7 +202,7 @@ const TheaterLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fe
 								</div>
 								<button
 									disabled={isIncreasing}
-									className="flex items-center rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400"
+									className="flex items-center rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
 									type="submit"
 								>
 									{isIncreasing ? 'Processing...' : 'INCREASE +'}

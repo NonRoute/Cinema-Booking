@@ -123,7 +123,7 @@ const Theater = ({ theaterId, movies, selectedDate }) => {
 					</div>
 					<button
 						disabled={isAddingShowtime}
-						className="rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400"
+						className="rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
 						type="submit"
 					>
 						{isAddingShowtime ? 'Processing...' : 'ADD +'}

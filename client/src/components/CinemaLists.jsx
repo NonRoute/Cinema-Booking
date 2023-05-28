@@ -50,7 +50,7 @@ const CinemaLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fet
 							required
 							{...register('name', { required: true })}
 						/>
-						<button className="flex items-center whitespace-nowrap rounded-r-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white hover:from-indigo-500 hover:to-blue-500">
+						<button className="flex items-center whitespace-nowrap rounded-r-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white hover:from-indigo-500 hover:to-blue-400">
 							ADD +
 						</button>
 					</div>
