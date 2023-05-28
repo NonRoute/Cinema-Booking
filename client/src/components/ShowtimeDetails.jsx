@@ -8,7 +8,7 @@ import { AuthContext } from '../context/AuthContext'
 const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 	const { auth } = useContext(AuthContext)
 	const navigate = useNavigate()
-	
+
 	const handleDelete = (id) => {
 		const confirmed = window.confirm(`Do you want to delete this showtime?`)
 		if (confirmed) {
@@ -52,7 +52,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 				</div>
 			</div>
 			<div className="flex flex-col md:flex-row">
-				<div className="flex grow flex-col gap-4 bg-gradient-to-br from-indigo-100 to-white py-4 drop-shadow-lg">
+				<div className="flex grow flex-col gap-4 bg-gradient-to-br from-indigo-100 to-white py-2 drop-shadow-lg sm:py-4">
 					<div className="flex items-center">
 						<img src={showtime?.movie?.img} className="w-32 px-4 drop-shadow-md" />
 						<div className="flex flex-col">
@@ -68,7 +68,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 					</div>
 				</div>
 				<div className="flex flex-col">
-					<div className="flex h-full min-w-fit flex-col items-center justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-4 text-center text-2xl font-semibold drop-shadow-lg">
+					<div className="flex h-full min-w-fit flex-col items-center justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-2 text-center text-xl font-semibold drop-shadow-lg sm:py-4 sm:text-2xl">
 						<p className="mx-4">
 							{showtime?.showtime
 								? `${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}
@@ -78,7 +78,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
                 `
 								: ''}
 						</p>
-						<p className="mx-4 bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-5xl font-bold text-transparent">
+						<p className="mx-4 bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl">
 							{showtime?.showtime
 								? `${new Date(showtime?.showtime).getHours().toString().padStart(2, '0')} : ${new Date(
 										showtime?.showtime

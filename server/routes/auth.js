@@ -1,5 +1,5 @@
 const express = require('express')
-const { register, login, getMe, getAll, logout, deleteUser } = require('../controllers/authController')
+const { register, login, getMe, getAll, logout, deleteUser, getTickets } = require('../controllers/authController')
 
 const router = express.Router()
 
@@ -9,6 +9,7 @@ router.post('/register', register)
 router.post('/login', login)
 router.get('/logout', logout)
 router.get('/me', protect, getMe)
+router.get('/tickets', protect, getTickets)
 router.get('/user', protect, authorize('admin'), getAll)
 router.delete('/user/:id', protect, authorize('admin'), deleteUser)
 

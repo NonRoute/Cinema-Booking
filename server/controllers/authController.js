@@ -25,28 +25,32 @@ exports.register = async (req, res, next) => {
 //@route	POST /auth/login
 //@access	Public
 exports.login = async (req, res, next) => {
-	const { username, password } = req.body
+	try {
+		const { username, password } = req.body
 
-	//Validate email & password
-	if (!username || !password) {
-		return res.status(400).json('Please provide an username and password')
+		//Validate email & password
+		if (!username || !password) {
+			return res.status(400).json('Please provide an username and password')
+		}
+
+		//Check for user
+		const user = await User.findOne({ username }).select('+password')
+
+		if (!user) {
+			return res.status(400).json('Invalid credentials')
+		}
+
+		//Check if password matches
+		const isMatch = await user.matchPassword(password)
+
+		if (!isMatch) {
+			return res.status(401).json('Invalid credentials')
+		}
+
+		sendTokenResponse(user, 200, res)
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
 	}
-
-	//Check for user
-	const user = await User.findOne({ username }).select('+password')
-
-	if (!user) {
-		return res.status(400).json('Invalid credentials')
-	}
-
-	//Check if password matches
-	const isMatch = await user.matchPassword(password)
-
-	if (!isMatch) {
-		return res.status(401).json('Invalid credentials')
-	}
-
-	sendTokenResponse(user, 200, res)
 }
 
 //Get token from model, create cookie and send response
@@ -72,36 +76,71 @@ const sendTokenResponse = (user, statusCode, res) => {
 //@route 	POST /auth/me
 //@access	Private
 exports.getMe = async (req, res, next) => {
-	const user = await User.findById(req.user.id)
-	res.status(200).json({
-		success: true,
-		data: user
-	})
+	try {
+		const user = await User.findById(req.user.id)
+		res.status(200).json({
+			success: true,
+			data: user
+		})
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
+//@desc		Get user's tickets
+//@route 	POST /auth/tickets
+//@access	Private
+exports.getTickets = async (req, res, next) => {
+	try {
+		const user = await User.findById(req.user.id, { tickets: 1 }).populate({
+			path: 'tickets.showtime',
+			populate: [
+				'movie',
+				{ path: 'theater', populate: { path: 'cinema', select: 'name' }, select: 'cinema number' }
+			],
+			select: 'theater movie showtime'
+		})
+
+		res.status(200).json({
+			success: true,
+			data: user
+		})
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
 }
 
 //@desc		Log user out / clear cookie
 //@route 	GET /auth/logout
 //@access	Private
 exports.logout = async (req, res, next) => {
-	res.cookie('token', 'none', {
-		expires: new Date(Date.now() + 10 * 1000),
-		httpOnly: true
-	})
+	try {
+		res.cookie('token', 'none', {
+			expires: new Date(Date.now() + 10 * 1000),
+			httpOnly: true
+		})
 
-	res.status(200).json({
-		success: true
-	})
+		res.status(200).json({
+			success: true
+		})
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
 }
 
 //@desc		Get All user
 //@route 	POST /auth/user
 //@access	Private
 exports.getAll = async (req, res, next) => {
-	const user = await User.find()
-	res.status(200).json({
-		success: true,
-		data: user
-	})
+	try {
+		const user = await User.find()
+		res.status(200).json({
+			success: true,
+			data: user
+		})
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
 }
 
 //@desc		Delete user

@@ -9,6 +9,7 @@ import Showtime from './Showtime'
 import Purchase from './Purchase'
 import Cinema from './Cinema'
 import Movie from './Movie'
+import Tickets from './Tickets'
 
 axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.withCredentials = true
@@ -39,6 +40,7 @@ function App() {
 				/>
 				<Route path="/showtime/:id" element={<Showtime />} />
 				<Route path="/purchase/:id" element={<Purchase />} />
+				<Route path="/tickets" element={<Tickets />} />
 			</Routes>
 		</>
 	)
