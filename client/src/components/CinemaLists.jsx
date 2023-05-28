@@ -18,7 +18,7 @@ const CinemaLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fet
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			console.log(response.data)
+			// console.log(response.data)
 			reset()
 			fetchCinemas()
 			toast.success('Add cinema successful!', {
@@ -56,7 +56,10 @@ const CinemaLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fet
 						return cinemas[selectedCinemaIndex]?.name === cinema.name ? (
 							<button
 								className="w-fit rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 px-2.5 py-1.5 text-lg font-medium text-white drop-shadow-xl hover:from-indigo-700 hover:to-blue-600"
-								onClick={() => setSelectedCinemaIndex(null)}
+								onClick={() => {
+									setSelectedCinemaIndex(null)
+									localStorage.setItem('selectedCinemaIndex', null)
+								}}
 								key={index}
 							>
 								{cinema.name}
@@ -64,7 +67,10 @@ const CinemaLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fet
 						) : (
 							<button
 								className="w-fit rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-700 hover:to-blue-600"
-								onClick={() => setSelectedCinemaIndex(index)}
+								onClick={() => {
+									setSelectedCinemaIndex(index)
+									localStorage.setItem('selectedCinemaIndex', index)
+								}}
 								key={index}
 							>
 								{cinema.name}

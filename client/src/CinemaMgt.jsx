@@ -8,7 +8,9 @@ import Cinema from './components/Cinema'
 
 const CinemaMgt = () => {
 	const { auth } = useContext(AuthContext)
-	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(null)
+	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(
+		parseInt(localStorage.getItem('selectedCinemaIndex')) || 0
+	)
 	const [cinemas, setCinemas] = useState([])
 
 	const fetchCinemas = async (data) => {
