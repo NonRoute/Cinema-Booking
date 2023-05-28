@@ -50,7 +50,7 @@ const Showtime = () => {
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
 			<div className="mx-4 h-fit rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
-				<ShowtimeDetails showtime={showtime} />
+				<ShowtimeDetails showtime={showtime} showDeleteBtn={true} />
 				<div className="flex flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
 					<div className="flex flex-col items-center gap-x-4 py-2 px-4 md:flex-row">
 						<p className="font-semibold">Selected Seats : </p>

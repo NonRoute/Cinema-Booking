@@ -1,4 +1,45 @@
-const ShowtimeDetails = ({ showtime }) => {
+import { TrashIcon } from '@heroicons/react/24/solid'
+import axios from 'axios'
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { AuthContext } from '../context/AuthContext'
+
+const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
+	const { auth } = useContext(AuthContext)
+	const navigate = useNavigate()
+	
+	const handleDelete = (id) => {
+		const confirmed = window.confirm(`Do you want to delete this showtime?`)
+		if (confirmed) {
+			onDeleteShowtime(id)
+		}
+	}
+
+	const onDeleteShowtime = async (id) => {
+		try {
+			const response = await axios.delete(`/showtime/${id}`, {
+				headers: {
+					Authorization: `Bearer ${auth.token}`
+				}
+			})
+			console.log(response.data)
+			navigate('/cinema-mgt')
+			toast.success('Delete showtime successful!', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
+		} catch (error) {
+			console.error(error)
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
+		}
+	}
+
 	return (
 		<>
 			<div className="flex justify-between">
@@ -26,26 +67,37 @@ const ShowtimeDetails = ({ showtime }) => {
 						</div>
 					</div>
 				</div>
-				<div className="flex min-w-fit flex-col items-center justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-4 text-center text-2xl font-semibold drop-shadow-lg">
-					<p className="mx-4">
-						{showtime?.showtime
-							? `${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}
+				<div className="flex flex-col">
+					<div className="flex h-full min-w-fit flex-col items-center justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-4 text-center text-2xl font-semibold drop-shadow-lg">
+						<p className="mx-4">
+							{showtime?.showtime
+								? `${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}
                 ${new Date(showtime?.showtime).getDate()}
                 ${new Date(showtime?.showtime).toLocaleString('default', { month: 'long' })}
                 ${new Date(showtime?.showtime).getFullYear()}
                 `
-							: ''}
-					</p>
-					<p className="mx-4 bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-5xl font-bold text-transparent">
-						{showtime?.showtime
-							? `${new Date(showtime?.showtime).getHours().toString().padStart(2, '0')} : ${new Date(
-									showtime?.showtime
-							  )
-									.getMinutes()
-									.toString()
-									.padStart(2, '0')}`
-							: ''}
-					</p>
+								: ''}
+						</p>
+						<p className="mx-4 bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-5xl font-bold text-transparent">
+							{showtime?.showtime
+								? `${new Date(showtime?.showtime).getHours().toString().padStart(2, '0')} : ${new Date(
+										showtime?.showtime
+								  )
+										.getMinutes()
+										.toString()
+										.padStart(2, '0')}`
+								: ''}
+						</p>
+					</div>
+					{showDeleteBtn && (
+						<button
+							className="flex w-full items-center justify-center gap-1 bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 md:min-w-fit"
+							onClick={() => handleDelete(showtime?._id)}
+						>
+							DELETE
+							<TrashIcon className="h-5 w-5" />
+						</button>
+					)}
 				</div>
 			</div>
 		</>

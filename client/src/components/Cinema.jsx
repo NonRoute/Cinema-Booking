@@ -141,7 +141,7 @@ const Cinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCin
 					<div className="flex items-center justify-center">
 						<span className="flex-grow">{cinemas[selectedCinemaIndex]?.name}</span>
 						<button
-							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-700 hover:to-rose-600"
+							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600"
 							onClick={() => handleDelete(cinemas[selectedCinemaIndex])}
 						>
 							DELETE
