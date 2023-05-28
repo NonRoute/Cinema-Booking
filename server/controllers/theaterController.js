@@ -93,7 +93,7 @@ exports.updateTheater = async (req, res, next) => {
 	}
 }
 
-//@desc     Delete all theaters
+//@desc     Delete single theaters
 //@route    DELETE /theater/:id
 //@access   Private Admin
 exports.deleteTheater = async (req, res, next) => {

@@ -124,3 +124,25 @@ exports.bookSeats = async (req, res, next) => {
 		res.status(400).json({ success: false, message: err })
 	}
 }
+
+
+//@desc     Delete single showtime
+//@route    DELETE /showtime/:id
+//@access   Private Admin
+exports.deleteShowtime = async (req, res, next) => {
+	try {
+		const showtime = await Showtime.findById(req.params.id)
+
+		if (!showtime) {
+			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+		}
+
+		await showtime.remove()
+
+		res.status(200).json({ success: true })
+	} catch (err) {
+		console.log(err)
+		res.status(400).json({ success: false, message: err })
+	}
+}
+

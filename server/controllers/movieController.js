@@ -63,7 +63,7 @@ exports.updateMovie = async (req, res, next) => {
 	}
 }
 
-//@desc     Delete all movies
+//@desc     Delete single movies
 //@route    DELETE /movie/:id
 //@access   Private Admin
 exports.deleteMovie = async (req, res, next) => {
