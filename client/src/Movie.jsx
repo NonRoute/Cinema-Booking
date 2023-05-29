@@ -5,6 +5,7 @@ import axios from 'axios'
 import { AuthContext } from './context/AuthContext'
 import { toast } from 'react-toastify'
 import { TrashIcon } from '@heroicons/react/24/solid'
+import Loading from './components/Loading'
 
 const Movie = () => {
 	const { auth } = useContext(AuthContext)
@@ -16,13 +17,16 @@ const Movie = () => {
 	} = useForm()
 
 	const [movies, setMovies] = useState([])
+	const [isFetchingMoviesDone, setIsFetchingMoviesDone] = useState(false)
 
 	const fetchMovies = async (data) => {
 		try {
+			setIsFetchingMoviesDone(false)
 			const response = await axios.get('/movie')
 			console.log(response.data.data)
 			reset()
 			setMovies(response.data.data)
+			setIsFetchingMoviesDone(true)
 		} catch (error) {
 			console.error(error)
 		}
@@ -140,35 +144,39 @@ const Movie = () => {
 						ADD +
 					</button>
 				</form>
-				{!!movies.length && (
-					<div className="mt-6 flex flex-wrap gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md">
-						{movies.map((movie, index) => {
-							return (
-								<div
-									key={index}
-									className="flex min-w-fit flex-grow rounded-md bg-white drop-shadow-md"
-								>
-									<img
-										src={movie.img}
-										className="h-36 rounded-md object-contain drop-shadow-md sm:h-48"
-									/>
-									<div className="flex flex-grow flex-col justify-between p-2">
-										<div>
-											<p className="text-lg font-semibold sm:text-xl">{movie.name}</p>
-											<p>length : {movie.length || '-'} min.</p>
+				{isFetchingMoviesDone ? (
+					!!movies.length && (
+						<div className="mt-6 flex flex-wrap gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md">
+							{movies.map((movie, index) => {
+								return (
+									<div
+										key={index}
+										className="flex min-w-fit flex-grow rounded-md bg-white drop-shadow-md"
+									>
+										<img
+											src={movie.img}
+											className="h-36 rounded-md object-contain drop-shadow-md sm:h-48"
+										/>
+										<div className="flex flex-grow flex-col justify-between p-2">
+											<div>
+												<p className="text-lg font-semibold sm:text-xl">{movie.name}</p>
+												<p>length : {movie.length || '-'} min.</p>
+											</div>
+											<button
+												className="flex w-fit items-center gap-1 self-end rounded-md bg-gradient-to-br from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-700 hover:to-rose-600"
+												onClick={() => handleDelete(movie)}
+											>
+												DELETE
+												<TrashIcon className="h-5 w-5" />
+											</button>
 										</div>
-										<button
-											className="flex w-fit items-center gap-1 self-end rounded-md bg-gradient-to-br from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-700 hover:to-rose-600"
-											onClick={() => handleDelete(movie)}
-										>
-											DELETE
-											<TrashIcon className="h-5 w-5" />
-										</button>
 									</div>
-								</div>
-							)
-						})}
-					</div>
+								)
+							})}
+						</div>
+					)
+				) : (
+					<Loading />
 				)}
 			</div>
 		</div>

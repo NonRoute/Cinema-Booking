@@ -12,12 +12,15 @@ const Home = () => {
 	const { auth } = useContext(AuthContext)
 	const [selectedMovieIndex, setSelectedMovieIndex] = useState(parseInt(localStorage.getItem('selectedMovieIndex')))
 	const [movies, setMovies] = useState([])
+	const [isFetchingMoviesDone, setIsFetchingMoviesDone] = useState(false)
 
 	const fetchMovies = async (data) => {
 		try {
+			setIsFetchingMoviesDone(false)
 			const response = await axios.get('/movie/showing')
 			console.log(response.data.data)
 			setMovies(response.data.data)
+			setIsFetchingMoviesDone(true)
 		} catch (error) {
 			console.error(error)
 		}
@@ -31,7 +34,8 @@ const Home = () => {
 		movies,
 		selectedMovieIndex,
 		setSelectedMovieIndex,
-		auth
+		auth,
+		isFetchingMoviesDone
 	}
 	return (
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">

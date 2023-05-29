@@ -82,8 +82,8 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 					}
 				}
 			)
-			console.log(response.data)
 			fetchCinemas()
+			console.log(response.data)
 			toast.success('Increase theater successful!', {
 				position: 'top-center',
 				autoClose: 2000,

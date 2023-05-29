@@ -7,20 +7,25 @@ import Theater from './Theater'
 import { useEffect, useState } from 'react'
 import DatePicker from './DatePicker'
 import CinemaLists from './CinemaLists'
+import Loading from './Loading'
 
 const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth }) => {
 	const [selectedDate, setSelectedDate] = useState(new Date())
 	const [theaters, setTheaters] = useState([])
+	const [isFetchingTheatersDone, setIsFetchingTheatersDone] = useState(false)
 	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(
 		parseInt(localStorage.getItem('selectedCinemaIndex'))
 	)
 	const [cinemas, setCinemas] = useState([])
+	const [isFetchingCinemasDone, setIsFetchingCinemasDone] = useState(false)
 
 	const fetchCinemas = async (data) => {
 		try {
+			setIsFetchingCinemasDone(false)
 			const response = await axios.get('/cinema')
 			// console.log(response.data.data)
 			setCinemas(response.data.data)
+			setIsFetchingCinemasDone(true)
 		} catch (error) {
 			console.error(error)
 		}
@@ -32,11 +37,10 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 
 	const fetchTheaters = async (data) => {
 		try {
-			console.log(movies[selectedMovieIndex]._id, selectedDate)
+			setIsFetchingTheatersDone(false)
 			const response = await axios.get(
 				`/theater/movie/${movies[selectedMovieIndex]._id}/${selectedDate.toISOString()}`
 			)
-			console.log(response.data.data)
 			setTheaters(
 				response.data.data.sort((a, b) => {
 					if (a.cinema.name > b.cinema.name) return 1
@@ -44,6 +48,7 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 					return -1
 				})
 			)
+			setIsFetchingTheatersDone(true)
 		} catch (error) {
 			console.error(error)
 		}
@@ -58,7 +63,8 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 		selectedCinemaIndex,
 		setSelectedCinemaIndex,
 		fetchCinemas,
-		auth
+		auth,
+		isFetchingCinemasDone
 	}
 
 	const filteredTheaters = theaters.filter((theater) => {
@@ -68,8 +74,6 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 		return true
 	})
 
-	console.log(filteredTheaters)
-
 	return (
 		<>
 			<CinemaLists {...props} />
@@ -78,36 +82,42 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 					<div className="rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 p-2">
 						<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 					</div>
-					{filteredTheaters.map((theater, index) => {
-						if (filteredTheaters[index - 1]?.cinema.name !== filteredTheaters[index].cinema.name) {
-							return (
-								<div key={index} className="flex flex-col gap-6">
-									<div className="rounded-md bg-gradient-to-br from-gray-900 to-gray-800 py-1.5 px-2 text-center text-2xl font-semibold text-white sm:py-2">
-										<h2>{theater.cinema.name}</h2>
-									</div>
+					{isFetchingTheatersDone ? (
+						<>
+							{filteredTheaters.map((theater, index) => {
+								if (filteredTheaters[index - 1]?.cinema.name !== filteredTheaters[index].cinema.name) {
+									return (
+										<div key={index} className="flex flex-col gap-6">
+											<div className="rounded-md bg-gradient-to-br from-gray-900 to-gray-800 py-1.5 px-2 text-center text-2xl font-semibold text-white sm:py-2">
+												<h2>{theater.cinema.name}</h2>
+											</div>
+											<Theater
+												theaterId={theater._id}
+												movies={movies}
+												selectedDate={selectedDate}
+												filterMovie={movies[selectedMovieIndex]}
+											/>
+										</div>
+									)
+								}
+								return (
 									<Theater
+										key={index}
 										theaterId={theater._id}
 										movies={movies}
 										selectedDate={selectedDate}
 										filterMovie={movies[selectedMovieIndex]}
 									/>
-								</div>
-							)
-						}
-						return (
-							<Theater
-								key={index}
-								theaterId={theater._id}
-								movies={movies}
-								selectedDate={selectedDate}
-								filterMovie={movies[selectedMovieIndex]}
-							/>
-						)
-					})}
-					{filteredTheaters.length === 0 && (
-						<p className="text-center text-xl font-semibold text-gray-700">
-							There are no showtimes available
-						</p>
+								)
+							})}
+							{filteredTheaters.length === 0 && (
+								<p className="text-center text-xl font-semibold text-gray-700">
+									There are no showtimes available
+								</p>
+							)}
+						</>
+					) : (
+						<Loading />
 					)}
 				</div>
 			</div>

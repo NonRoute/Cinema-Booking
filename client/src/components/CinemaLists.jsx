@@ -2,8 +2,16 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Loading from './Loading'
 
-const CinemaLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCinemas, auth }) => {
+const CinemaLists = ({
+	cinemas,
+	selectedCinemaIndex,
+	setSelectedCinemaIndex,
+	fetchCinemas,
+	auth,
+	isFetchingCinemasDone = true
+}) => {
 	const {
 		register,
 		handleSubmit,
@@ -59,33 +67,37 @@ const CinemaLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fet
 						</div>
 					)}
 				</form>
-				<div className="flex flex-wrap items-center gap-3 pt-4">
-					{cinemas?.map((cinema, index) => {
-						return cinemas[selectedCinemaIndex]?._id === cinema._id ? (
-							<button
-								className="w-fit rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 px-2.5 py-1.5 text-lg font-medium text-white drop-shadow-xl hover:from-indigo-700 hover:to-blue-600"
-								onClick={() => {
-									setSelectedCinemaIndex(null)
-									localStorage.setItem('selectedCinemaIndex', null)
-								}}
-								key={index}
-							>
-								{cinema.name}
-							</button>
-						) : (
-							<button
-								className="w-fit rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-700 hover:to-blue-600"
-								onClick={() => {
-									setSelectedCinemaIndex(index)
-									localStorage.setItem('selectedCinemaIndex', index)
-								}}
-								key={index}
-							>
-								{cinema.name}
-							</button>
-						)
-					})}
-				</div>
+				{isFetchingCinemasDone ? (
+					<div className="flex flex-wrap items-center gap-3 pt-4">
+						{cinemas?.map((cinema, index) => {
+							return cinemas[selectedCinemaIndex]?._id === cinema._id ? (
+								<button
+									className="w-fit rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 px-2.5 py-1.5 text-lg font-medium text-white drop-shadow-xl hover:from-indigo-700 hover:to-blue-600"
+									onClick={() => {
+										setSelectedCinemaIndex(null)
+										localStorage.setItem('selectedCinemaIndex', null)
+									}}
+									key={index}
+								>
+									{cinema.name}
+								</button>
+							) : (
+								<button
+									className="w-fit rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-700 hover:to-blue-600"
+									onClick={() => {
+										setSelectedCinemaIndex(index)
+										localStorage.setItem('selectedCinemaIndex', index)
+									}}
+									key={index}
+								>
+									{cinema.name}
+								</button>
+							)
+						})}
+					</div>
+				) : (
+					<Loading />
+				)}
 			</div>
 		</>
 	)

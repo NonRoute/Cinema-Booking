@@ -6,6 +6,7 @@ import Seat from './components/Seat'
 import { TicketIcon } from '@heroicons/react/24/solid'
 import ShowtimeDetails from './components/ShowtimeDetails'
 import { AuthContext } from './context/AuthContext'
+import Loading from './components/Loading'
 
 const Showtime = () => {
 	const { auth } = useContext(AuthContext)
@@ -75,78 +76,85 @@ const Showtime = () => {
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
 			<div className="mx-4 h-fit rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
-				<ShowtimeDetails showtime={showtime} showDeleteBtn={true} />
-
-				<div className="flex flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
-					<div className="flex flex-col items-center gap-x-4 py-2 px-4 md:flex-row">
-						{!isPast(showtime.showtime) && <p className="font-semibold">Selected Seats : </p>}
-						<p className="text-start">{sortedSelectedSeat.join(', ')}</p>
-						{!!selectedSeats.length && <p className="whitespace-nowrap">({selectedSeats.length} seats)</p>}
-					</div>
-					{!!selectedSeats.length && (
-						<Link
-							to={auth.role ? `/purchase/${id}` : '/login'}
-							state={{
-								selectedSeats: sortedSelectedSeat,
-								showtime
-							}}
-							className="flex items-center justify-center gap-2 rounded-b-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-4 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 md:rounded-none md:rounded-br-lg"
-						>
-							<p>Purchase</p>
-							<TicketIcon className="h-7 w-7 text-white" />
-						</Link>
-					)}
-				</div>
-
-				<div className="mx-auto mt-4 flex flex-col items-center rounded-lg bg-gradient-to-br from-indigo-100 to-white p-4 text-center drop-shadow-lg">
-					<div className="w-full rounded-lg bg-white">
-						<div className="bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-xl font-bold text-transparent">
-							Screen
+				{showtime.showtime ? (
+					<>
+						<ShowtimeDetails showtime={showtime} showDeleteBtn={true} />
+						<div className="flex flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
+							<div className="flex flex-col items-center gap-x-4 py-2 px-4 md:flex-row">
+								{!isPast(showtime.showtime) && <p className="font-semibold">Selected Seats : </p>}
+								<p className="text-start">{sortedSelectedSeat.join(', ')}</p>
+								{!!selectedSeats.length && (
+									<p className="whitespace-nowrap">({selectedSeats.length} seats)</p>
+								)}
+							</div>
+							{!!selectedSeats.length && (
+								<Link
+									to={auth.role ? `/purchase/${id}` : '/login'}
+									state={{
+										selectedSeats: sortedSelectedSeat,
+										showtime
+									}}
+									className="flex items-center justify-center gap-2 rounded-b-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-4 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 md:rounded-none md:rounded-br-lg"
+								>
+									<p>Purchase</p>
+									<TicketIcon className="h-7 w-7 text-white" />
+								</Link>
+							)}
 						</div>
-					</div>
-					<div className="flex w-full flex-col overflow-x-auto overflow-y-hidden">
-						<div className="m-auto my-2">
-							<div className="flex flex-col">
-								<div className="flex items-center">
-									<div className="flex h-8 w-8 items-center">
-										<p className="w-8"></p>
-									</div>
-									{colNumber.map((col, index) => {
-										return (
-											<div key={index} className="flex h-8 w-8 items-center">
-												<p className="w-8 font-semibold">{col}</p>
-											</div>
-										)
-									})}
+
+						<div className="mx-auto mt-4 flex flex-col items-center rounded-lg bg-gradient-to-br from-indigo-100 to-white p-4 text-center drop-shadow-lg">
+							<div className="w-full rounded-lg bg-white">
+								<div className="bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-xl font-bold text-transparent">
+									Screen
 								</div>
-								{rowLetters.map((rowLetter, index) => {
-									return (
-										<div key={index} className="flex">
+							</div>
+							<div className="flex w-full flex-col overflow-x-auto overflow-y-hidden">
+								<div className="m-auto my-2">
+									<div className="flex flex-col">
+										<div className="flex items-center">
 											<div className="flex h-8 w-8 items-center">
-												<p className="w-8 text-xl font-semibold">{rowLetter}</p>
+												<p className="w-8"></p>
 											</div>
-											{showtime?.seats
-												.filter((seat) => seat.row === rowLetter)
-												.map((seat, index) => {
-													return (
-														<Seat
-															key={index}
-															seat={seat}
-															setSelectedSeats={setSelectedSeats}
-															selectable={!isPast(showtime.showtime)}
-														/>
-													)
-												})}
-											<div className="flex h-8 w-8 items-center">
-												<p className="w-8 text-xl font-semibold">{rowLetter}</p>
-											</div>
+											{colNumber.map((col, index) => {
+												return (
+													<div key={index} className="flex h-8 w-8 items-center">
+														<p className="w-8 font-semibold">{col}</p>
+													</div>
+												)
+											})}
 										</div>
-									)
-								})}
+										{rowLetters.map((rowLetter, index) => {
+											return (
+												<div key={index} className="flex">
+													<div className="flex h-8 w-8 items-center">
+														<p className="w-8 text-xl font-semibold">{rowLetter}</p>
+													</div>
+													{showtime?.seats
+														.filter((seat) => seat.row === rowLetter)
+														.map((seat, index) => {
+															return (
+																<Seat
+																	key={index}
+																	seat={seat}
+																	setSelectedSeats={setSelectedSeats}
+																	selectable={!isPast(showtime.showtime)}
+																/>
+															)
+														})}
+													<div className="flex h-8 w-8 items-center">
+														<p className="w-8 text-xl font-semibold">{rowLetter}</p>
+													</div>
+												</div>
+											)
+										})}
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+					</>
+				) : (
+					<Loading />
+				)}
 			</div>
 		</div>
 	)

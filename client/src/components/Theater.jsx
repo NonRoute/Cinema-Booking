@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
 import Showtimes from './Showtimes'
+import Loading from './Loading'
 
 const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 	const {
@@ -17,13 +18,16 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 	const { auth } = useContext(AuthContext)
 
 	const [theater, setTheater] = useState({})
+	const [isFetchingTheaterDone, setIsFetchingTheaterDone] = useState(false)
 	const [isAddingShowtime, SetIsAddingShowtime] = useState(false)
 
 	const fetchTheater = async (data) => {
 		try {
+			setIsFetchingTheaterDone(false)
 			const response = await axios.get(`/theater/${theaterId}`)
 			// console.log(response.data.data)
 			setTheater(response.data.data)
+			setIsFetchingTheaterDone(true)
 		} catch (error) {
 			console.error(error)
 		}
@@ -65,6 +69,10 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 			})
 			SetIsAddingShowtime(false)
 		}
+	}
+
+	if (!isFetchingTheaterDone) {
+		return <Loading />
 	}
 
 	return (
