@@ -32,6 +32,9 @@ const Showtimes = ({ showtimes, movies, selectedDate, filterMovie }) => {
 		return date < new Date()
 	}
 
+	if (Object.keys(sortedShowtimes).length === 0) {
+		return <p className="text-center">There are no showtimes available</p>
+	}
 	return (
 		<>
 			{movies?.map((movie, index) => {
