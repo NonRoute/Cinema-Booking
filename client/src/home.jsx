@@ -4,15 +4,13 @@ import 'react-toastify/dist/ReactToastify.css'
 import { AuthContext } from './context/AuthContext'
 import { useContext, useEffect, useState } from 'react'
 import CinemaLists from './components/CinemaLists'
-import TheaterLists from './components/TheaterLists'
+import TheaterLists from './components/TheaterListsByCinema'
 import MovieLists from './components/MovieLists'
+import TheaterListsByMovie from './components/TheaterListsByMovie'
 
 const Home = () => {
 	const { auth } = useContext(AuthContext)
-	const [selectedMoviesIndex, setSelectedMoviesIndex] = useState(
-		parseInt(localStorage.getItem('selectedCinemaIndex')) || 0
-	)
-
+	const [selectedMovieIndex, setSelectedMovieIndex] = useState(parseInt(localStorage.getItem('selectedMovieIndex')))
 	const [movies, setMovies] = useState([])
 
 	const fetchMovies = async (data) => {
@@ -31,15 +29,15 @@ const Home = () => {
 
 	const props = {
 		movies,
-		selectedMoviesIndex,
-		setSelectedMoviesIndex,
+		selectedMovieIndex,
+		setSelectedMovieIndex,
 		auth
 	}
 	return (
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
 			<MovieLists {...props} />
-			{/* {cinemas[selectedCinemaIndex]?.name && <TheaterLists {...props} />} */}
+			{movies[selectedMovieIndex]?.name && <TheaterListsByMovie {...props} />}
 		</div>
 	)
 }

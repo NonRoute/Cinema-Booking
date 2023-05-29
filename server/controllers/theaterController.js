@@ -38,6 +38,37 @@ exports.getTheater = async (req, res, next) => {
 	}
 }
 
+//@desc     GET theaters by movie
+//@route    GET /theater/movie
+//@access   Public
+exports.getTheaterByMovie = async (req, res, next) => {
+	try {
+		const { movie, showDate } = req.body
+
+		let theaters = await Theater.find().populate([
+			{ path: 'showtimes', populate: { path: 'movie', select: 'name' }, select: 'movie showtime' },
+			{ path: 'cinema', select: 'name' }
+		])
+
+		theaters = theaters.filter((theater) => {
+			return theater.showtimes.some((showtime) => {
+				const d1 = new Date(showtime.showtime)
+				const d2 = new Date(showDate)
+				return (
+					showtime.movie._id.equals(movie) &&
+					d1.getFullYear() === d2.getFullYear() &&
+					d1.getMonth() === d2.getMonth() &&
+					d1.getDate() === d2.getDate()
+				)
+			})
+		})
+
+		res.status(200).json({ success: true, data: theaters })
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
 //@desc     Create theater
 //@route    POST /theater
 //@access   Private

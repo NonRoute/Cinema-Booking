@@ -57,7 +57,7 @@ const CinemaLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fet
 				</form>
 				<div className="flex flex-wrap items-center gap-3 pt-4">
 					{cinemas?.map((cinema, index) => {
-						return cinemas[selectedCinemaIndex]?.name === cinema.name ? (
+						return cinemas[selectedCinemaIndex]?._id === cinema._id ? (
 							<button
 								className="w-fit rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 px-2.5 py-1.5 text-lg font-medium text-white drop-shadow-xl hover:from-indigo-700 hover:to-blue-600"
 								onClick={() => {
