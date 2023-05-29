@@ -10,7 +10,9 @@ import CinemaLists from './CinemaLists'
 import Loading from './Loading'
 
 const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth }) => {
-	const [selectedDate, setSelectedDate] = useState(new Date())
+	const [selectedDate, setSelectedDate] = useState(
+		(localStorage.getItem('selectedDate') && new Date(localStorage.getItem('selectedDate'))) || new Date()
+	)
 	const [theaters, setTheaters] = useState([])
 	const [isFetchingTheatersDone, setIsFetchingTheatersDone] = useState(false)
 	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(

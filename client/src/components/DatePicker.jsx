@@ -9,12 +9,14 @@ const DatePicker = ({ selectedDate, setSelectedDate }) => {
 		const prevDay = new Date(selectedDate)
 		prevDay.setDate(prevDay.getDate() - 1)
 		setSelectedDate(prevDay)
+		localStorage.setItem('selectedDate', prevDay)
 	}
 
 	const handleNextDay = () => {
 		const nextDay = new Date(selectedDate)
 		nextDay.setDate(nextDay.getDate() + 1)
 		setSelectedDate(nextDay)
+		localStorage.setItem('selectedDate', nextDay)
 	}
 
 	const formatDate = (date) => {

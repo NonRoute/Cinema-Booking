@@ -16,7 +16,9 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 	} = useForm()
 
 	const [movies, setMovies] = useState()
-	const [selectedDate, setSelectedDate] = useState(new Date())
+	const [selectedDate, setSelectedDate] = useState(
+		(localStorage.getItem('selectedDate') && new Date(localStorage.getItem('selectedDate'))) || new Date()
+	)
 	const [isIncreasing, SetIsIncreaseing] = useState(false)
 
 	const fetchMovies = async (data) => {
