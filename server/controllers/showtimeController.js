@@ -8,10 +8,12 @@ const User = require('../models/User')
 //@access   Public
 exports.getShowtime = async (req, res, next) => {
 	try {
-		const showtime = await Showtime.findById(req.params.id).populate([
-			'movie',
-			{ path: 'theater', populate: { path: 'cinema', select: 'name' }, select: 'number cinema seatPlan' }
-		])
+		const showtime = await Showtime.findById(req.params.id)
+			.populate([
+				'movie',
+				{ path: 'theater', populate: { path: 'cinema', select: 'name' }, select: 'number cinema seatPlan' }
+			])
+			.select('-seats.user')
 
 		if (!showtime) {
 			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
