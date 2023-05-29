@@ -46,14 +46,16 @@ exports.getTheaterByMovie = async (req, res, next) => {
 		const { mid, date } = req.params
 
 		let theaters = await Theater.find().populate([
-			{ path: 'showtimes', populate: { path: 'movie', select: 'name' }, select: 'movie showtime' },
+			{ path: 'showtimes', populate: { path: 'movie', select: 'name _id' }, select: 'movie showtime' },
 			{ path: 'cinema', select: 'name' }
 		])
 
+		// console.log(theaters)
 		theaters = theaters.filter((theater) => {
 			return theater.showtimes.some((showtime) => {
 				const d1 = new Date(showtime.showtime)
 				const d2 = new Date(date)
+				console.log(showtime)
 				return (
 					showtime.movie._id.equals(mid) &&
 					d1.getFullYear() === d2.getFullYear() &&
@@ -65,6 +67,7 @@ exports.getTheaterByMovie = async (req, res, next) => {
 
 		res.status(200).json({ success: true, data: theaters })
 	} catch (err) {
+		console.log(err)
 		res.status(400).json({ success: false, message: err })
 	}
 }

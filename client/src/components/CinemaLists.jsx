@@ -20,6 +20,8 @@ const CinemaLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fet
 			})
 			// console.log(response.data)
 			reset()
+			setSelectedCinemaIndex(null)
+			localStorage.setItem('selectedCinemaIndex', null)
 			fetchCinemas()
 			toast.success('Add cinema successful!', {
 				position: 'top-center',

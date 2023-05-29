@@ -6,10 +6,29 @@ import { useForm } from 'react-hook-form'
 import Theater from './Theater'
 import { useEffect, useState } from 'react'
 import DatePicker from './DatePicker'
+import CinemaLists from './CinemaLists'
 
 const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth }) => {
 	const [selectedDate, setSelectedDate] = useState(new Date())
 	const [theaters, setTheaters] = useState([])
+	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(
+		parseInt(localStorage.getItem('selectedCinemaIndex'))
+	)
+	const [cinemas, setCinemas] = useState([])
+
+	const fetchCinemas = async (data) => {
+		try {
+			const response = await axios.get('/cinema')
+			// console.log(response.data.data)
+			setCinemas(response.data.data)
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	useEffect(() => {
+		fetchCinemas()
+	}, [])
 
 	const fetchTheaters = async (data) => {
 		try {
@@ -34,44 +53,66 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 		fetchTheaters()
 	}, [selectedMovieIndex, selectedDate])
 
+	const props = {
+		cinemas,
+		selectedCinemaIndex,
+		setSelectedCinemaIndex,
+		fetchCinemas,
+		auth
+	}
+
+	const filteredTheaters = theaters.filter((theater) => {
+		// console.log(theater.cinema.name, cinemas[selectedCinemaIndex].name)
+		if (selectedCinemaIndex === 0 || !!selectedCinemaIndex) {
+			return theater.cinema.name === cinemas[selectedCinemaIndex].name
+		}
+		return true
+	})
+
+	console.log(filteredTheaters)
+
 	return (
-		<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 drop-shadow-md sm:mx-8">
-			<div className="flex flex-col gap-6 p-4 sm:p-6">
-				<div className="rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 p-2">
-					<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-				</div>
-				{theaters.map((theater, index) => {
-					if (theaters[index - 1]?.cinema.name !== theaters[index].cinema.name) {
-						return (
-							<>
-								<div className="rounded-md bg-gradient-to-br from-gray-900 to-gray-800 py-1.5 px-2 text-center text-2xl font-semibold text-white sm:py-2">
-									<h2>{theaters[index].cinema.name}</h2>
+		<>
+			<CinemaLists {...props} />
+			<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 drop-shadow-md sm:mx-8">
+				<div className="flex flex-col gap-6 p-4 sm:p-6">
+					<div className="rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 p-2">
+						<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+					</div>
+					{filteredTheaters.map((theater, index) => {
+						if (filteredTheaters[index - 1]?.cinema.name !== filteredTheaters[index].cinema.name) {
+							return (
+								<div key={index} className="flex flex-col gap-6">
+									<div className="rounded-md bg-gradient-to-br from-gray-900 to-gray-800 py-1.5 px-2 text-center text-2xl font-semibold text-white sm:py-2">
+										<h2>{theater.cinema.name}</h2>
+									</div>
+									<Theater
+										theaterId={theater._id}
+										movies={movies}
+										selectedDate={selectedDate}
+										filterMovie={movies[selectedMovieIndex]}
+									/>
 								</div>
-								<Theater
-									key={index}
-									theaterId={theater._id}
-									movies={movies}
-									selectedDate={selectedDate}
-									filterMovie={movies[selectedMovieIndex]}
-								/>
-							</>
+							)
+						}
+						return (
+							<Theater
+								key={index}
+								theaterId={theater._id}
+								movies={movies}
+								selectedDate={selectedDate}
+								filterMovie={movies[selectedMovieIndex]}
+							/>
 						)
-					}
-					return (
-						<Theater
-							key={index}
-							theaterId={theater._id}
-							movies={movies}
-							selectedDate={selectedDate}
-							filterMovie={movies[selectedMovieIndex]}
-						/>
-					)
-				})}
-				{theaters.length === 0 && (
-					<p className="text-center text-xl font-semibold text-gray-700">There are no showtimes available</p>
-				)}
+					})}
+					{filteredTheaters.length === 0 && (
+						<p className="text-center text-xl font-semibold text-gray-700">
+							There are no showtimes available
+						</p>
+					)}
+				</div>
 			</div>
-		</div>
+		</>
 	)
 }
 

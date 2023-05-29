@@ -7,7 +7,7 @@ const User = require('../models/User')
 //@access   Public
 exports.getCinemas = async (req, res, next) => {
 	try {
-		const cinemas = await Cinema.find()
+		const cinemas = await Cinema.find().sort({ name: 1 })
 		res.status(200).json({ success: true, count: cinemas.length, data: cinemas })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })

@@ -43,6 +43,9 @@ exports.getShowingMovies = async (req, res, next) => {
 						$mergeObjects: ['$$ROOT', '$_id']
 					}
 				}
+			},
+			{
+				$sort: { updatedAt: -1 }
 			}
 		])
 
@@ -109,11 +112,13 @@ exports.updateMovie = async (req, res, next) => {
 //@access   Private Admin
 exports.deleteMovie = async (req, res, next) => {
 	try {
-		const movie = await Movie.findByIdAndDelete(req.params.id)
+		const movie = await Movie.findById(req.params.id)
 
 		if (!movie) {
 			return res.status(400).json({ success: false, message: `Movie not found with id of ${req.params.id}` })
 		}
+
+		await movie.remove()
 		res.status(200).json({ success: true })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })
