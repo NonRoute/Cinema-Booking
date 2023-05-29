@@ -8,7 +8,6 @@ import { Bars3Icon } from '@heroicons/react/24/solid'
 
 const Navbar = () => {
 	const { auth, setAuth } = useContext(AuthContext)
-	const [username, setUsername] = useState('')
 	const [menuOpen, setMenuOpen] = useState(false)
 
 	const toggleMenu = () => {
@@ -22,7 +21,6 @@ const Navbar = () => {
 			const response = await axios.get('/auth/logout')
 			console.log(response)
 			setAuth({ username: null, email: null, role: null, token: null })
-			setUsername('')
 			navigate('/')
 			toast.success('Logout successful!', {
 				position: 'top-center',
@@ -54,28 +52,32 @@ const Navbar = () => {
 						<HomeModernIcon className="h-6 w-6" />
 						<p>Cinema</p>
 					</Link>
-					<Link
-						to={'/movie'}
-						className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
-							window.location.pathname === '/movie'
-								? 'bg-gradient-to-br from-indigo-800 to-blue-700'
-								: 'bg-gray-600'
-						}`}
-					>
-						<VideoCameraIcon className="h-6 w-6" />
-						<p>Movie</p>
-					</Link>
-					<Link
-						to={'/tickets'}
-						className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
-							window.location.pathname === '/tickets'
-								? 'bg-gradient-to-br from-indigo-800 to-blue-700'
-								: 'bg-gray-600'
-						}`}
-					>
-						<TicketIcon className="h-6 w-6" />
-						<p>Tickets</p>
-					</Link>
+					{auth.role === 'admin' && (
+						<Link
+							to={'/movie'}
+							className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
+								window.location.pathname === '/movie'
+									? 'bg-gradient-to-br from-indigo-800 to-blue-700'
+									: 'bg-gray-600'
+							}`}
+						>
+							<VideoCameraIcon className="h-6 w-6" />
+							<p>Add Movie</p>
+						</Link>
+					)}
+					{auth.role && (
+						<Link
+							to={'/tickets'}
+							className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
+								window.location.pathname === '/tickets'
+									? 'bg-gradient-to-br from-indigo-800 to-blue-700'
+									: 'bg-gray-600'
+							}`}
+						>
+							<TicketIcon className="h-6 w-6" />
+							<p>Tickets</p>
+						</Link>
+					)}
 				</div>
 				<div className="flex grow items-center justify-center gap-3 md:justify-end">
 					{auth.username && (

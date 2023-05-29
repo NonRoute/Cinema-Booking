@@ -44,16 +44,18 @@ const CinemaLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fet
 					onSubmit={handleSubmit(onAddCinema)}
 				>
 					<h2 className="text-3xl font-bold text-gray-900">Cinema Lists</h2>
-					<div className="flex grow drop-shadow-md sm:justify-end">
-						<input
-							className="w-full grow rounded-l py-1 px-3 sm:max-w-xs"
-							required
-							{...register('name', { required: true })}
-						/>
-						<button className="flex items-center whitespace-nowrap rounded-r-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white hover:from-indigo-500 hover:to-blue-400">
-							ADD +
-						</button>
-					</div>
+					{auth.role === 'admin' && (
+						<div className="flex grow drop-shadow-md sm:justify-end">
+							<input
+								className="w-full grow rounded-l py-1 px-3 sm:max-w-xs"
+								required
+								{...register('name', { required: true })}
+							/>
+							<button className="flex items-center whitespace-nowrap rounded-r-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white hover:from-indigo-500 hover:to-blue-400">
+								ADD +
+							</button>
+						</div>
+					)}
 				</form>
 				<div className="flex flex-wrap items-center gap-3 pt-4">
 					{cinemas?.map((cinema, index) => {

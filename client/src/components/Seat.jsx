@@ -1,7 +1,7 @@
 import { CheckIcon } from '@heroicons/react/24/outline'
 import { memo, useState } from 'react'
 
-const Seat = ({ seat, setSelectedSeats }) => {
+const Seat = ({ seat, setSelectedSeats, selectable }) => {
 	const [isSelected, setIsSelected] = useState(false)
 	return seat.status === 2 ? (
 		<button
@@ -26,10 +26,12 @@ const Seat = ({ seat, setSelectedSeats }) => {
 	) : (
 		<button
 			title={`${seat.row}${seat.number}`}
-			className="flex h-8 w-8 items-center justify-center "
+			className={`flex h-8 w-8 items-center justify-center ${!selectable && 'cursor-not-allowed'}`}
 			onClick={() => {
-				setIsSelected(true)
-				setSelectedSeats((prev) => [...prev, `${seat.row}${seat.number}`])
+				if (selectable) {
+					setIsSelected(true)
+					setSelectedSeats((prev) => [...prev, `${seat.row}${seat.number}`])
+				}
 			}}
 		>
 			<div className="h-6 w-6 rounded bg-white drop-shadow-md"></div>

@@ -89,7 +89,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 								: ''}
 						</p>
 					</div>
-					{showDeleteBtn && (
+					{showDeleteBtn && auth.role === 'admin' && (
 						<button
 							className="flex w-full items-center justify-center gap-1 bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 md:min-w-fit"
 							onClick={() => handleDelete(showtime?._id)}
