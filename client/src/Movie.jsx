@@ -114,8 +114,11 @@ const Movie = () => {
 								min="1"
 								max="2000"
 								maxLength="3"
+								required
 								className="w-full flex-grow rounded py-1 px-3 font-semibold drop-shadow-sm sm:w-auto"
-								{...register('length')}
+								{...register('length', {
+									required: true
+								})}
 							/>
 						</div>
 						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">

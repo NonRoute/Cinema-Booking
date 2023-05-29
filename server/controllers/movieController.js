@@ -1,4 +1,5 @@
 const Movie = require('../models/Movie')
+const Showtime = require('../models/Showtime')
 
 //@desc     GET all movies
 //@route    GET /movie
@@ -8,6 +9,46 @@ exports.getMovies = async (req, res, next) => {
 		const movies = await Movie.find()
 		res.status(200).json({ success: true, count: movies.length, data: movies })
 	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
+//@desc     GET showing movies
+//@route    GET /movie/showing
+//@access   Public
+exports.getShowingMovies = async (req, res, next) => {
+	try {
+		const showingShowtime = await Showtime.aggregate([
+			{ $match: { showtime: { $gte: new Date() } } },
+
+			{
+				$lookup: {
+					from: 'movies', // Replace "movies" with the actual collection name of your movies
+					localField: 'movie',
+					foreignField: '_id',
+					as: 'movie'
+				}
+			},
+			{
+				$group: {
+					_id: '$movie'
+				}
+			},
+			{
+				$unwind: '$_id'
+			},
+			{
+				$replaceRoot: {
+					newRoot: {
+						$mergeObjects: ['$$ROOT', '$_id']
+					}
+				}
+			}
+		])
+
+		res.status(200).json({ success: true, data: showingShowtime })
+	} catch (err) {
+		console.log(err)
 		res.status(400).json({ success: false, message: err })
 	}
 }

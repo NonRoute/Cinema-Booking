@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css'
 const MovieLists = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth }) => {
 	return (
 		<div className="mx-4 flex flex-col rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-md sm:mx-8 sm:p-6">
-			<h2 className="text-3xl font-bold text-gray-900">Movie Lists</h2>
+			<h2 className="text-3xl font-bold text-gray-900">Now Showing</h2>
 			<div className="mt-1 flex flex-wrap justify-center gap-4 sm:mt-3">
 				{movies?.map((movie, index) => {
 					return movies[selectedMovieIndex]?._id === movie._id ? (

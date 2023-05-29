@@ -15,7 +15,7 @@ const Home = () => {
 
 	const fetchMovies = async (data) => {
 		try {
-			const response = await axios.get('/movie')
+			const response = await axios.get('/movie/showing')
 			console.log(response.data.data)
 			setMovies(response.data.data)
 		} catch (error) {

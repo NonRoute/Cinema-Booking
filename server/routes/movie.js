@@ -1,10 +1,18 @@
 const express = require('express')
-const { getMovies, getMovie, createMovie, updateMovie, deleteMovie } = require('../controllers/movieController')
+const {
+	getMovies,
+	getMovie,
+	createMovie,
+	updateMovie,
+	deleteMovie,
+	getShowingMovies
+} = require('../controllers/movieController')
 const router = express.Router()
 
 const { protect, authorize } = require('../middleware/auth')
 
 router.route('/').get(getMovies).post(protect, authorize('admin'), createMovie)
+router.route('/showing').get(getShowingMovies)
 router
 	.route('/:id')
 	.get(getMovie)

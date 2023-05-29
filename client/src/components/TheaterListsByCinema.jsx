@@ -215,7 +215,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 				{cinemas[selectedCinemaIndex].theaters.map((theater, index) => {
 					return <Theater key={index} theaterId={theater} movies={movies} selectedDate={selectedDate} />
 				})}
-				{auth.role === 'admin' && (
+				{auth.role === 'admin' && cinemas[selectedCinemaIndex].theaters.length > 0 && (
 					<div className="flex justify-center">
 						<button
 							className="w-fit rounded-md bg-gradient-to-r from-red-600 to-rose-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-500 hover:to-rose-400"

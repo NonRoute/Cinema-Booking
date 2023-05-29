@@ -67,6 +67,9 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 						/>
 					)
 				})}
+				{theaters.length === 0 && (
+					<p className="text-center text-xl font-semibold text-gray-700">There are no showtimes available</p>
+				)}
 			</div>
 		</div>
 	)
