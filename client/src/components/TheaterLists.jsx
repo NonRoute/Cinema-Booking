@@ -137,17 +137,15 @@ const TheaterLists = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fe
 	return (
 		<>
 			<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 drop-shadow-md sm:mx-8">
-				<div className="rounded-t-md bg-gradient-to-br from-gray-900 to-gray-800 py-1.5 px-2 text-center text-2xl font-semibold text-white">
-					<div className="flex items-center justify-center">
-						<span className="flex-grow">{cinemas[selectedCinemaIndex]?.name}</span>
-						<button
-							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600"
-							onClick={() => handleDelete(cinemas[selectedCinemaIndex])}
-						>
-							DELETE
-							<TrashIcon className="h-5 w-5" />
-						</button>
-					</div>
+				<div className="flex items-center justify-center rounded-t-md bg-gradient-to-br from-gray-900 to-gray-800 py-1.5 px-2 text-center text-2xl font-semibold text-white sm:py-2">
+					<span className="flex-grow text-2xl sm:text-3xl">{cinemas[selectedCinemaIndex]?.name}</span>
+					<button
+						className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600"
+						onClick={() => handleDelete(cinemas[selectedCinemaIndex])}
+					>
+						DELETE
+						<TrashIcon className="h-5 w-5" />
+					</button>
 				</div>
 				<div className="flex flex-col gap-6 p-4 sm:p-6">
 					<div className="rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 p-2">

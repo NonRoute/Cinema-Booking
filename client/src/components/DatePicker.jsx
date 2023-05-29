@@ -24,11 +24,17 @@ const DatePicker = ({ selectedDate, setSelectedDate }) => {
 
 	return (
 		<div className="flex items-center justify-between gap-2 font-semibold  text-white">
-			<button className="" onClick={handlePrevDay}>
+			<button
+				className="rounded hover:bg-gradient-to-br hover:from-indigo-600 hover:to-blue-600"
+				onClick={handlePrevDay}
+			>
 				<ChevronLeftIcon className="h-10 w-10 text-white" />
 			</button>
 			<h2 className="text-center text-xl sm:text-2xl">{formatDate(selectedDate)}</h2>
-			<button className="arrow" onClick={handleNextDay}>
+			<button
+				className="rounded hover:bg-gradient-to-br hover:from-indigo-600 hover:to-blue-600"
+				onClick={handleNextDay}
+			>
 				<ChevronRightIcon className="h-10 w-10 text-white" />
 			</button>
 		</div>
