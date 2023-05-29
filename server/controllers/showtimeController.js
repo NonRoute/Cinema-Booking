@@ -143,3 +143,24 @@ exports.deleteShowtime = async (req, res, next) => {
 		res.status(400).json({ success: false, message: err })
 	}
 }
+
+//@desc     Delete previous day showtime
+//@route    DELETE /showtime/previous
+//@access   Private Admin
+exports.deletePreviousShowtime = async (req, res, next) => {
+	try {
+		const currentDate = new Date()
+		currentDate.setHours(0, 0, 0, 0)
+
+		const showtimes = await Showtime.find({ showtime: { $lt: currentDate } })
+
+		for (const showtime of showtimes) {
+			await showtime.remove()
+		}
+
+		res.status(200).json({ success: true, count: showtimes.length })
+	} catch (err) {
+		console.log(err)
+		res.status(400).json({ success: false, message: err })
+	}
+}

@@ -3,7 +3,13 @@ import { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
-import { FilmIcon, HomeModernIcon, VideoCameraIcon, TicketIcon } from '@heroicons/react/24/outline'
+import {
+	FilmIcon,
+	HomeModernIcon,
+	VideoCameraIcon,
+	TicketIcon,
+	WrenchScrewdriverIcon
+} from '@heroicons/react/24/outline'
 import { Bars3Icon } from '@heroicons/react/24/solid'
 
 const Navbar = () => {
@@ -52,19 +58,6 @@ const Navbar = () => {
 						<HomeModernIcon className="h-6 w-6" />
 						<p>Cinema</p>
 					</Link>
-					{auth.role === 'admin' && (
-						<Link
-							to={'/movie'}
-							className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
-								window.location.pathname === '/movie'
-									? 'bg-gradient-to-br from-indigo-800 to-blue-700'
-									: 'bg-gray-600'
-							}`}
-						>
-							<VideoCameraIcon className="h-6 w-6" />
-							<p>Add Movie</p>
-						</Link>
-					)}
 					{auth.role && (
 						<Link
 							to={'/tickets'}
@@ -77,6 +70,32 @@ const Navbar = () => {
 							<TicketIcon className="h-6 w-6" />
 							<p>Tickets</p>
 						</Link>
+					)}
+					{auth.role === 'admin' && (
+						<>
+							<Link
+								to={'/movie'}
+								className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
+									window.location.pathname === '/movie'
+										? 'bg-gradient-to-br from-indigo-800 to-blue-700'
+										: 'bg-gray-600'
+								}`}
+							>
+								<VideoCameraIcon className="h-6 w-6" />
+								<p>Add Movie</p>
+							</Link>
+							<Link
+								to={'/utils'}
+								className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
+									window.location.pathname === '/utils'
+										? 'bg-gradient-to-br from-indigo-800 to-blue-700'
+										: 'bg-gray-600'
+								}`}
+							>
+								<WrenchScrewdriverIcon className="h-6 w-6" />
+								<p>Utility</p>
+							</Link>
+						</>
 					)}
 				</div>
 				<div className="flex grow items-center justify-center gap-3 md:justify-end">

@@ -10,6 +10,7 @@ import Cinema from './Cinema'
 import Movie from './Movie'
 import Tickets from './Tickets'
 import Home from './Home'
+import Utils from './Utils'
 
 axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.withCredentials = true
@@ -28,6 +29,14 @@ function App() {
 					element={
 						<AdminRoute>
 							<Movie />
+						</AdminRoute>
+					}
+				/>
+				<Route
+					path="/utils"
+					element={
+						<AdminRoute>
+							<Utils />
 						</AdminRoute>
 					}
 				/>
