@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router'
 import Login from './Login'
 import Register from './Register'
-import Home from './home'
 import axios from 'axios'
 import { ToastContainer } from 'react-toastify'
 import AdminRoute from './AdminRoute'
@@ -10,6 +9,7 @@ import Purchase from './Purchase'
 import Cinema from './Cinema'
 import Movie from './Movie'
 import Tickets from './Tickets'
+import Home from './Home'
 
 axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.withCredentials = true
