@@ -39,11 +39,11 @@ exports.getTheater = async (req, res, next) => {
 }
 
 //@desc     GET theaters by movie
-//@route    GET /theater/movie
+//@route    GET /theater/movie/:mid/:date
 //@access   Public
 exports.getTheaterByMovie = async (req, res, next) => {
 	try {
-		const { movie, showDate } = req.body
+		const { mid, date } = req.params
 
 		let theaters = await Theater.find().populate([
 			{ path: 'showtimes', populate: { path: 'movie', select: 'name' }, select: 'movie showtime' },
@@ -53,9 +53,9 @@ exports.getTheaterByMovie = async (req, res, next) => {
 		theaters = theaters.filter((theater) => {
 			return theater.showtimes.some((showtime) => {
 				const d1 = new Date(showtime.showtime)
-				const d2 = new Date(showDate)
+				const d2 = new Date(date)
 				return (
-					showtime.movie._id.equals(movie) &&
+					showtime.movie._id.equals(mid) &&
 					d1.getFullYear() === d2.getFullYear() &&
 					d1.getMonth() === d2.getMonth() &&
 					d1.getDate() === d2.getDate()

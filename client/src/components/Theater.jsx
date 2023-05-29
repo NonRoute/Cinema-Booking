@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
 import Showtimes from './Showtimes'
 
-const Theater = ({ theaterId, movies, selectedDate }) => {
+const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 	const {
 		register,
 		handleSubmit,
@@ -129,7 +129,12 @@ const Theater = ({ theaterId, movies, selectedDate }) => {
 						{isAddingShowtime ? 'Processing...' : 'ADD +'}
 					</button>
 				</form>
-				<Showtimes showtimes={theater.showtimes} movies={movies} selectedDate={selectedDate} />
+				<Showtimes
+					showtimes={theater.showtimes}
+					movies={movies}
+					selectedDate={selectedDate}
+					filterMovie={filterMovie}
+				/>
 			</div>
 		</div>
 	)

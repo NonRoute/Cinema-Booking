@@ -1,15 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 
-const Showtimes = ({ showtimes, movies, selectedDate }) => {
+const Showtimes = ({ showtimes, movies, selectedDate, filterMovie }) => {
 	const navigate = useNavigate()
 	const sortedShowtimes = showtimes?.reduce((result, showtime) => {
 		const { movie, showtime: showDateTime, seats, _id } = showtime
+
+		if (filterMovie && filterMovie._id !== movie) {
+			return result // skip
+		}
 
 		if (new Date(showDateTime).getDay() === selectedDate.getDay()) {
 			if (!result[movie]) {
 				result[movie] = []
 			}
-
 			result[movie].push({ showtime: showDateTime, seats, _id })
 		}
 		return result
