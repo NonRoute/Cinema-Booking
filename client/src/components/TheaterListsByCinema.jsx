@@ -151,10 +151,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 				)}
 			</div>
 			<div className="flex flex-col gap-6 p-4 sm:p-6">
-				<div className="rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 p-2">
-					<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-				</div>
-
+				<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 				<form className="flex flex-col gap-2" onSubmit={handleSubmit(onIncreaseTheater)}>
 					<div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
 						<h2 className="text-3xl font-bold text-gray-900">Theaters</h2>

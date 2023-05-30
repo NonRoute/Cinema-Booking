@@ -8,7 +8,8 @@ import {
 	HomeModernIcon,
 	VideoCameraIcon,
 	TicketIcon,
-	WrenchScrewdriverIcon
+	WrenchScrewdriverIcon,
+	ClockIcon
 } from '@heroicons/react/24/outline'
 import { Bars3Icon } from '@heroicons/react/24/solid'
 
@@ -58,6 +59,17 @@ const Navbar = () => {
 					>
 						<HomeModernIcon className="h-6 w-6" />
 						<p>Cinema</p>
+					</Link>
+					<Link
+						to={'/schedule'}
+						className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
+							window.location.pathname === '/schedule'
+								? 'bg-gradient-to-br from-indigo-800 to-blue-700'
+								: 'bg-gray-600'
+						}`}
+					>
+						<ClockIcon className="h-6 w-6" />
+						<p>Schedule</p>
 					</Link>
 					{auth.role && (
 						<Link

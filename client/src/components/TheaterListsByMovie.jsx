@@ -81,9 +81,7 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 			<CinemaLists {...props} />
 			<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 drop-shadow-md sm:mx-8">
 				<div className="flex flex-col gap-6 p-4 sm:p-6">
-					<div className="rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 p-2">
-						<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-					</div>
+					<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 					{isFetchingTheatersDone ? (
 						<>
 							{filteredTheaters.map((theater, index) => {

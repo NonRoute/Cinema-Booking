@@ -11,6 +11,7 @@ import Movie from './Movie'
 import Tickets from './Tickets'
 import Home from './Home'
 import Utils from './Utils'
+import Schedule from './Schedule'
 
 axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.withCredentials = true
@@ -43,6 +44,7 @@ function App() {
 				<Route path="/showtime/:id" element={<Showtime />} />
 				<Route path="/purchase/:id" element={<Purchase />} />
 				<Route path="/tickets" element={<Tickets />} />
+				<Route path="/schedule" element={<Schedule />} />
 			</Routes>
 		</>
 	)

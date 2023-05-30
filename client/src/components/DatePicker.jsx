@@ -36,7 +36,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }) => {
 	}
 
 	return (
-		<div className="flex items-center justify-between gap-2 font-semibold  text-white">
+		<div className="flex items-center justify-between gap-2 rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 p-2 font-semibold text-white">
 			{auth.role === 'admin' || !isPast(selectedDate) ? (
 				<button
 					className={'rounded hover:bg-gradient-to-br hover:from-indigo-600 hover:to-blue-600'}
