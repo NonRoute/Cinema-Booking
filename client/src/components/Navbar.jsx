@@ -48,7 +48,7 @@ const Navbar = () => {
 	const menuLists = () => {
 		return (
 			<>
-				<div className="flex flex-col gap-2 md:flex-row">
+				<div className="flex flex-col gap-2 lg:flex-row">
 					<Link
 						to={'/cinema'}
 						className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
@@ -111,7 +111,7 @@ const Navbar = () => {
 						</>
 					)}
 				</div>
-				<div className="flex grow items-center justify-center gap-3 md:justify-end">
+				<div className="flex grow items-center justify-center gap-3 lg:justify-end">
 					{auth.username && (
 						<p className="text-md whitespace-nowrap leading-none text-white">Welcome {auth.username}!</p>
 					)}
@@ -133,21 +133,21 @@ const Navbar = () => {
 	}
 
 	return (
-		<nav className="flex flex-col items-center justify-between gap-2 bg-gray-900 py-3 px-5 drop-shadow-lg md:flex-row md:justify-start">
-			<div className="flex w-full flex-row justify-between md:w-fit">
+		<nav className="flex flex-col items-center justify-between gap-2 bg-gray-900 py-3 px-5 drop-shadow-lg lg:flex-row lg:justify-start">
+			<div className="flex w-full flex-row justify-between lg:w-fit">
 				<button className="flex flex-row items-center gap-2" onClick={() => navigate('/')}>
 					<FilmIcon className="h-8 w-8 text-white" />
 					<h1 className="mr-2 text-xl text-white">Cinema</h1>
 				</button>
 				<button
-					className="flex h-8 w-8 items-center justify-center rounded hover:bg-gray-700 md:hidden"
+					className="flex h-8 w-8 items-center justify-center rounded hover:bg-gray-700 lg:hidden"
 					onClick={() => toggleMenu()}
 				>
 					<Bars3Icon className="h-6 w-6 text-white" />
 				</button>
 			</div>
-			<div className="hidden grow justify-between gap-2 md:flex">{menuLists()}</div>
-			{menuOpen && <div className="flex w-full grow flex-col gap-2 md:hidden">{menuLists()}</div>}
+			<div className="hidden grow justify-between gap-2 lg:flex">{menuLists()}</div>
+			{menuOpen && <div className="flex w-full grow flex-col gap-2 lg:hidden">{menuLists()}</div>}
 		</nav>
 	)
 }
