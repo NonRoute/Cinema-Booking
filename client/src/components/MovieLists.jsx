@@ -11,6 +11,7 @@ const MovieLists = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth, i
 						return movies[selectedMovieIndex]?._id === movie._id ? (
 							<div
 								key={index}
+								title={movie.name}
 								className="flex w-[108px] flex-col rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 p-1 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 sm:w-[144px]"
 								onClick={() => {
 									setSelectedMovieIndex(null)

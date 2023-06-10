@@ -53,6 +53,24 @@ const Showtimes = ({ showtimes, movies, selectedDate, filterMovie }) => {
 										return isPast(new Date(showtime.showtime)) ? (
 											<button
 												key={index}
+												title={`${new Date(showtime.showtime)
+													.getHours()
+													.toString()
+													.padStart(2, '0')} : ${new Date(showtime.showtime)
+													.getMinutes()
+													.toString()
+													.padStart(2, '0')} - ${new Date(
+													new Date(showtime.showtime).getTime() + movie.length * 60000
+												)
+													.getHours()
+													.toString()
+													.padStart(2, '0')} : ${new Date(
+													new Date(showtime.showtime).getTime() + movie.length * 60000
+												)
+													.getMinutes()
+													.toString()
+													.padStart(2, '0')}
+														`}
 												className={`rounded-md bg-gradient-to-br from-gray-100 to-white px-2 py-1 text-lg text-gray-900 ring-1 ring-inset ring-gray-800 drop-shadow-sm ${
 													auth.role !== 'admin' && 'cursor-not-allowed'
 												} ${auth.role === 'admin' && 'to-gray-100 hover:from-gray-200'}`}
@@ -72,6 +90,24 @@ const Showtimes = ({ showtimes, movies, selectedDate, filterMovie }) => {
 										) : (
 											<button
 												key={index}
+												title={`${new Date(showtime.showtime)
+													.getHours()
+													.toString()
+													.padStart(2, '0')} : ${new Date(showtime.showtime)
+													.getMinutes()
+													.toString()
+													.padStart(2, '0')} - ${new Date(
+													new Date(showtime.showtime).getTime() + movie.length * 60000
+												)
+													.getHours()
+													.toString()
+													.padStart(2, '0')} : ${new Date(
+													new Date(showtime.showtime).getTime() + movie.length * 60000
+												)
+													.getMinutes()
+													.toString()
+													.padStart(2, '0')}
+														`}
 												className="rounded-md bg-gradient-to-br from-gray-600 to-gray-500 px-2 py-1 text-lg text-white drop-shadow-sm hover:from-gray-500 hover:to-gray-400"
 												onClick={() => {
 													navigate(`/showtime/${showtime._id}`)

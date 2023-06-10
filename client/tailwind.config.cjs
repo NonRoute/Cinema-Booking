@@ -39,19 +39,19 @@ module.exports = {
 				sans: ['IBM Plex Sans Thai', ...defaultTheme.fontFamily.sans]
 			},
 			gridTemplateRows: {
-				144: '36px repeat(144, minmax(10px, 1fr))'
+				150: '36px repeat(150, minmax(10px, 1fr))'
 			},
 			gridTemplateColumns: {
 				...generateGridColumns(100)
 			},
 			gridRowStart: {
-				...generateRowColStart(144)
+				...generateRowColStart(145)
 			},
 			gridColStart: {
 				...generateRowColStart(100)
 			},
 			gridRow: {
-				...generateRowSpan(100)
+				...generateRowSpan(145)
 			}
 		}
 	},

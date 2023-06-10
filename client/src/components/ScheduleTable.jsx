@@ -37,7 +37,7 @@ const ScheduleTable = ({ cinemaId, selectedDate }) => {
 
 	return (
 		<div
-			className={`grid h-full overflow-x-auto grid-cols-${cinema.theaters?.length.toString()} grid-rows-144 rounded-md bg-gradient-to-br from-indigo-100 to-white`}
+			className={`grid h-full overflow-x-auto grid-cols-${cinema.theaters?.length.toString()} grid-rows-150 rounded-md bg-gradient-to-br from-indigo-100 to-white`}
 			{...events}
 			ref={ref}
 		>
@@ -47,13 +47,30 @@ const ScheduleTable = ({ cinemaId, selectedDate }) => {
 						if (new Date(showtime.showtime).getDay() === selectedDate.getDay())
 							return (
 								<Link
-									title={showtime.movie.name}
+									title={`${showtime.movie.name}\n${new Date(showtime.showtime)
+										.getHours()
+										.toString()
+										.padStart(2, '0')} : ${new Date(showtime.showtime)
+										.getMinutes()
+										.toString()
+										.padStart(2, '0')} - ${new Date(
+										new Date(showtime.showtime).getTime() + showtime.movie.length * 60000
+									)
+										.getHours()
+										.toString()
+										.padStart(2, '0')} : ${new Date(
+										new Date(showtime.showtime).getTime() + showtime.movie.length * 60000
+									)
+										.getMinutes()
+										.toString()
+										.padStart(2, '0')}
+											`}
 									key={index}
 									className={`overflow-y-scroll row-span-${getRowSpan(
 										showtime.movie.length
 									)} row-start-${getRowStart(showtime.showtime)} col-start-${
 										theater.number
-									} mx-1 rounded bg-white p-1 text-center drop-shadow-lg hover:bg-gray-50`}
+									} mx-1 rounded bg-white p-1 text-center drop-shadow-md hover:bg-gray-50`}
 									to={`/showtime/${showtime._id}`}
 								>
 									<p className="text-sm font-bold">{showtime.movie.name}</p>
