@@ -50,7 +50,9 @@ const Schedule = () => {
 			<div className="mx-4 flex h-screen flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
 				<h2 className="text-3xl font-bold text-gray-900">Schedule</h2>
 				<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-				{cinemas[selectedCinemaIndex]?._id && <ScheduleTable cinemaId={cinemas[selectedCinemaIndex]?._id} />}
+				{cinemas[selectedCinemaIndex]?._id && (
+					<ScheduleTable cinemaId={cinemas[selectedCinemaIndex]?._id} selectedDate={selectedDate} />
+				)}
 			</div>
 		</div>
 	)
