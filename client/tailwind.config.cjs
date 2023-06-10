@@ -4,23 +4,54 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 function generateGridColumns(lastValue) {
 	let obj = {}
 	for (let i = 13; i < lastValue; i++) {
-		obj[`${i}`] = `repeat(${i},  minmax(0px, 1fr))`
+		obj[`${i}`] = `repeat(${i}, minmax(160px, 1fr))`
+	}
+	return obj
+}
+
+function generateRowColStart(lastValue) {
+	let obj = {}
+	for (let i = 8; i < lastValue; i++) {
+		obj[`${i}`] = `${i}`
+	}
+	return obj
+}
+
+function generateRowSpan(lastValue) {
+	let obj = {}
+	for (let i = 7; i < lastValue; i++) {
+		obj[`span-${i}`] = `span ${i} / span ${i}`
 	}
 	return obj
 }
 
 module.exports = {
 	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+	safelist: [
+		{ pattern: /grid-cols-./ },
+		{ pattern: /row-start-./ },
+		{ pattern: /col-start-./ },
+		{ pattern: /row-span./ }
+	],
 	theme: {
 		extend: {
 			fontFamily: {
 				sans: ['IBM Plex Sans Thai', ...defaultTheme.fontFamily.sans]
 			},
 			gridTemplateRows: {
-				288: '36px repeat(288, minmax(10px, 1fr))'
+				144: '36px repeat(144, minmax(10px, 1fr))'
 			},
 			gridTemplateColumns: {
 				...generateGridColumns(100)
+			},
+			gridRowStart: {
+				...generateRowColStart(144)
+			},
+			gridColStart: {
+				...generateRowColStart(100)
+			},
+			gridRow: {
+				...generateRowSpan(100)
 			}
 		}
 	},

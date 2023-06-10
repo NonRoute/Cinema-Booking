@@ -5,6 +5,7 @@ import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthContext } from './context/AuthContext'
 import { useContext, useEffect, useState } from 'react'
+import ScheduleTable from './components/ScheduleTable'
 
 const Schedule = () => {
 	const { auth } = useContext(AuthContext)
@@ -42,7 +43,6 @@ const Schedule = () => {
 		isFetchingCinemasDone
 	}
 
-	const theatersLength = cinemas[selectedCinemaIndex]?.theaters.length
 	return (
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
@@ -50,21 +50,7 @@ const Schedule = () => {
 			<div className="mx-4 flex h-screen flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
 				<h2 className="text-3xl font-bold text-gray-900">Schedule</h2>
 				<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-				<div className="overflow-auto">
-					<div
-						className={`grid h-full divide-x divide-gray-700 overflow-x-auto grid-cols-${theatersLength} grid-rows-288 rounded-md bg-gradient-to-br from-indigo-100 to-white`}
-					>
-						{[...Array(theatersLength)].map((x, i) => (
-							<div className="sticky top-0 row-span-1 row-start-1 flex w-36 items-center justify-center bg-white text-center text-2xl font-semibold">
-								{i + 1}
-							</div>
-						))}
-						<div className="row-span-3 row-start-2 m-4 w-20 rounded bg-white p-4">FF</div>
-						<div className="col-start-2 row-span-3 row-start-2 m-4 w-20 rounded bg-white p-4">FF</div>
-						<div className="col-start-3 row-span-3 row-start-2 m-4 w-20 rounded bg-white p-4">FF</div>
-						<div className="col-start-5 row-span-3 row-start-2 m-4 w-20 rounded bg-white p-4">FF</div>
-					</div>
-				</div>
+				{cinemas[selectedCinemaIndex]?._id && <ScheduleTable cinemaId={cinemas[selectedCinemaIndex]?._id} />}
 			</div>
 		</div>
 	)

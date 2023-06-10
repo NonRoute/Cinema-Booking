@@ -19,7 +19,15 @@ exports.getCinemas = async (req, res, next) => {
 //@access   Public
 exports.getCinema = async (req, res, next) => {
 	try {
-		const cinema = await Cinema.findById(req.params.id)
+		const cinema = await Cinema.findById(req.params.id).populate({
+			path: 'theaters',
+			populate: {
+				path: 'showtimes',
+				populate: { path: 'movie', select: 'name length' },
+				select: 'movie showtime'
+			},
+			select: 'number showtimes'
+		})
 
 		if (!cinema) {
 			return res.status(400).json({ success: false, message: `Cinema not found with id of ${req.params.id}` })
