@@ -13,7 +13,11 @@ const Showtimes = ({ showtimes, movies, selectedDate, filterMovie }) => {
 			return result // skip
 		}
 
-		if (new Date(showDateTime).getDay() === selectedDate.getDay()) {
+		if (
+			new Date(showDateTime).getDate() === selectedDate.getDate() &&
+			new Date(showDateTime).getMonth() === selectedDate.getMonth() &&
+			new Date(showDateTime).getFullYear() === selectedDate.getFullYear()
+		) {
 			if (!result[movie]) {
 				result[movie] = []
 			}

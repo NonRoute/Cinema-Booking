@@ -70,7 +70,7 @@ const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
 			showtime.setHours(hours, minutes, 0)
 			const response = await axios.post(
 				'/showtime',
-				{ movie: data.movie, showtime, theater: data.theater },
+				{ movie: data.movie, showtime, theater: data.theater, repeat: data.repeat },
 				{
 					headers: {
 						Authorization: `Bearer ${auth.token}`
@@ -114,7 +114,11 @@ const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
 				{cinema.theaters?.map((theater, index) => {
 					{
 						return theater.showtimes?.map((showtime, index) => {
-							if (new Date(showtime.showtime).getDay() === selectedDate.getDay())
+							if (
+								new Date(showtime.showtime).getDate() === selectedDate.getDate() &&
+								new Date(showtime.showtime).getMonth() === selectedDate.getMonth() &&
+								new Date(showtime.showtime).getYear() === selectedDate.getYear()
+							)
 								return (
 									<Link
 										title={`${showtime.movie.name}\n${new Date(showtime.showtime)
@@ -179,13 +183,13 @@ const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
 
 			{auth.role === 'admin' && (
 				<form
-					className="flex flex-col gap-2 gap-y-2 gap-x-4 rounded-lg md:flex-row"
+					className="flex flex-col gap-2 rounded-lg md:flex-row md:items-end"
 					onSubmit={handleSubmit(onAddShowtime)}
 				>
-					<div className="flex grow items-center gap-2">
-						<label className="text-lg font-semibold leading-5">Theater :</label>
+					<div className="flex grow items-center gap-y-1 gap-x-2 md:flex-col md:items-start">
+						<label className="whitespace-nowrap text-lg font-semibold leading-5">Theater :</label>
 						<select
-							className="w-12 flex-grow rounded-md bg-white px-2 py-1 font-medium text-gray-900 drop-shadow-sm"
+							className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm"
 							required
 							{...register('theater', { required: true })}
 						>
@@ -201,10 +205,11 @@ const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
 							})}
 						</select>
 					</div>
-					<div className="flex grow-[5] items-center gap-2">
-						<label className="text-lg font-semibold leading-5">Movie :</label>
+					<div className="flex grow-[2] items-center gap-y-1 gap-x-2 md:flex-col md:items-start">
+						<label className="whitespace-nowrap text-lg font-semibold leading-5">Movie :</label>
 						<select
-							className="w-12 flex-grow rounded-md bg-white px-2 py-1 font-medium text-gray-900 drop-shadow-sm"
+							className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm"
+							required
 							{...register('movie', { required: true })}
 						>
 							<option value="" defaultValue>
@@ -219,19 +224,31 @@ const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
 							})}
 						</select>
 					</div>
-					<div className="flex grow-[2] items-center gap-2">
-						<label className="text-lg font-semibold leading-5">Showtime :</label>
+					<div className="flex items-center gap-y-1 gap-x-2 md:flex-col md:items-start">
+						<label className="whitespace-nowrap text-lg font-semibold leading-5">Showtime :</label>
 						<input
 							type="time"
-							className="w-12 flex-grow rounded px-2  py-1 font-semibold drop-shadow-sm"
+							className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm"
 							required
 							{...register('showtime', { required: true })}
+						/>
+					</div>
+					<div className="flex items-center gap-y-1 gap-x-2 md:flex-col md:items-start">
+						<label className="whitespace-nowrap text-lg font-semibold leading-5">Repeat (Day) :</label>
+						<input
+							type="number"
+							min={1}
+							defaultValue={1}
+							max={1000}
+							className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm"
+							required
+							{...register('repeat', { required: true })}
 						/>
 					</div>
 					<button
 						title="Add showtime"
 						disabled={isAddingShowtime}
-						className="rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+						className="h-9 whitespace-nowrap rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
 						type="submit"
 					>
 						{isAddingShowtime ? 'Processing...' : 'ADD +'}

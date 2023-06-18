@@ -46,7 +46,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 			showtime.setHours(hours, minutes, 0)
 			const response = await axios.post(
 				'/showtime',
-				{ movie: data.movie, showtime, theater: theater._id },
+				{ movie: data.movie, showtime, theater: theater._id, repeat: data.repeat },
 				{
 					headers: {
 						Authorization: `Bearer ${auth.token}`
@@ -112,6 +112,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 							<select
 								className="w-12 flex-grow rounded-md bg-white px-2 py-1 font-medium text-gray-900 drop-shadow-sm"
 								{...register('movie', { required: true })}
+								required
 							>
 								<option value="" defaultValue>
 									Choose a movie
@@ -125,13 +126,25 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 								})}
 							</select>
 						</div>
-						<div className="flex grow items-center gap-2">
+						<div className="flex items-center gap-2">
 							<label className="text-lg font-semibold leading-5">Showtime :</label>
 							<input
 								type="time"
-								className="w-12 flex-grow rounded px-2  py-1 font-semibold drop-shadow-sm"
+								className="w-24 flex-grow rounded px-2 py-1 font-semibold drop-shadow-sm"
 								required
 								{...register('showtime', { required: true })}
+							/>
+						</div>
+						<div className="flex items-center gap-2">
+							<label className="text-lg font-semibold leading-5">Repeat (Day) :</label>
+							<input
+								type="number"
+								min={1}
+								defaultValue={1}
+								max={1000}
+								className="w-14 flex-grow rounded px-2 py-1 font-semibold drop-shadow-sm"
+								required
+								{...register('repeat', { required: true })}
 							/>
 						</div>
 						<button

@@ -31,7 +31,11 @@ exports.getShowtime = async (req, res, next) => {
 //@access   Private
 exports.addShowtime = async (req, res, next) => {
 	try {
-		const { movie: movieId, showtime, theater: theaterId } = req.body
+		const { movie: movieId, showtime: showtimeString, theater: theaterId, repeat = 1 } = req.body
+
+		let showtime = new Date(showtimeString)
+		let showtimes = []
+		let showtimeIds = []
 
 		const theater = await Theater.findById(theaterId)
 
@@ -47,6 +51,7 @@ exports.addShowtime = async (req, res, next) => {
 
 		const row = theater.seatPlan.row
 		const column = theater.seatPlan.column
+
 		let seats = []
 		for (let k = 64; k <= (row.length === 2 ? row.charCodeAt(0) : 64); k++) {
 			for (
@@ -62,15 +67,27 @@ exports.addShowtime = async (req, res, next) => {
 			}
 		}
 
-		const showtimeDoc = await Showtime.create({ theater, movie: movie._id, showtime, seats })
+		for (let i = 0; i < repeat; i++) {
+			console.log(i)
 
-		theater.showtimes.push(showtimeDoc._id)
+			const showtimeDoc = await Showtime.create({ theater, movie: movie._id, showtime, seats })
+
+			showtimeIds.push(showtimeDoc._id)
+			showtimes.push(new Date(showtime))
+			showtime.setDate(showtime.getDate() + 1)
+		}
+
+		console.log(showtimeIds)
+
+		theater.showtimes = theater.showtimes.concat(showtimeIds)
+
+		console.log(theater.showtimes)
 
 		await theater.save()
 
 		res.status(200).json({
 			success: true,
-			data: theater
+			showtimes: showtimes
 		})
 	} catch (err) {
 		console.log(err)
