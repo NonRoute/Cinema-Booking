@@ -5,12 +5,12 @@
 
 ::-webkit-scrollbar {
 	-webkit-appearance: none;
-	width: 10px;
+	width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-	border-radius: 6px;
-	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 8px;
+	background-color: rgba(100, 100, 100, 0.5);
 	-webkit-box-shadow: 0 0 1px #babac0;
 }
 
