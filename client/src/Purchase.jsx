@@ -1,6 +1,6 @@
 import { TicketIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Navbar from './components/Navbar'
@@ -13,8 +13,10 @@ const Purchase = () => {
 	const location = useLocation()
 	const showtime = location.state.showtime
 	const selectedSeats = location.state.selectedSeats || []
+	const [isPurchasing, SetIsPurchasing] = useState(false)
 
 	const onPurchase = async (data) => {
+		SetIsPurchasing(true)
 		try {
 			const response = await axios.post(
 				`/showtime/${showtime._id}`,
@@ -39,6 +41,8 @@ const Purchase = () => {
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
+			SetIsPurchasing(false)
 		}
 	}
 
@@ -56,10 +60,17 @@ const Purchase = () => {
 					{!!selectedSeats.length && (
 						<button
 							onClick={() => onPurchase()}
-							className="flex items-center justify-center gap-2 rounded-b-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-4 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 md:rounded-none md:rounded-br-lg"
+							className="flex items-center justify-center gap-2 rounded-b-lg  bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-4 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 md:rounded-none md:rounded-br-lg"
+							disabled={isPurchasing}
 						>
-							<p>Confirm Purchase</p>
-							<TicketIcon className="h-7 w-7 text-white" />
+							{isPurchasing ? (
+								'Processing...'
+							) : (
+								<>
+									<p>Confirm Purchase</p>
+									<TicketIcon className="h-7 w-7 text-white" />
+								</>
+							)}
 						</button>
 					)}
 				</div>

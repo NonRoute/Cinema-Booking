@@ -4,9 +4,10 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDraggable } from 'react-use-draggable-scroll'
+import Loading from './Loading'
 
 const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
-	const ref = useRef()
+	const ref = useRef(null)
 	const {
 		register,
 		handleSubmit,
@@ -17,14 +18,18 @@ const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
 	const [cinema, setCinema] = useState([])
 	const [movies, setMovies] = useState()
 	const [isAddingShowtime, SetIsAddingShowtime] = useState(false)
+	const [isFetchingCinemasDone, setIsFetchingCinemasDone] = useState(false)
 
 	const fetchCinema = async (data) => {
 		try {
+			setIsFetchingCinemasDone(false)
 			const response = await axios.get(`/cinema/${cinemaId}`)
 			console.log(response.data.data)
 			setCinema(response.data.data)
 		} catch (error) {
 			console.error(error)
+		} finally {
+			setIsFetchingCinemasDone(true)
 		}
 	}
 
@@ -91,6 +96,14 @@ const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
 		}
 	}
 
+	if (!isFetchingCinemasDone) {
+		return (
+			<div ref={ref}>
+				<Loading />
+			</div>
+		)
+	}
+
 	return (
 		<>
 			<div
@@ -121,7 +134,7 @@ const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
 											.getMinutes()
 											.toString()
 											.padStart(2, '0')}
-											`}
+												`}
 										key={index}
 										className={`overflow-y-scroll row-span-${getRowSpan(
 											showtime.movie.length

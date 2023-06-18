@@ -24,9 +24,10 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 			const response = await axios.get('/cinema')
 			// console.log(response.data.data)
 			setCinemas(response.data.data)
-			setIsFetchingCinemasDone(true)
 		} catch (error) {
 			console.error(error)
+		} finally {
+			setIsFetchingCinemasDone(true)
 		}
 	}
 

@@ -16,6 +16,7 @@ import { AuthContext } from '../context/AuthContext'
 const Navbar = () => {
 	const { auth, setAuth } = useContext(AuthContext)
 	const [menuOpen, setMenuOpen] = useState(false)
+	const [isLoggingOut, SetLoggingOut] = useState(false)
 
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen)
@@ -25,6 +26,7 @@ const Navbar = () => {
 
 	const onLogout = async () => {
 		try {
+			SetLoggingOut(true)
 			const response = await axios.get('/auth/logout')
 			console.log(response)
 			setAuth({ username: null, email: null, role: null, token: null })
@@ -42,6 +44,8 @@ const Navbar = () => {
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
+			SetLoggingOut(false)
 		}
 	}
 
@@ -117,10 +121,11 @@ const Navbar = () => {
 					)}
 					{auth.token ? (
 						<button
-							className="rounded-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-2 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400"
+							className="rounded-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-2 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => onLogout()}
+							disabled={isLoggingOut}
 						>
-							<p>Logout</p>
+							{isLoggingOut ? 'Processing...' : 'Logout'}
 						</button>
 					) : (
 						<button className="rounded-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-2 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400">

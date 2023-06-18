@@ -1,12 +1,13 @@
 import { TrashIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
 import Navbar from './components/Navbar'
 import { AuthContext } from './context/AuthContext'
 
 const Utils = () => {
 	const { auth } = useContext(AuthContext)
+	const [isDeletingShowtimes, SetIsDeletingShowtimes] = useState(false)
 
 	const handleDeleteShowtimes = () => {
 		const confirmed = window.confirm(`Do you want to delete all showtimes in previous day, including its tickets?`)
@@ -16,6 +17,7 @@ const Utils = () => {
 	}
 
 	const onDeleteShowtimes = async (id) => {
+		SetIsDeletingShowtimes(true)
 		try {
 			const response = await axios.delete(`/showtime/previous`, {
 				headers: {
@@ -35,6 +37,8 @@ const Utils = () => {
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
+			SetIsDeletingShowtimes(false)
 		}
 	}
 
@@ -45,11 +49,18 @@ const Utils = () => {
 				<div className="flex items-center gap-2">
 					<p className="text-lg font-semibold">Delete all showtimes in previous day</p>
 					<button
-						className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600"
+						className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600 disabled:from-slate-500 disabled:to-slate-400"
 						onClick={() => handleDeleteShowtimes()}
+						disabled={isDeletingShowtimes}
 					>
-						DELETE
-						<TrashIcon className="h-5 w-5" />
+						{isDeletingShowtimes ? (
+							'Processing...'
+						) : (
+							<>
+								DELETE
+								<TrashIcon className="h-5 w-5" />
+							</>
+						)}
 					</button>
 				</div>
 			</div>

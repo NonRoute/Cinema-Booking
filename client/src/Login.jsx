@@ -10,6 +10,7 @@ const Login = () => {
 	const navigate = useNavigate()
 	const { auth, setAuth } = useContext(AuthContext)
 	const [errorsMessage, setErrorsMessage] = useState('')
+	const [isLoggingIn, SetLoggingIn] = useState(false)
 
 	const {
 		register,
@@ -18,6 +19,7 @@ const Login = () => {
 	} = useForm()
 
 	const onSubmit = async (data) => {
+		SetLoggingIn(true)
 		try {
 			const response = await axios.post('/auth/login', data)
 			console.log(response.data)
@@ -36,6 +38,8 @@ const Login = () => {
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
+			SetLoggingIn(false)
 		}
 	}
 
@@ -73,9 +77,10 @@ const Login = () => {
 						{errorsMessage && <span className="text-sm text-red-500">{errorsMessage}</span>}
 						<button
 							type="submit"
-							className="mt-4 w-full rounded-md bg-blue-600 bg-gradient-to-br from-indigo-600 to-blue-500 py-2 px-4 font-medium text-white drop-shadow-md hover:bg-blue-700 hover:from-indigo-500 hover:to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+							className="mt-4 w-full rounded-md bg-blue-600 bg-gradient-to-br from-indigo-600 to-blue-500 py-2 px-4 font-medium text-white drop-shadow-md hover:bg-blue-700 hover:from-indigo-500 hover:to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:from-slate-500 disabled:to-slate-400"
+							disabled={isLoggingIn}
 						>
-							Login
+							{isLoggingIn ? 'Processing...' : 'Login'}
 						</button>
 					</div>
 					<p className="text-right">

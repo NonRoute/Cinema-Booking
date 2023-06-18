@@ -18,9 +18,10 @@ const Home = () => {
 			const response = await axios.get('/movie/showing')
 			console.log(response.data.data)
 			setMovies(response.data.data)
-			setIsFetchingMoviesDone(true)
 		} catch (error) {
 			console.error(error)
+		} finally {
+			setIsFetchingMoviesDone(true)
 		}
 	}
 

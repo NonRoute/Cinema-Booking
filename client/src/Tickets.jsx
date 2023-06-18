@@ -25,9 +25,10 @@ const Tickets = () => {
 					return -1
 				})
 			)
-			setIsFetchingticketsDone(true)
 		} catch (error) {
 			console.error(error)
+		} finally {
+			setIsFetchingticketsDone(true)
 		}
 	}
 

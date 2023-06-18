@@ -18,6 +18,7 @@ const Movie = () => {
 
 	const [movies, setMovies] = useState([])
 	const [isFetchingMoviesDone, setIsFetchingMoviesDone] = useState(false)
+	const [isAddingMovie, SetIsAddingMovie] = useState(false)
 
 	const fetchMovies = async (data) => {
 		try {
@@ -26,9 +27,10 @@ const Movie = () => {
 			console.log(response.data.data)
 			reset()
 			setMovies(response.data.data)
-			setIsFetchingMoviesDone(true)
 		} catch (error) {
 			console.error(error)
+		} finally {
+			setIsFetchingMoviesDone(true)
 		}
 	}
 
@@ -38,6 +40,7 @@ const Movie = () => {
 
 	const onAddMovie = async (data) => {
 		try {
+			SetIsAddingMovie(true)
 			const response = await axios.post('/movie', data, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`
@@ -57,11 +60,15 @@ const Movie = () => {
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
+			SetIsAddingMovie(false)
 		}
 	}
 
 	const handleDelete = (movie) => {
-		const confirmed = window.confirm(`Do you want to delete movie ${movie.name}, including its showtimes and tickets?`)
+		const confirmed = window.confirm(
+			`Do you want to delete movie ${movie.name}, including its showtimes and tickets?`
+		)
 		if (confirmed) {
 			onDeleteMovie(movie._id)
 		}
@@ -138,10 +145,11 @@ const Movie = () => {
 						</div>
 					</div>
 					<button
-						className="text-centeritems-center w-full rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 lg:h-32 lg:w-20 xl:w-32 xl:text-xl"
+						className="text-centeritems-center w-full rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:h-32 lg:w-20 xl:w-32 xl:text-xl"
 						type="submit"
+						disabled={isAddingMovie}
 					>
-						ADD +
+						{isAddingMovie ? 'Processing...' : 'ADD +'}
 					</button>
 				</form>
 				{isFetchingMoviesDone ? (

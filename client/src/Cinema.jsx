@@ -28,9 +28,10 @@ const Cinema = () => {
 					}
 				})
 			}
-			setIsFetchingCinemasDone(true)
 		} catch (error) {
 			console.error(error)
+		} finally {
+			setIsFetchingCinemasDone(true)
 		}
 	}
 

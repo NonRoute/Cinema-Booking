@@ -34,6 +34,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 	)
 	const [isIncreasing, SetIsIncreaseing] = useState(false)
 	const [isDeleting, SetIsDeleting] = useState(false)
+	const [isDecreasing, SetIsDecreasing] = useState(false)
 	const [isEditing, SetIsEditing] = useState(false)
 
 	const fetchMovies = async (data) => {
@@ -56,7 +57,9 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 	}, [cinemas[selectedCinemaIndex].name])
 
 	const handleDelete = (cinema) => {
-		const confirmed = window.confirm(`Do you want to delete cinema ${cinema.name}, including its theaters, showtimes and tickets?`)
+		const confirmed = window.confirm(
+			`Do you want to delete cinema ${cinema.name}, including its theaters, showtimes and tickets?`
+		)
 		if (confirmed) {
 			onDeleteCinema(cinema._id)
 		}
@@ -137,6 +140,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 
 	const onDecreaseTheater = async () => {
 		try {
+			SetIsDecreasing(true)
 			const response = await axios.delete(`/theater/${cinemas[selectedCinemaIndex].theaters.slice(-1)[0]}`, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`
@@ -156,6 +160,8 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
+			SetIsDecreasing(false)
 		}
 	}
 
@@ -318,10 +324,11 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 					<div className="flex justify-center">
 						<button
 							title="Decrease theater"
-							className="w-fit rounded-md bg-gradient-to-r from-red-600 to-rose-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-500 hover:to-rose-400"
+							className="w-fit rounded-md bg-gradient-to-r from-red-600 to-rose-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-500 hover:to-rose-400 disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleDecreaseTheater()}
+							disabled={isDecreasing}
 						>
-							DECREASE -
+							{isDecreasing ? 'Processing...' : 'DECREASE -'}
 						</button>
 					</div>
 				)}

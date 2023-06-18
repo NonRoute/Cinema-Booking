@@ -1,6 +1,6 @@
 import { TrashIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
@@ -8,6 +8,7 @@ import { AuthContext } from '../context/AuthContext'
 const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 	const { auth } = useContext(AuthContext)
 	const navigate = useNavigate()
+	const [isDeletingShowtimes, SetIsDeletingShowtimes] = useState(false)
 
 	const handleDelete = (id) => {
 		const confirmed = window.confirm(`Do you want to delete this showtime, including its tickets?`)
@@ -18,6 +19,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 
 	const onDeleteShowtime = async (id) => {
 		try {
+			SetIsDeletingShowtimes(true)
 			const response = await axios.delete(`/showtime/${id}`, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`
@@ -37,6 +39,8 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
+			SetIsDeletingShowtimes(false)
 		}
 	}
 
@@ -91,11 +95,18 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 					</div>
 					{showDeleteBtn && auth.role === 'admin' && (
 						<button
-							className="flex w-full items-center justify-center gap-1 bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 md:min-w-fit"
+							className="flex w-full items-center justify-center gap-1 bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
 							onClick={() => handleDelete(showtime?._id)}
+							disabled={isDeletingShowtimes}
 						>
-							DELETE
-							<TrashIcon className="h-5 w-5" />
+							{isDeletingShowtimes ? (
+								'Processing...'
+							) : (
+								<>
+									DELETE
+									<TrashIcon className="h-5 w-5" />
+								</>
+							)}
 						</button>
 					)}
 				</div>

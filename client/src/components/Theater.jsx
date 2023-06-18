@@ -27,9 +27,10 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 			const response = await axios.get(`/theater/${theaterId}`)
 			// console.log(response.data.data)
 			setTheater(response.data.data)
-			setIsFetchingTheaterDone(true)
 		} catch (error) {
 			console.error(error)
+		} finally {
+			setIsFetchingTheaterDone(true)
 		}
 	}
 
