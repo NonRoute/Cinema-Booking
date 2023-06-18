@@ -1,10 +1,10 @@
-import Navbar from './components/Navbar'
 import axios from 'axios'
-import 'react-toastify/dist/ReactToastify.css'
-import { AuthContext } from './context/AuthContext'
 import { useContext, useEffect, useState } from 'react'
+import 'react-toastify/dist/ReactToastify.css'
 import CinemaLists from './components/CinemaLists'
+import Navbar from './components/Navbar'
 import TheaterListsByCinema from './components/TheaterListsByCinema'
+import { AuthContext } from './context/AuthContext'
 
 const Cinema = () => {
 	const { auth } = useContext(AuthContext)

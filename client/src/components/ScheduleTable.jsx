@@ -1,11 +1,9 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useRef } from 'react'
-import { Link } from 'react-router-dom'
-import { useDraggable } from 'react-use-draggable-scroll'
-import Loading from './Loading'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { useDraggable } from 'react-use-draggable-scroll'
 
 const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
 	const ref = useRef()

@@ -1,11 +1,11 @@
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import { useContext, useEffect, useState } from 'react'
-import axios from 'axios'
 import { TicketIcon } from '@heroicons/react/24/solid'
+import axios from 'axios'
+import { useContext } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import Navbar from './components/Navbar'
 import ShowtimeDetails from './components/ShowtimeDetails'
 import { AuthContext } from './context/AuthContext'
-import { toast } from 'react-toastify'
 
 const Purchase = () => {
 	const navigate = useNavigate()

@@ -3,8 +3,6 @@ import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthContext } from './context/AuthContext'
 import { useContext, useEffect, useState } from 'react'
-import CinemaLists from './components/CinemaLists'
-import TheaterLists from './components/TheaterListsByCinema'
 import MovieLists from './components/MovieLists'
 import TheaterListsByMovie from './components/TheaterListsByMovie'
 

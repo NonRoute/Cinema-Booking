@@ -1,11 +1,11 @@
-import DatePicker from './components/DatePicker'
-import CinemaLists from './components/CinemaLists'
-import Navbar from './components/Navbar'
 import axios from 'axios'
-import 'react-toastify/dist/ReactToastify.css'
-import { AuthContext } from './context/AuthContext'
 import { useContext, useEffect, useState } from 'react'
+import 'react-toastify/dist/ReactToastify.css'
+import CinemaLists from './components/CinemaLists'
+import DatePicker from './components/DatePicker'
+import Navbar from './components/Navbar'
 import ScheduleTable from './components/ScheduleTable'
+import { AuthContext } from './context/AuthContext'
 
 const Schedule = () => {
 	const { auth } = useContext(AuthContext)

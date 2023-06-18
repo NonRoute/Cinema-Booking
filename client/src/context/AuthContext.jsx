@@ -49,4 +49,4 @@ const AuthContextProvider = ({ children }) => {
 	return <AuthContext.Provider value={{ auth, setAuth }}>{children}</AuthContext.Provider>
 }
 
-export { AuthContextProvider, AuthContext }
+export { AuthContext, AuthContextProvider }

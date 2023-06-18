@@ -1,17 +1,17 @@
+import {
+	ArrowsRightLeftIcon,
+	ArrowsUpDownIcon,
+	CheckIcon,
+	PencilSquareIcon,
+	TrashIcon
+} from '@heroicons/react/24/solid'
 import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {
-	TrashIcon,
-	ArrowsUpDownIcon,
-	ArrowsRightLeftIcon,
-	PencilSquareIcon,
-	CheckIcon
-} from '@heroicons/react/24/solid'
-import { useForm } from 'react-hook-form'
-import Theater from './Theater'
-import { useEffect, useState } from 'react'
 import DatePicker from './DatePicker'
+import Theater from './Theater'
 
 const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCinemas, auth }) => {
 	const {

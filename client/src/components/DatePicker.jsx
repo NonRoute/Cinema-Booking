@@ -1,5 +1,5 @@
 import { ArrowPathIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 
 const DatePicker = ({ selectedDate, setSelectedDate }) => {

@@ -1,17 +1,17 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { useContext, useState } from 'react'
-import { toast } from 'react-toastify'
-import axios from 'axios'
-import { AuthContext } from '../context/AuthContext'
 import {
+	ClockIcon,
 	FilmIcon,
 	HomeModernIcon,
-	VideoCameraIcon,
 	TicketIcon,
-	WrenchScrewdriverIcon,
-	ClockIcon
+	VideoCameraIcon,
+	WrenchScrewdriverIcon
 } from '@heroicons/react/24/outline'
 import { Bars3Icon } from '@heroicons/react/24/solid'
+import axios from 'axios'
+import { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { AuthContext } from '../context/AuthContext'
 
 const Navbar = () => {
 	const { auth, setAuth } = useContext(AuthContext)

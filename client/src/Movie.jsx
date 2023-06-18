@@ -1,11 +1,11 @@
-import { useForm } from 'react-hook-form'
-import Navbar from './components/Navbar'
-import { useContext, useEffect, useState } from 'react'
-import axios from 'axios'
-import { AuthContext } from './context/AuthContext'
-import { toast } from 'react-toastify'
 import { TrashIcon } from '@heroicons/react/24/solid'
+import axios from 'axios'
+import { useContext, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import Loading from './components/Loading'
+import Navbar from './components/Navbar'
+import { AuthContext } from './context/AuthContext'
 
 const Movie = () => {
 	const { auth } = useContext(AuthContext)

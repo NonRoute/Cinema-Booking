@@ -1,8 +1,8 @@
 import { TrashIcon } from '@heroicons/react/24/solid'
-import Navbar from './components/Navbar'
 import axios from 'axios'
-import { toast } from 'react-toastify'
 import { useContext } from 'react'
+import { toast } from 'react-toastify'
+import Navbar from './components/Navbar'
 import { AuthContext } from './context/AuthContext'
 
 const Utils = () => {

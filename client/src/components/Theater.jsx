@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from 'react'
+import { ArrowsRightLeftIcon, ArrowsUpDownIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
-import { ArrowsUpDownIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/solid'
+import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
-import Showtimes from './Showtimes'
 import Loading from './Loading'
+import Showtimes from './Showtimes'
 
 const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 	const {

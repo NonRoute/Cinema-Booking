@@ -1,13 +1,10 @@
 import axios from 'axios'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { TrashIcon, ArrowsUpDownIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/solid'
-import { useForm } from 'react-hook-form'
-import Theater from './Theater'
 import { useEffect, useState } from 'react'
-import DatePicker from './DatePicker'
+import 'react-toastify/dist/ReactToastify.css'
 import CinemaLists from './CinemaLists'
+import DatePicker from './DatePicker'
 import Loading from './Loading'
+import Theater from './Theater'
 
 const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth }) => {
 	const [selectedDate, setSelectedDate] = useState(
