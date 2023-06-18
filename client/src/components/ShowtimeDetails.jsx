@@ -10,7 +10,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 	const navigate = useNavigate()
 
 	const handleDelete = (id) => {
-		const confirmed = window.confirm(`Do you want to delete this showtime?`)
+		const confirmed = window.confirm(`Do you want to delete this showtime, including its tickets?`)
 		if (confirmed) {
 			onDeleteShowtime(id)
 		}
@@ -68,7 +68,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 					</div>
 				</div>
 				<div className="flex flex-col">
-					<div className="flex h-full min-w-fit flex-col items-center justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-2 text-center text-xl font-semibold drop-shadow-lg sm:py-4 sm:text-2xl">
+					<div className="flex h-full min-w-max flex-col items-center justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-2 text-center text-xl font-semibold drop-shadow-lg sm:py-4 sm:text-2xl">
 						<p className="mx-4">
 							{showtime?.showtime
 								? `${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}

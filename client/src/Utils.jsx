@@ -8,8 +8,8 @@ import { AuthContext } from './context/AuthContext'
 const Utils = () => {
 	const { auth } = useContext(AuthContext)
 
-	const handleDelete = () => {
-		const confirmed = window.confirm(`Do you want to delete all showtimes in previous day?`)
+	const handleDeleteShowtimes = () => {
+		const confirmed = window.confirm(`Do you want to delete all showtimes in previous day, including its tickets?`)
 		if (confirmed) {
 			onDeleteShowtimes()
 		}
@@ -46,7 +46,7 @@ const Utils = () => {
 					<p className="text-lg font-semibold">Delete all showtimes in previous day</p>
 					<button
 						className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600"
-						onClick={() => handleDelete()}
+						onClick={() => handleDeleteShowtimes()}
 					>
 						DELETE
 						<TrashIcon className="h-5 w-5" />

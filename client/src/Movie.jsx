@@ -61,7 +61,7 @@ const Movie = () => {
 	}
 
 	const handleDelete = (movie) => {
-		const confirmed = window.confirm(`Do you want to delete movie ${movie.name}?`)
+		const confirmed = window.confirm(`Do you want to delete movie ${movie.name}, including its showtimes and tickets?`)
 		if (confirmed) {
 			onDeleteMovie(movie._id)
 		}

@@ -56,7 +56,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 	}, [cinemas[selectedCinemaIndex].name])
 
 	const handleDelete = (cinema) => {
-		const confirmed = window.confirm(`Do you want to delete cinema ${cinema.name}?`)
+		const confirmed = window.confirm(`Do you want to delete cinema ${cinema.name}, including its theaters, showtimes and tickets?`)
 		if (confirmed) {
 			onDeleteCinema(cinema._id)
 		}
@@ -128,7 +128,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 
 	const handleDecreaseTheater = (cinema) => {
 		const confirmed = window.confirm(
-			`Do you want to delete theater ${cinemas[selectedCinemaIndex].theaters.length}?`
+			`Do you want to delete theater ${cinemas[selectedCinemaIndex].theaters.length}, including its showtimes and tickets?`
 		)
 		if (confirmed) {
 			onDecreaseTheater()
