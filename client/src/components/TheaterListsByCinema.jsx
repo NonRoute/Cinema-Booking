@@ -33,6 +33,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 		(localStorage.getItem('selectedDate') && new Date(localStorage.getItem('selectedDate'))) || new Date()
 	)
 	const [isIncreasing, SetIsIncreaseing] = useState(false)
+	const [isDeleting, SetIsDeleting] = useState(false)
 	const [isEditing, SetIsEditing] = useState(false)
 
 	const fetchMovies = async (data) => {
@@ -63,6 +64,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 
 	const onDeleteCinema = async (id) => {
 		try {
+			SetIsDeleting(true)
 			const response = await axios.delete(`/cinema/${id}`, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`
@@ -83,6 +85,8 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
+			SetIsDeleting(false)
 		}
 	}
 
@@ -110,7 +114,6 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 				autoClose: 2000,
 				pauseOnHover: false
 			})
-			SetIsIncreaseing(false)
 		} catch (error) {
 			console.error(error)
 			toast.error(errors, {
@@ -118,6 +121,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
 			SetIsIncreaseing(false)
 		}
 	}
@@ -229,11 +233,18 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 						)}
 						<button
 							title="Delete cinema"
-							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600"
+							disabled={isDeleting}
+							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600 disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleDelete(cinemas[selectedCinemaIndex])}
 						>
-							DELETE
-							<TrashIcon className="h-5 w-5" />
+							{isDeleting ? (
+								'Processing...'
+							) : (
+								<>
+									DELETE
+									<TrashIcon className="h-5 w-5" />
+								</>
+							)}
 						</button>
 					</>
 				)}

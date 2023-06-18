@@ -3,6 +3,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Loading from './Loading'
+import { useState } from 'react'
 
 const CinemaLists = ({
 	cinemas,
@@ -19,8 +20,11 @@ const CinemaLists = ({
 		formState: { errors }
 	} = useForm()
 
+	const [isAdding, SetIsAdding] = useState(false)
+
 	const onAddCinema = async (data) => {
 		try {
+			SetIsAdding(true)
 			const response = await axios.post('/cinema', data, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`
@@ -41,6 +45,8 @@ const CinemaLists = ({
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
+			SetIsAdding(false)
 		}
 	}
 
@@ -59,8 +65,12 @@ const CinemaLists = ({
 								required
 								{...register('name', { required: true })}
 							/>
-							<button className="flex items-center whitespace-nowrap rounded-r-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white hover:from-indigo-500 hover:to-blue-400">
-								ADD +
+
+							<button
+								disabled={isAdding}
+								className="flex items-center whitespace-nowrap rounded-r-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+							>
+								{isAdding ? 'Processing...' : 'ADD +'}
 							</button>
 						</div>
 					)}

@@ -47,13 +47,19 @@ const Schedule = () => {
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
 			<CinemaLists {...props} />
-			<div className="mx-4 flex h-screen flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
-				<h2 className="text-3xl font-bold text-gray-900">Schedule</h2>
-				<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-				{cinemas[selectedCinemaIndex]?._id && (
-					<ScheduleTable cinemaId={cinemas[selectedCinemaIndex]?._id} selectedDate={selectedDate} />
-				)}
-			</div>
+			{cinemas[selectedCinemaIndex]?.theaters?.length ? (
+				<div className="mx-4 flex h-screen flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
+					<h2 className="text-3xl font-bold text-gray-900">Schedule</h2>
+					<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+					{cinemas[selectedCinemaIndex]?._id && (
+						<ScheduleTable cinemaId={cinemas[selectedCinemaIndex]?._id} selectedDate={selectedDate} />
+					)}
+				</div>
+			) : (
+				<div className="mx-4 flex flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
+					<p className="text-center">There are no theaters available</p>
+				</div>
+			)}
 		</div>
 	)
 }
