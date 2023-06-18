@@ -28,9 +28,7 @@ const CinemaLists = ({
 			})
 			// console.log(response.data)
 			reset()
-			setSelectedCinemaIndex(null)
-			localStorage.setItem('selectedCinemaIndex', null)
-			fetchCinemas()
+			fetchCinemas(data.name)
 			toast.success('Add cinema successful!', {
 				position: 'top-center',
 				autoClose: 2000,

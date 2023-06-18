@@ -14,12 +14,20 @@ const Cinema = () => {
 	const [cinemas, setCinemas] = useState([])
 	const [isFetchingCinemasDone, setIsFetchingCinemasDone] = useState(false)
 
-	const fetchCinemas = async (data) => {
+	const fetchCinemas = async (newSelectedCinema) => {
 		try {
 			setIsFetchingCinemasDone(false)
 			const response = await axios.get('/cinema')
 			console.log(response.data.data)
 			setCinemas(response.data.data)
+			if (newSelectedCinema) {
+				response.data.data.map((cinema, index) => {
+					if (cinema.name === newSelectedCinema) {
+						setSelectedCinemaIndex(index)
+						localStorage.setItem('selectedCinemaIndex', index)
+					}
+				})
+			}
 			setIsFetchingCinemasDone(true)
 		} catch (error) {
 			console.error(error)
