@@ -68,20 +68,13 @@ exports.addShowtime = async (req, res, next) => {
 		}
 
 		for (let i = 0; i < repeat; i++) {
-			console.log(i)
-
 			const showtimeDoc = await Showtime.create({ theater, movie: movie._id, showtime, seats })
 
 			showtimeIds.push(showtimeDoc._id)
 			showtimes.push(new Date(showtime))
 			showtime.setDate(showtime.getDate() + 1)
 		}
-
-		console.log(showtimeIds)
-
 		theater.showtimes = theater.showtimes.concat(showtimeIds)
-
-		console.log(theater.showtimes)
 
 		await theater.save()
 
@@ -155,6 +148,24 @@ exports.deleteShowtime = async (req, res, next) => {
 		await showtime.remove()
 
 		res.status(200).json({ success: true })
+	} catch (err) {
+		console.log(err)
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
+//@desc     Delete all showtimes
+//@route    DELETE /showtime
+//@access   Private Admin
+exports.deleteAllShowtime = async (req, res, next) => {
+	try {
+		const showtime = await Showtime.deleteMany({})
+
+		if (!showtime) {
+			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+		}
+
+		res.status(200).json({ success: true, showtime })
 	} catch (err) {
 		console.log(err)
 		res.status(400).json({ success: false, message: err })

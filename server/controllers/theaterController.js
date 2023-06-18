@@ -55,7 +55,7 @@ exports.getTheaterByMovie = async (req, res, next) => {
 			return theater.showtimes.some((showtime) => {
 				const d1 = new Date(showtime.showtime)
 				const d2 = new Date(date)
-				console.log(showtime)
+				// console.log(showtime)
 				return (
 					showtime.movie._id.equals(mid) &&
 					d1.getFullYear() === d2.getFullYear() &&
