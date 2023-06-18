@@ -52,7 +52,11 @@ const Schedule = () => {
 					<h2 className="text-3xl font-bold text-gray-900">Schedule</h2>
 					<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 					{cinemas[selectedCinemaIndex]?._id && (
-						<ScheduleTable cinemaId={cinemas[selectedCinemaIndex]?._id} selectedDate={selectedDate} />
+						<ScheduleTable
+							cinemaId={cinemas[selectedCinemaIndex]?._id}
+							selectedDate={selectedDate}
+							auth={auth}
+						/>
 					)}
 				</div>
 			) : (

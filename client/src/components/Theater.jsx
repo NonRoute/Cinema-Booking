@@ -59,7 +59,6 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 				autoClose: 2000,
 				pauseOnHover: false
 			})
-			SetIsAddingShowtime(false)
 		} catch (error) {
 			console.error(error)
 			toast.error('Error', {
@@ -67,6 +66,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 				autoClose: 2000,
 				pauseOnHover: false
 			})
+		} finally {
 			SetIsAddingShowtime(false)
 		}
 	}
@@ -134,7 +134,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 							/>
 						</div>
 						<button
-							title='Add showtime'
+							title="Add showtime"
 							disabled={isAddingShowtime}
 							className="rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
 							type="submit"
