@@ -145,7 +145,7 @@ const Movie = () => {
 						</div>
 					</div>
 					<button
-						className="text-centeritems-center w-full rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:h-32 lg:w-20 xl:w-32 xl:text-xl"
+						className="w-full min-w-fit items-center rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:h-32 lg:w-20 xl:w-32 xl:text-xl"
 						type="submit"
 						disabled={isAddingMovie}
 					>

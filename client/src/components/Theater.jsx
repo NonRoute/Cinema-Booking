@@ -141,7 +141,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 								type="number"
 								min={1}
 								defaultValue={1}
-								max={1000}
+								max={31}
 								className="w-14 flex-grow rounded px-2 py-1 font-semibold drop-shadow-sm"
 								required
 								{...register('repeat', { required: true })}

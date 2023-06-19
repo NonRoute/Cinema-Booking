@@ -239,7 +239,7 @@ const ScheduleTable = ({ cinemaId, selectedDate, auth }) => {
 							type="number"
 							min={1}
 							defaultValue={1}
-							max={1000}
+							max={31}
 							className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm"
 							required
 							{...register('repeat', { required: true })}

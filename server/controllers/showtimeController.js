@@ -33,6 +33,10 @@ exports.addShowtime = async (req, res, next) => {
 	try {
 		const { movie: movieId, showtime: showtimeString, theater: theaterId, repeat = 1 } = req.body
 
+		if (repeat > 31 || repeat < 1) {
+			return res.status(400).json({ success: false, message: `Repeat is not a valid number between 1 to 31` })
+		}
+
 		let showtime = new Date(showtimeString)
 		let showtimes = []
 		let showtimeIds = []
