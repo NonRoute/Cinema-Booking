@@ -47,7 +47,7 @@ module.exports = {
 			gridRowStart: {
 				...generateRowColStart(145)
 			},
-			gridColStart: {
+			gridColumnStart: {
 				...generateRowColStart(100)
 			},
 			gridRow: {
