@@ -25,7 +25,7 @@ const Utils = () => {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			console.log(response.data)
+			// console.log(response.data)
 			toast.success(`Delete ${response.data.showtime.deletedCount} showtimes successful!`, {
 				position: 'top-center',
 				autoClose: 2000,
@@ -58,7 +58,7 @@ const Utils = () => {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			console.log(response.data)
+			// console.log(response.data)
 			toast.success(`Delete ${response.data.count} showtimes successful!`, {
 				position: 'top-center',
 				autoClose: 2000,

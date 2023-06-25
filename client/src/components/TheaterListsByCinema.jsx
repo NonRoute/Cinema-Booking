@@ -30,7 +30,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 
 	const [movies, setMovies] = useState()
 	const [selectedDate, setSelectedDate] = useState(
-		(localStorage.getItem('selectedDate') && new Date(localStorage.getItem('selectedDate'))) || new Date()
+		(sessionStorage.getItem('selectedDate') && new Date(sessionStorage.getItem('selectedDate'))) || new Date()
 	)
 	const [isIncreasing, SetIsIncreaseing] = useState(false)
 	const [isDeleting, SetIsDeleting] = useState(false)
@@ -73,7 +73,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			console.log(response.data)
+			// console.log(response.data)
 			setSelectedCinemaIndex(null)
 			fetchCinemas()
 			toast.success('Delete cinema successful!', {
@@ -111,7 +111,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 				}
 			)
 			fetchCinemas()
-			console.log(response.data)
+			// console.log(response.data)
 			toast.success('Increase theater successful!', {
 				position: 'top-center',
 				autoClose: 2000,
@@ -146,7 +146,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			console.log(response.data)
+			// console.log(response.data)
 			fetchCinemas()
 			toast.success('Decrease theater successful!', {
 				position: 'top-center',
@@ -178,7 +178,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 					}
 				}
 			)
-			console.log(response.data)
+			// console.log(response.data)
 			fetchCinemas(data.name)
 			toast.success('Edit cinema name successful!', {
 				position: 'top-center',

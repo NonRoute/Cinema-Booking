@@ -3,15 +3,23 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 function generateGridColumns(lastValue) {
 	let obj = {}
-	for (let i = 13; i < lastValue; i++) {
+	for (let i = 13; i <= lastValue; i++) {
 		obj[`${i}`] = `repeat(${i}, minmax(160px, 1fr))`
+	}
+	return obj
+}
+
+function generateGridRow(lastValue) {
+	let obj = {}
+	for (let i = 0; i <= lastValue; i++) {
+		obj[`${i}`] = `36px repeat(${i}, minmax(10px, 1fr))`
 	}
 	return obj
 }
 
 function generateRowColStart(lastValue) {
 	let obj = {}
-	for (let i = 8; i < lastValue; i++) {
+	for (let i = 8; i <= lastValue; i++) {
 		obj[`${i}`] = `${i}`
 	}
 	return obj
@@ -19,7 +27,7 @@ function generateRowColStart(lastValue) {
 
 function generateRowSpan(lastValue) {
 	let obj = {}
-	for (let i = 7; i < lastValue; i++) {
+	for (let i = 7; i <= lastValue; i++) {
 		obj[`span-${i}`] = `span ${i} / span ${i}`
 	}
 	return obj
@@ -28,6 +36,7 @@ function generateRowSpan(lastValue) {
 module.exports = {
 	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
 	safelist: [
+		{ pattern: /grid-rows-./ },
 		{ pattern: /grid-cols-./ },
 		{ pattern: /row-start-./ },
 		{ pattern: /col-start-./ },
@@ -39,13 +48,13 @@ module.exports = {
 				sans: ['IBM Plex Sans Thai', ...defaultTheme.fontFamily.sans]
 			},
 			gridTemplateRows: {
-				150: '36px repeat(150, minmax(10px, 1fr))'
+				...generateGridRow(200)
 			},
 			gridTemplateColumns: {
 				...generateGridColumns(100)
 			},
 			gridRowStart: {
-				...generateRowColStart(145)
+				...generateRowColStart(150)
 			},
 			gridColumnStart: {
 				...generateRowColStart(100)

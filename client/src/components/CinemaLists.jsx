@@ -83,7 +83,7 @@ const CinemaLists = ({
 									className="w-fit rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 px-2.5 py-1.5 text-lg font-medium text-white drop-shadow-xl hover:from-indigo-700 hover:to-blue-600"
 									onClick={() => {
 										setSelectedCinemaIndex(null)
-										localStorage.setItem('selectedCinemaIndex', null)
+										sessionStorage.setItem('selectedCinemaIndex', null)
 									}}
 									key={index}
 								>
@@ -94,7 +94,7 @@ const CinemaLists = ({
 									className="w-fit rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-700 hover:to-blue-600"
 									onClick={() => {
 										setSelectedCinemaIndex(index)
-										localStorage.setItem('selectedCinemaIndex', index)
+										sessionStorage.setItem('selectedCinemaIndex', index)
 									}}
 									key={index}
 								>

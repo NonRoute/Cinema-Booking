@@ -35,7 +35,7 @@ const Showtime = () => {
 	const fetchShowtime = async (data) => {
 		try {
 			const response = await axios.get(`/showtime/${id}`)
-			console.log(response.data.data)
+			// console.log(response.data.data)
 			setShowtime(response.data.data)
 		} catch (error) {
 			console.error(error)
@@ -67,10 +67,7 @@ const Showtime = () => {
 		colNumber.push(k)
 	}
 
-	const isPast = (date) => {
-		console.log(date, new Date(date) < new Date())
-		return new Date(date) < new Date()
-	}
+	const isPast = new Date(showtime.showtime) < new Date()
 
 	return (
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
@@ -81,7 +78,7 @@ const Showtime = () => {
 						<ShowtimeDetails showtime={showtime} showDeleteBtn={true} />
 						<div className="flex flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
 							<div className="flex flex-col items-center gap-x-4 py-2 px-4 md:flex-row">
-								{!isPast(showtime.showtime) && <p className="font-semibold">Selected Seats : </p>}
+								{!isPast && <p className="font-semibold">Selected Seats : </p>}
 								<p className="text-start">{sortedSelectedSeat.join(', ')}</p>
 								{!!selectedSeats.length && (
 									<p className="whitespace-nowrap">({selectedSeats.length} seats)</p>
@@ -137,7 +134,7 @@ const Showtime = () => {
 																	key={index}
 																	seat={seat}
 																	setSelectedSeats={setSelectedSeats}
-																	selectable={!isPast(showtime.showtime)}
+																	selectable={!isPast}
 																/>
 															)
 														})}

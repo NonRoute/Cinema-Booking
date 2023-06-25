@@ -22,7 +22,7 @@ const Login = () => {
 		SetLoggingIn(true)
 		try {
 			const response = await axios.post('/auth/login', data)
-			console.log(response.data)
+			// console.log(response.data)
 			toast.success('Login successful!', {
 				position: 'top-center',
 				autoClose: 2000,

@@ -8,12 +8,12 @@ import Theater from './Theater'
 
 const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth }) => {
 	const [selectedDate, setSelectedDate] = useState(
-		(localStorage.getItem('selectedDate') && new Date(localStorage.getItem('selectedDate'))) || new Date()
+		(sessionStorage.getItem('selectedDate') && new Date(sessionStorage.getItem('selectedDate'))) || new Date()
 	)
 	const [theaters, setTheaters] = useState([])
 	const [isFetchingTheatersDone, setIsFetchingTheatersDone] = useState(false)
 	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(
-		parseInt(localStorage.getItem('selectedCinemaIndex'))
+		parseInt(sessionStorage.getItem('selectedCinemaIndex'))
 	)
 	const [cinemas, setCinemas] = useState([])
 	const [isFetchingCinemasDone, setIsFetchingCinemasDone] = useState(false)

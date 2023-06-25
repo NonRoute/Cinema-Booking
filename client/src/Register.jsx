@@ -20,7 +20,7 @@ const Register = () => {
 		SetIsRegistering(true)
 		try {
 			const response = await axios.post('/auth/register', data)
-			console.log(response.data)
+			// console.log(response.data)
 			toast.success('Registration successful!', {
 				position: 'top-center',
 				autoClose: 2000,

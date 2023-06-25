@@ -9,20 +9,20 @@ const DatePicker = ({ selectedDate, setSelectedDate }) => {
 		const prevDay = new Date(selectedDate)
 		prevDay.setDate(prevDay.getDate() - 1)
 		setSelectedDate(prevDay)
-		localStorage.setItem('selectedDate', prevDay)
+		sessionStorage.setItem('selectedDate', prevDay)
 	}
 
 	const handleNextDay = () => {
 		const nextDay = new Date(selectedDate)
 		nextDay.setDate(nextDay.getDate() + 1)
 		setSelectedDate(nextDay)
-		localStorage.setItem('selectedDate', nextDay)
+		sessionStorage.setItem('selectedDate', nextDay)
 	}
 
 	const handleToday = () => {
 		const today = new Date()
 		setSelectedDate(today)
-		localStorage.setItem('selectedDate', today)
+		sessionStorage.setItem('selectedDate', today)
 	}
 
 	const formatDate = (date) => {

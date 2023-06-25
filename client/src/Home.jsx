@@ -8,7 +8,7 @@ import TheaterListsByMovie from './components/TheaterListsByMovie'
 
 const Home = () => {
 	const { auth } = useContext(AuthContext)
-	const [selectedMovieIndex, setSelectedMovieIndex] = useState(parseInt(localStorage.getItem('selectedMovieIndex')))
+	const [selectedMovieIndex, setSelectedMovieIndex] = useState(parseInt(sessionStorage.getItem('selectedMovieIndex')))
 	const [movies, setMovies] = useState([])
 	const [isFetchingMoviesDone, setIsFetchingMoviesDone] = useState(false)
 
@@ -16,7 +16,7 @@ const Home = () => {
 		try {
 			setIsFetchingMoviesDone(false)
 			const response = await axios.get('/movie/showing')
-			console.log(response.data.data)
+			// console.log(response.data.data)
 			setMovies(response.data.data)
 		} catch (error) {
 			console.error(error)

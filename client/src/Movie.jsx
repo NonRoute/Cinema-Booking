@@ -24,7 +24,7 @@ const Movie = () => {
 		try {
 			setIsFetchingMoviesDone(false)
 			const response = await axios.get('/movie')
-			console.log(response.data.data)
+			// console.log(response.data.data)
 			reset()
 			setMovies(response.data.data)
 		} catch (error) {
@@ -46,7 +46,7 @@ const Movie = () => {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			console.log(response.data)
+			// console.log(response.data)
 			fetchMovies()
 			toast.success('Add movie successful!', {
 				position: 'top-center',
@@ -81,7 +81,7 @@ const Movie = () => {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			console.log(response.data)
+			// console.log(response.data)
 			fetchMovies()
 			toast.success('Delete movie successful!', {
 				position: 'top-center',

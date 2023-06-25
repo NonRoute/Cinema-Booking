@@ -10,10 +10,10 @@ import { AuthContext } from './context/AuthContext'
 const Schedule = () => {
 	const { auth } = useContext(AuthContext)
 	const [selectedDate, setSelectedDate] = useState(
-		(localStorage.getItem('selectedDate') && new Date(localStorage.getItem('selectedDate'))) || new Date()
+		(sessionStorage.getItem('selectedDate') && new Date(sessionStorage.getItem('selectedDate'))) || new Date()
 	)
 	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(
-		parseInt(localStorage.getItem('selectedCinemaIndex')) || 0
+		parseInt(sessionStorage.getItem('selectedCinemaIndex')) || 0
 	)
 	const [cinemas, setCinemas] = useState([])
 	const [isFetchingCinemasDone, setIsFetchingCinemasDone] = useState(false)
@@ -22,7 +22,7 @@ const Schedule = () => {
 		try {
 			setIsFetchingCinemasDone(false)
 			const response = await axios.get('/cinema')
-			console.log(response.data.data)
+			// console.log(response.data.data)
 			setCinemas(response.data.data)
 		} catch (error) {
 			console.error(error)

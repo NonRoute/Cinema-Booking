@@ -9,7 +9,7 @@ import { AuthContext } from './context/AuthContext'
 const Cinema = () => {
 	const { auth } = useContext(AuthContext)
 	const [selectedCinemaIndex, setSelectedCinemaIndex] = useState(
-		parseInt(localStorage.getItem('selectedCinemaIndex')) || 0
+		parseInt(sessionStorage.getItem('selectedCinemaIndex')) || 0
 	)
 	const [cinemas, setCinemas] = useState([])
 	const [isFetchingCinemasDone, setIsFetchingCinemasDone] = useState(false)
@@ -18,13 +18,13 @@ const Cinema = () => {
 		try {
 			setIsFetchingCinemasDone(false)
 			const response = await axios.get('/cinema')
-			console.log(response.data.data)
+			// console.log(response.data.data)
 			setCinemas(response.data.data)
 			if (newSelectedCinema) {
 				response.data.data.map((cinema, index) => {
 					if (cinema.name === newSelectedCinema) {
 						setSelectedCinemaIndex(index)
-						localStorage.setItem('selectedCinemaIndex', index)
+						sessionStorage.setItem('selectedCinemaIndex', index)
 					}
 				})
 			}

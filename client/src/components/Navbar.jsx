@@ -28,9 +28,9 @@ const Navbar = () => {
 		try {
 			SetLoggingOut(true)
 			const response = await axios.get('/auth/logout')
-			console.log(response)
+			// console.log(response)
 			setAuth({ username: null, email: null, role: null, token: null })
-			localStorage.clear()
+			sessionStorage.clear()
 			navigate('/')
 			toast.success('Logout successful!', {
 				position: 'top-center',

@@ -16,7 +16,7 @@ const MovieLists = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth, i
 									className="flex w-[108px] flex-col rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 p-1 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 sm:w-[144px]"
 									onClick={() => {
 										setSelectedMovieIndex(null)
-										localStorage.setItem('selectedMovieIndex', null)
+										sessionStorage.setItem('selectedMovieIndex', null)
 									}}
 								>
 									<img
@@ -33,7 +33,7 @@ const MovieLists = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth, i
 									className="flex w-[108px] flex-col rounded-md bg-white p-1 drop-shadow-md hover:bg-gradient-to-br hover:from-indigo-500 hover:to-blue-400 hover:text-white sm:w-[144px]"
 									onClick={() => {
 										setSelectedMovieIndex(index)
-										localStorage.setItem('selectedMovieIndex', index)
+										sessionStorage.setItem('selectedMovieIndex', index)
 									}}
 								>
 									<img
