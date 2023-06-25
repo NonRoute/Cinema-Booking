@@ -60,9 +60,9 @@ const DatePicker = ({ selectedDate, setSelectedDate }) => {
 		minDate: auth.role === 'admin' ? new Date('2000-01-01') : new Date().setDate(new Date().getDate() - 1),
 		theme: {
 			todayBtn:
-				' text-cyan-300bg-gradient-to-br from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500',
-			disabledText: 'dark:text-gray-500',
-			input: 'bg-gradient-to-br from-indigo-800 to-blue-700',
+				'text-cyan-300bg-gradient-to-br from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500',
+			disabledText: 'opacity-20',
+			input: 'bg-gradient-to-br from-indigo-800 to-blue-700 text-white',
 			selected: 'bg-gradient-to-br from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-500'
 		},
 		defaultDate: new Date(selectedDate),
