@@ -184,21 +184,21 @@ exports.deleteShowtimes = async (req, res, next) => {
 	try {
 		const { ids } = req.body
 
-		let showtimes
+		let showtimesIds
 
 		if (!ids) {
 			// Delete all showtimes
-			showtimes = await Showtime.find()
+			showtimesIds = await Showtime.find({}, '_id')
 		} else {
 			// Find showtimes based on the provided IDs
-			showtimes = await Showtime.find({ _id: { $in: ids } })
+			showtimesIds = await Showtime.find({ _id: { $in: ids } }, '_id')
 		}
 
-		for (const showtime of showtimes) {
-			await showtime.remove()
+		for (const showtimeId of showtimesIds) {
+			await showtimeId.remove()
 		}
 
-		res.status(200).json({ success: true, count: showtimes.length })
+		res.status(200).json({ success: true, count: showtimesIds.length })
 	} catch (err) {
 		console.log(err)
 		res.status(400).json({ success: false, message: err })
@@ -213,13 +213,13 @@ exports.deletePreviousShowtime = async (req, res, next) => {
 		const currentDate = new Date()
 		currentDate.setHours(0, 0, 0, 0)
 
-		const showtimes = await Showtime.find({ showtime: { $lt: currentDate } })
+		const showtimesIds = await Showtime.find({ showtime: { $lt: currentDate } }, '_id')
 
-		for (const showtime of showtimes) {
-			await showtime.remove()
+		for (const showtimeId of showtimesIds) {
+			await showtimeId.remove()
 		}
 
-		res.status(200).json({ success: true, count: showtimes.length })
+		res.status(200).json({ success: true, count: showtimesIds.length })
 	} catch (err) {
 		console.log(err)
 		res.status(400).json({ success: false, message: err })

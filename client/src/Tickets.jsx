@@ -18,7 +18,7 @@ const Tickets = () => {
 				}
 			})
 			setTickets(
-				response.data.data.tickets.sort((a, b) => {
+				response.data.data.tickets?.sort((a, b) => {
 					if (a.showtime.showtime > b.showtime.showtime) {
 						return 1
 					}
