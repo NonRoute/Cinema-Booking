@@ -3,6 +3,25 @@ const Showtime = require('../models/Showtime')
 const Theater = require('../models/Theater')
 const User = require('../models/User')
 
+//@desc     GET showtimes
+//@route    GET /showtime
+//@access   Public
+exports.getShowtimes = async (req, res, next) => {
+	try {
+		const showtimes = await Showtime.find()
+			.populate([
+				'movie',
+				{ path: 'theater', populate: { path: 'cinema', select: 'name' }, select: 'number cinema seatPlan' }
+			])
+			.select('-seats')
+
+		res.status(200).json({ success: true, count: showtimes.length, data: showtimes })
+	} catch (err) {
+		console.log(err)
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
 //@desc     GET single showtime
 //@route    GET /showtime/:id
 //@access   Public
@@ -158,18 +177,28 @@ exports.deleteShowtime = async (req, res, next) => {
 	}
 }
 
-//@desc     Delete all showtimes
+//@desc     Delete showtimes
 //@route    DELETE /showtime
 //@access   Private Admin
-exports.deleteAllShowtime = async (req, res, next) => {
+exports.deleteShowtimes = async (req, res, next) => {
 	try {
-		const showtime = await Showtime.deleteMany({})
+		const { ids } = req.body
 
-		if (!showtime) {
-			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+		let showtimes
+
+		if (!ids) {
+			// Delete all showtimes
+			showtimes = await Showtime.find()
+		} else {
+			// Find showtimes based on the provided IDs
+			showtimes = await Showtime.find({ _id: { $in: ids } })
 		}
 
-		res.status(200).json({ success: true, showtime })
+		for (const showtime of showtimes) {
+			await showtime.remove()
+		}
+
+		res.status(200).json({ success: true, count: showtimes.length })
 	} catch (err) {
 		console.log(err)
 		res.status(400).json({ success: false, message: err })

@@ -26,7 +26,7 @@ const Utils = () => {
 				}
 			})
 			// console.log(response.data)
-			toast.success(`Delete ${response.data.showtime.deletedCount} showtimes successful!`, {
+			toast.success(`Delete ${response.data.count} showtimes successful!`, {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false

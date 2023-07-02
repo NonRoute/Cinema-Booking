@@ -130,7 +130,7 @@ exports.logout = async (req, res, next) => {
 
 //@desc		Get All user
 //@route 	POST /auth/user
-//@access	Private
+//@access	Private Admin
 exports.getAll = async (req, res, next) => {
 	try {
 		const user = await User.find()
@@ -145,7 +145,7 @@ exports.getAll = async (req, res, next) => {
 
 //@desc		Delete user
 //@route 	DELETE /auth/user/:id
-//@access	Private
+//@access	Private Admin
 exports.deleteUser = async (req, res, next) => {
 	try {
 		const user = await User.findByIdAndDelete(req.params.id)
