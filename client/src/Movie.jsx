@@ -13,6 +13,7 @@ const Movie = () => {
 		register,
 		handleSubmit,
 		reset,
+		watch,
 		formState: { errors }
 	} = useForm()
 
@@ -106,13 +107,13 @@ const Movie = () => {
 					onSubmit={handleSubmit(onAddMovie)}
 					className="mt-4 flex flex-col items-center justify-end gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:flex-row"
 				>
-					<div className="flex w-full flex-col flex-wrap justify-start gap-4">
+					<div className="flex w-full grow flex-col flex-wrap justify-start gap-4 lg:w-auto">
 						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
 							<label className="text-lg font-semibold leading-5">Name :</label>
 							<input
 								type="text"
 								required
-								className="w-full flex-grow rounded py-1 px-3 font-semibold drop-shadow-sm sm:w-auto"
+								className="w-full flex-grow rounded px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
 								{...register('name', {
 									required: true
 								})}
@@ -126,7 +127,7 @@ const Movie = () => {
 								max="2000"
 								maxLength="3"
 								required
-								className="w-full flex-grow rounded py-1 px-3 font-semibold drop-shadow-sm sm:w-auto"
+								className="w-full flex-grow rounded px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
 								{...register('length', {
 									required: true
 								})}
@@ -137,20 +138,25 @@ const Movie = () => {
 							<input
 								type="text"
 								required
-								className="w-full flex-grow rounded py-1 px-3 font-semibold drop-shadow-sm sm:w-auto"
+								className="w-full flex-grow rounded px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
 								{...register('img', {
 									required: true
 								})}
 							/>
 						</div>
 					</div>
-					<button
-						className="w-full min-w-fit items-center rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:h-32 lg:w-20 xl:w-32 xl:text-xl"
-						type="submit"
-						disabled={isAddingMovie}
-					>
-						{isAddingMovie ? 'Processing...' : 'ADD +'}
-					</button>
+					<div className="flex w-full flex-col gap-4 lg:w-auto lg:flex-row">
+						{watch('img') && (
+							<img src={watch('img')} className="h-32 rounded-md object-contain drop-shadow-md" />
+						)}
+						<button
+							className="w-full min-w-fit items-center rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:h-32 lg:w-20 xl:w-32 xl:text-xl"
+							type="submit"
+							disabled={isAddingMovie}
+						>
+							{isAddingMovie ? 'Processing...' : 'ADD +'}
+						</button>
+					</div>
 				</form>
 				{isFetchingMoviesDone ? (
 					!!movies.length && (
