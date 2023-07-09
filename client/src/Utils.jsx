@@ -1,9 +1,10 @@
-import { TrashIcon } from '@heroicons/react/24/solid'
+import { ArrowDownIcon, TrashIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Navbar from './components/Navbar'
 import { AuthContext } from './context/AuthContext'
+import { Fragment } from 'react'
 import Select from 'react-tailwindcss-select'
 
 const Utils = () => {
@@ -15,23 +16,28 @@ const Utils = () => {
 	const [filterCinema, setFilterCinema] = useState(null)
 	const [filterTheater, setFilterTheater] = useState(null)
 	const [filterMovie, setFilterMovie] = useState(null)
-	const [filterShowtime, setFilterShowtime] = useState(null)
+	const [filterDate, setFilterDate] = useState(null)
+	const [filterTime, setFilterTime] = useState(null)
+	const [isCheckAll, setIsCheckAll] = useState(false)
+	const [checkedShowtimes, setCheckedShowtimes] = useState([])
 
 	const filteredShowtimes = showtimes.filter((showtime) => {
 		const showtimeDate = new Date(showtime.showtime)
 		const year = showtimeDate.getFullYear()
 		const month = showtimeDate.toLocaleString('default', { month: 'short' })
 		const day = showtimeDate.getDate().toString().padStart(2, '0')
-		const formattedShowtime = `${day} ${month} ${year}`
+		const formattedDate = `${day} ${month} ${year}`
+		const hours = showtimeDate.getHours().toString().padStart(2, '0')
+		const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
+		const formattedTime = `${hours} : ${minutes}`
 		return (
 			(!filterCinema || filterCinema.map((cinema) => cinema.value).includes(showtime.theater.cinema._id)) &&
 			(!filterTheater || filterTheater.map((theater) => theater.value).includes(showtime.theater.number)) &&
 			(!filterMovie || filterMovie.map((movie) => movie.value).includes(showtime.movie._id)) &&
-			(!filterShowtime || filterShowtime.map((showtime) => showtime.value).includes(formattedShowtime))
+			(!filterDate || filterDate.map((showtime) => showtime.value).includes(formattedDate)) &&
+			(!filterTime || filterTime.map((showtime) => showtime.value).includes(formattedTime))
 		)
 	})
-
-	console.log('filteredShowtimes', filteredShowtimes)
 
 	const fetchShowtimes = async (data) => {
 		try {
@@ -121,22 +127,9 @@ const Utils = () => {
 			<Navbar />
 			<div className="mx-4 flex h-fit flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
 				<h2 className="text-3xl font-bold text-gray-900">Search Showtimes</h2>
-				<div className={`my-4 grid grid-cols-5 rounded-md bg-gradient-to-br from-indigo-100 to-white`}>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 text-center text-2xl font-semibold text-white">
-						Cinema
-					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 text-center text-2xl font-semibold text-white">
-						Theater
-					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 text-center text-2xl font-semibold text-white">
-						Movie
-					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 text-center text-2xl font-semibold text-white">
-						Showtime
-					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 text-center text-2xl font-semibold text-white">
-						Action
-					</p>
+				<div className="flex flex-col rounded-md bg-gradient-to-br from-indigo-100 to-white p-4">
+					<h3 className="text-2xl font-bold text-gray-900">Filter</h3>
+					<h4 className="pt-1 text-lg font-bold text-gray-800">Cinema</h4>
 					<Select
 						value={filterCinema}
 						options={Array.from(new Set(showtimes.map((showtime) => showtime.theater.cinema._id))).map(
@@ -146,11 +139,16 @@ const Utils = () => {
 									.cinema.name
 							})
 						)}
-						onChange={(value) => setFilterCinema(value)}
+						onChange={(value) => {
+							setFilterCinema(value)
+							setIsCheckAll(false)
+							setCheckedShowtimes([])
+						}}
 						isMultiple={true}
 						isSearchable={true}
 						primaryColor="indigo"
 					/>
+					<h4 className="pt-1 text-lg font-bold text-gray-800">Theater</h4>
 					<Select
 						value={filterTheater}
 						options={Array.from(new Set(showtimes.map((showtime) => showtime.theater.number))).map(
@@ -159,24 +157,34 @@ const Utils = () => {
 								label: value.toString()
 							})
 						)}
-						onChange={(value) => setFilterTheater(value)}
+						onChange={(value) => {
+							setFilterTheater(value)
+							setIsCheckAll(false)
+							setCheckedShowtimes([])
+						}}
 						isMultiple={true}
 						isSearchable={true}
 						primaryColor="indigo"
 					/>
+					<h4 className="pt-1 text-lg font-bold text-gray-800">Movie</h4>
 					<Select
 						value={filterMovie}
 						options={Array.from(new Set(showtimes.map((showtime) => showtime.movie._id))).map((value) => ({
 							value,
 							label: showtimes.find((showtime) => showtime.movie._id === value).movie.name
 						}))}
-						onChange={(value) => setFilterMovie(value)}
+						onChange={(value) => {
+							setFilterMovie(value)
+							setIsCheckAll(false)
+							setCheckedShowtimes([])
+						}}
 						isMultiple={true}
 						isSearchable={true}
 						primaryColor="indigo"
 					/>
+					<h4 className="pt-1 text-lg font-bold text-gray-800">Date</h4>
 					<Select
-						value={filterShowtime}
+						value={filterDate}
 						options={Array.from(
 							new Set(
 								showtimes.map((showtime) => {
@@ -191,19 +199,138 @@ const Utils = () => {
 							value,
 							label: value
 						}))}
-						onChange={(value) => setFilterShowtime(value)}
+						onChange={(value) => {
+							setFilterDate(value)
+							setIsCheckAll(false)
+							setCheckedShowtimes([])
+						}}
 						isMultiple={true}
 						isSearchable={true}
 						primaryColor="indigo"
 					/>
-					<p className="sticky top-0 bg-gradient-to-br from-indigo-100 to-white text-center text-lg font-semibold ">
-						Action
+					<h4 className="pt-1 text-lg font-bold text-gray-800">Time</h4>
+					<Select
+						value={filterTime}
+						options={Array.from(
+							new Set(
+								showtimes.map((showtime) => {
+									const showtimeDate = new Date(showtime.showtime)
+									const hours = showtimeDate.getHours().toString().padStart(2, '0')
+									const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
+									return `${hours} : ${minutes}`
+								})
+							)
+						).map((value) => ({
+							value,
+							label: value
+						}))}
+						onChange={(value) => {
+							setFilterTime(value)
+							setIsCheckAll(false)
+							setCheckedShowtimes([])
+						}}
+						isMultiple={true}
+						isSearchable={true}
+						primaryColor="indigo"
+					/>
+				</div>
+
+				<div className="flex items-center gap-2 px-1">
+					<ArrowDownIcon className="h-6 w-6" />
+					<button
+						className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+						// onClick={() => handleDelete(showtime?._id)}
+						// disabled={isDeletingShowtimes}
+					>
+						{/* {isDeletingShowtimes ? (
+						'Processing...'
+					) : (
+						<> */}
+						{`Delete ${checkedShowtimes.length} checked showtimes`}
+						<TrashIcon className="h-5 w-5" />
+						{/* </>
+					)} */}
+					</button>
+				</div>
+
+				<div
+					className={`mb-4 grid max-h-screen overflow-auto rounded-md bg-gradient-to-br from-indigo-100 to-white`}
+					style={{ gridTemplateColumns: '34px repeat(5, minmax(max-content, 1fr))' }}
+				>
+					<p className="sticky top-0 flex items-center justify-center rounded-tl-md bg-gradient-to-br from-gray-800 to-gray-700 text-center text-xl font-semibold text-white">
+						<input
+							type="checkbox"
+							className="h-6 w-6 rounded"
+							checked={isCheckAll}
+							onChange={() => {
+								if (isCheckAll) {
+									setIsCheckAll(false)
+									setCheckedShowtimes([])
+								} else {
+									setIsCheckAll(true)
+									setCheckedShowtimes((prev) => [
+										...prev,
+										...filteredShowtimes.map((showtime) => showtime._id)
+									])
+								}
+							}}
+						/>
 					</p>
+					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+						Cinema
+					</p>
+					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+						Theater
+					</p>
+					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+						Movie
+					</p>
+					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+						Date
+					</p>
+					<p className="sticky top-0 rounded-tr-md bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+						Time
+					</p>
+					{filteredShowtimes.map((showtime, index) => {
+						const showtimeDate = new Date(showtime.showtime)
+						const year = showtimeDate.getFullYear()
+						const month = showtimeDate.toLocaleString('default', { month: 'short' })
+						const day = showtimeDate.getDate().toString().padStart(2, '0')
+						const hours = showtimeDate.getHours().toString().padStart(2, '0')
+						const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
+						return (
+							<Fragment key={index}>
+								<div className="flex items-center justify-center border-t-2 border-indigo-200">
+									<input
+										id={showtime._id}
+										type="checkbox"
+										className="h-6 w-6 rounded"
+										checked={checkedShowtimes.includes(showtime._id)}
+										onChange={(e) => {
+											const { id, checked } = e.target
+											console.log(id, checked)
+											setCheckedShowtimes((prev) => [...prev, id])
+											if (!checked) {
+												setCheckedShowtimes((prev) => prev.filter((item) => item !== id))
+											}
+										}}
+									/>
+								</div>
+								<div className="border-t-2 border-indigo-200 px-2 py-1">
+									{showtime.theater.cinema.name}
+								</div>
+								<div className="border-t-2 border-indigo-200 px-2 py-1">{showtime.theater.number}</div>
+								<div className="border-t-2 border-indigo-200 px-2 py-1">{showtime.movie.name}</div>
+								<div className="border-t-2 border-indigo-200 px-2 py-1">{`${day} ${month} ${year}`}</div>
+								<div className="border-t-2 border-indigo-200 px-2 py-1">{`${hours} : ${minutes}`}</div>
+							</Fragment>
+						)
+					})}
 				</div>
 				<div className="flex items-center gap-2">
 					<p className="text-lg font-semibold">Delete all showtimes</p>
 					<button
-						className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600 disabled:from-slate-500 disabled:to-slate-400"
+						className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600 disabled:from-slate-500 disabled:to-slate-400"
 						onClick={() => handleDeleteShowtimes()}
 						disabled={isDeletingShowtimes}
 					>
@@ -220,7 +347,7 @@ const Utils = () => {
 				<div className="flex items-center gap-2">
 					<p className="text-lg font-semibold">Delete all showtimes in previous day</p>
 					<button
-						className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600 disabled:from-slate-500 disabled:to-slate-400"
+						className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600 disabled:from-slate-500 disabled:to-slate-400"
 						onClick={() => handleDeleteShowtimesPrev()}
 						disabled={isDeletingShowtimesPrev}
 					>
