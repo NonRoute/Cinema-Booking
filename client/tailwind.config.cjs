@@ -34,7 +34,12 @@ function generateRowSpan(lastValue) {
 }
 
 module.exports = {
-	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', './node_modules/tailwind-datepicker-react/dist/**/*.js'],
+	content: [
+		'./index.html',
+		'./src/**/*.{js,ts,jsx,tsx}',
+		'./node_modules/tailwind-datepicker-react/dist/**/*.js',
+		'./node_modules/react-tailwindcss-select/dist/index.esm.js'
+	],
 	safelist: [
 		{ pattern: /grid-rows-./ },
 		{ pattern: /grid-cols-./ },
