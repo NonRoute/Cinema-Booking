@@ -142,6 +142,7 @@ const Utils = () => {
 		setIsDeletingCheckedShowtimes(true)
 		setDeletedCheckedShowtimes(0)
 		let successCounter = 0
+		let errorCounter = 0
 		const deletePromises = checkedShowtimes.map(async (checkedShowtime) => {
 			try {
 				const response = await axios.delete(`/showtime/${checkedShowtime}`, {
@@ -154,11 +155,7 @@ const Utils = () => {
 				return response
 			} catch (error) {
 				console.error(error)
-				toast.error('Error deleting checked showtime', {
-					position: 'top-center',
-					autoClose: 2000,
-					pauseOnHover: false
-				})
+				errorCounter++
 			}
 		})
 		await Promise.all(deletePromises)
@@ -167,6 +164,12 @@ const Utils = () => {
 			autoClose: 2000,
 			pauseOnHover: false
 		})
+		errorCounter > 0 &&
+			toast.error(`Error deleting ${errorCounter} checked showtime`, {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		resetState()
 		setIsDeletingCheckedShowtimes(false)
 	}
