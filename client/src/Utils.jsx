@@ -50,7 +50,6 @@ const Utils = () => {
 			const response = await axios.get('/showtime')
 			// console.log(response.data.data)
 			setShowtimes(response.data.data)
-			return response
 		} catch (error) {
 			console.error(error)
 		} finally {
@@ -142,6 +141,7 @@ const Utils = () => {
 	const onDeleteCheckedShowtimes = async () => {
 		setIsDeletingCheckedShowtimes(true)
 		setDeletedCheckedShowtimes(0)
+		let successCounter = 0
 		const deletePromises = checkedShowtimes.map(async (checkedShowtime) => {
 			try {
 				const response = await axios.delete(`/showtime/${checkedShowtime}`, {
@@ -150,6 +150,7 @@ const Utils = () => {
 					}
 				})
 				setDeletedCheckedShowtimes((prev) => prev + 1)
+				successCounter++
 				return response
 			} catch (error) {
 				console.error(error)
@@ -161,19 +162,19 @@ const Utils = () => {
 			}
 		})
 		await Promise.all(deletePromises)
-		await resetState()
-		toast.success(`Delete ${deletedCheckedShowtimes} checked showtimes successful!`, {
+		toast.success(`Delete ${successCounter} checked showtimes successful!`, {
 			position: 'top-center',
 			autoClose: 2000,
 			pauseOnHover: false
 		})
+		resetState()
 		setIsDeletingCheckedShowtimes(false)
 	}
 
 	const resetState = () => {
 		setIsCheckAll(false)
 		setCheckedShowtimes([])
-		return fetchShowtimes()
+		fetchShowtimes()
 	}
 
 	return (
@@ -311,10 +312,12 @@ const Utils = () => {
 						</button>
 					</div>
 
-					<div className="flex items-center gap-1 px-1 text-sm font-medium">
-						<InformationCircleIcon className="h-5 w-5" /> Showing {filteredShowtimes.length} filtered
-						showtimes
-					</div>
+					{isFetchingShowtimesDone && (
+						<div className="flex items-center gap-1 px-1 text-sm font-medium">
+							<InformationCircleIcon className="h-5 w-5" /> Showing {filteredShowtimes.length} filtered
+							showtimes
+						</div>
+					)}
 				</div>
 
 				<div
@@ -338,6 +341,7 @@ const Utils = () => {
 									])
 								}
 							}}
+							disabled={!isFetchingShowtimesDone}
 						/>
 					</p>
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
@@ -355,40 +359,44 @@ const Utils = () => {
 					<p className="sticky top-0 rounded-tr-md bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
 						Time
 					</p>
-					{filteredShowtimes.map((showtime, index) => {
-						const showtimeDate = new Date(showtime.showtime)
-						const year = showtimeDate.getFullYear()
-						const month = showtimeDate.toLocaleString('default', { month: 'short' })
-						const day = showtimeDate.getDate().toString().padStart(2, '0')
-						const hours = showtimeDate.getHours().toString().padStart(2, '0')
-						const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
-						return (
-							<Fragment key={index}>
-								<div className="flex items-center justify-center border-t-2 border-indigo-200">
-									<input
-										id={showtime._id}
-										type="checkbox"
-										className="h-6 w-6 rounded"
-										checked={checkedShowtimes.includes(showtime._id)}
-										onChange={(e) => {
-											const { id, checked } = e.target
-											setCheckedShowtimes((prev) => [...prev, id])
-											if (!checked) {
-												setCheckedShowtimes((prev) => prev.filter((item) => item !== id))
-											}
-										}}
-									/>
-								</div>
-								<div className="border-t-2 border-indigo-200 px-2 py-1">
-									{showtime.theater.cinema.name}
-								</div>
-								<div className="border-t-2 border-indigo-200 px-2 py-1">{showtime.theater.number}</div>
-								<div className="border-t-2 border-indigo-200 px-2 py-1">{showtime.movie.name}</div>
-								<div className="border-t-2 border-indigo-200 px-2 py-1">{`${day} ${month} ${year}`}</div>
-								<div className="border-t-2 border-indigo-200 px-2 py-1">{`${hours} : ${minutes}`}</div>
-							</Fragment>
-						)
-					})}
+					{isFetchingShowtimesDone &&
+						filteredShowtimes.map((showtime, index) => {
+							const showtimeDate = new Date(showtime.showtime)
+							const year = showtimeDate.getFullYear()
+							const month = showtimeDate.toLocaleString('default', { month: 'short' })
+							const day = showtimeDate.getDate().toString().padStart(2, '0')
+							const hours = showtimeDate.getHours().toString().padStart(2, '0')
+							const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
+							return (
+								<Fragment key={index}>
+									<div className="flex items-center justify-center border-t-2 border-indigo-200">
+										<input
+											id={showtime._id}
+											type="checkbox"
+											className="h-6 w-6 rounded"
+											checked={checkedShowtimes.includes(showtime._id)}
+											onChange={(e) => {
+												const { id, checked } = e.target
+												setCheckedShowtimes((prev) => [...prev, id])
+												if (!checked) {
+													setCheckedShowtimes((prev) => prev.filter((item) => item !== id))
+												}
+											}}
+											disabled={!isFetchingShowtimesDone}
+										/>
+									</div>
+									<div className="border-t-2 border-indigo-200 px-2 py-1">
+										{showtime.theater.cinema.name}
+									</div>
+									<div className="border-t-2 border-indigo-200 px-2 py-1">
+										{showtime.theater.number}
+									</div>
+									<div className="border-t-2 border-indigo-200 px-2 py-1">{showtime.movie.name}</div>
+									<div className="border-t-2 border-indigo-200 px-2 py-1">{`${day} ${month} ${year}`}</div>
+									<div className="border-t-2 border-indigo-200 px-2 py-1">{`${hours} : ${minutes}`}</div>
+								</Fragment>
+							)
+						})}
 				</div>
 				{!isFetchingShowtimesDone && <Loading />}
 				<div className="flex items-center gap-2">
