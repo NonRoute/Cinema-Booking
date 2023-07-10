@@ -14,7 +14,7 @@ const Utils = () => {
 	const [isDeletingShowtimes, setIsDeletingShowtimes] = useState(false)
 	const [isDeletingShowtimesPrev, setIsDeletingShowtimesPrev] = useState(false)
 	const [isDeletingCheckedShowtimes, setIsDeletingCheckedShowtimes] = useState(false)
-	const [deleteCheckedShowtimesCounter, setDeleteCheckedShowtimesCounter] = useState(0)
+	const [deletedCheckedShowtimes, setDeletedCheckedShowtimes] = useState(0)
 	const [isFetchingShowtimesDone, setIsFetchingShowtimesDone] = useState(false)
 
 	const [showtimes, setShowtimes] = useState([])
@@ -141,7 +141,7 @@ const Utils = () => {
 
 	const onDeleteCheckedShowtimes = async () => {
 		setIsDeletingCheckedShowtimes(true)
-		setDeleteCheckedShowtimesCounter(0)
+		setDeletedCheckedShowtimes(0)
 		const deletePromises = checkedShowtimes.map(async (checkedShowtime) => {
 			try {
 				const response = await axios.delete(`/showtime/${checkedShowtime}`, {
@@ -149,11 +149,11 @@ const Utils = () => {
 						Authorization: `Bearer ${auth.token}`
 					}
 				})
-				setDeleteCheckedShowtimesCounter((prev) => prev + 1)
+				setDeletedCheckedShowtimes((prev) => prev + 1)
 				return response
 			} catch (error) {
 				console.error(error)
-				toast.error('Error', {
+				toast.error('Error deleting checked showtime', {
 					position: 'top-center',
 					autoClose: 2000,
 					pauseOnHover: false
@@ -162,7 +162,7 @@ const Utils = () => {
 		})
 		await Promise.all(deletePromises)
 		await resetState()
-		toast.success(`Delete ${deletePromises.length} checked showtimes successful!`, {
+		toast.success(`Delete ${deletedCheckedShowtimes} checked showtimes successful!`, {
 			position: 'top-center',
 			autoClose: 2000,
 			pauseOnHover: false
@@ -301,7 +301,7 @@ const Utils = () => {
 							disabled={checkedShowtimes.length === 0 || isDeletingCheckedShowtimes}
 						>
 							{isDeletingCheckedShowtimes ? (
-								`${deleteCheckedShowtimesCounter} / ${checkedShowtimes.length} showtimes deleted`
+								`${deletedCheckedShowtimes} / ${checkedShowtimes.length} showtimes deleted`
 							) : (
 								<>
 									{`Delete ${checkedShowtimes.length} checked showtimes`}
@@ -372,7 +372,6 @@ const Utils = () => {
 										checked={checkedShowtimes.includes(showtime._id)}
 										onChange={(e) => {
 											const { id, checked } = e.target
-											console.log(id, checked)
 											setCheckedShowtimes((prev) => [...prev, id])
 											if (!checked) {
 												setCheckedShowtimes((prev) => prev.filter((item) => item !== id))
