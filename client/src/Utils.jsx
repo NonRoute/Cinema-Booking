@@ -48,8 +48,9 @@ const Utils = () => {
 		try {
 			setIsFetchingShowtimesDone(false)
 			const response = await axios.get('/showtime')
-			console.log(response.data.data)
+			// console.log(response.data.data)
 			setShowtimes(response.data.data)
+			return response
 		} catch (error) {
 			console.error(error)
 		} finally {
@@ -160,19 +161,19 @@ const Utils = () => {
 			}
 		})
 		await Promise.all(deletePromises)
+		await resetState()
 		toast.success(`Delete ${deletePromises.length} checked showtimes successful!`, {
 			position: 'top-center',
 			autoClose: 2000,
 			pauseOnHover: false
 		})
 		setIsDeletingCheckedShowtimes(false)
-		resetState()
 	}
 
 	const resetState = () => {
 		setIsCheckAll(false)
 		setCheckedShowtimes([])
-		fetchShowtimes()
+		return fetchShowtimes()
 	}
 
 	return (
