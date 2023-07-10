@@ -6,11 +6,16 @@ import Navbar from './components/Navbar'
 import { AuthContext } from './context/AuthContext'
 import { Fragment } from 'react'
 import Select from 'react-tailwindcss-select'
+import { FunnelIcon, InformationCircleIcon } from '@heroicons/react/24/outline'
+import Loading from './components/Loading'
 
 const Utils = () => {
 	const { auth } = useContext(AuthContext)
 	const [isDeletingShowtimes, setIsDeletingShowtimes] = useState(false)
 	const [isDeletingShowtimesPrev, setIsDeletingShowtimesPrev] = useState(false)
+	const [isDeletingCheckedShowtimes, setIsDeletingCheckedShowtimes] = useState(false)
+	const [deleteCheckedShowtimesCounter, setDeleteCheckedShowtimesCounter] = useState(0)
+	const [isFetchingShowtimesDone, setIsFetchingShowtimesDone] = useState(false)
 
 	const [showtimes, setShowtimes] = useState([])
 	const [filterCinema, setFilterCinema] = useState(null)
@@ -41,14 +46,14 @@ const Utils = () => {
 
 	const fetchShowtimes = async (data) => {
 		try {
-			// setIsFetchingMoviesDone(false)
+			setIsFetchingShowtimesDone(false)
 			const response = await axios.get('/showtime')
 			console.log(response.data.data)
 			setShowtimes(response.data.data)
 		} catch (error) {
 			console.error(error)
 		} finally {
-			// setIsFetchingMoviesDone(true)
+			setIsFetchingShowtimesDone(true)
 		}
 	}
 
@@ -86,6 +91,7 @@ const Utils = () => {
 			})
 		} finally {
 			setIsDeletingShowtimes(false)
+			resetState()
 		}
 	}
 
@@ -119,7 +125,54 @@ const Utils = () => {
 			})
 		} finally {
 			setIsDeletingShowtimesPrev(false)
+			resetState()
 		}
+	}
+
+	const handleDeleteCheckedShowtimes = () => {
+		const confirmed = window.confirm(
+			`Do you want to delete ${checkedShowtimes.length} checked showtimes, including its tickets?`
+		)
+		if (confirmed) {
+			onDeleteCheckedShowtimes()
+		}
+	}
+
+	const onDeleteCheckedShowtimes = async () => {
+		setIsDeletingCheckedShowtimes(true)
+		setDeleteCheckedShowtimesCounter(0)
+		const deletePromises = checkedShowtimes.map(async (checkedShowtime) => {
+			try {
+				const response = await axios.delete(`/showtime/${checkedShowtime}`, {
+					headers: {
+						Authorization: `Bearer ${auth.token}`
+					}
+				})
+				setDeleteCheckedShowtimesCounter((prev) => prev + 1)
+				return response
+			} catch (error) {
+				console.error(error)
+				toast.error('Error', {
+					position: 'top-center',
+					autoClose: 2000,
+					pauseOnHover: false
+				})
+			}
+		})
+		await Promise.all(deletePromises)
+		toast.success(`Delete ${deletePromises.length} checked showtimes successful!`, {
+			position: 'top-center',
+			autoClose: 2000,
+			pauseOnHover: false
+		})
+		setIsDeletingCheckedShowtimes(false)
+		resetState()
+	}
+
+	const resetState = () => {
+		setIsCheckAll(false)
+		setCheckedShowtimes([])
+		fetchShowtimes()
 	}
 
 	return (
@@ -128,7 +181,10 @@ const Utils = () => {
 			<div className="mx-4 flex h-fit flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
 				<h2 className="text-3xl font-bold text-gray-900">Search Showtimes</h2>
 				<div className="flex flex-col rounded-md bg-gradient-to-br from-indigo-100 to-white p-4">
-					<h3 className="text-2xl font-bold text-gray-900">Filter</h3>
+					<div className="flex items-center gap-2 text-2xl font-bold text-gray-900">
+						<FunnelIcon className="h-6 w-6" />
+						Filter
+					</div>
 					<h4 className="pt-1 text-lg font-bold text-gray-800">Cinema</h4>
 					<Select
 						value={filterCinema}
@@ -235,22 +291,29 @@ const Utils = () => {
 					/>
 				</div>
 
-				<div className="flex items-center gap-2 px-1">
-					<ArrowDownIcon className="h-6 w-6" />
-					<button
-						className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
-						// onClick={() => handleDelete(showtime?._id)}
-						// disabled={isDeletingShowtimes}
-					>
-						{/* {isDeletingShowtimes ? (
-						'Processing...'
-					) : (
-						<> */}
-						{`Delete ${checkedShowtimes.length} checked showtimes`}
-						<TrashIcon className="h-5 w-5" />
-						{/* </>
-					)} */}
-					</button>
+				<div className="flex justify-between">
+					<div className="flex items-center gap-2 px-1">
+						<ArrowDownIcon className="h-6 w-6" />
+						<button
+							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+							onClick={() => handleDeleteCheckedShowtimes()}
+							disabled={checkedShowtimes.length === 0 || isDeletingCheckedShowtimes}
+						>
+							{isDeletingCheckedShowtimes ? (
+								`${deleteCheckedShowtimesCounter} / ${checkedShowtimes.length} showtimes deleted`
+							) : (
+								<>
+									{`Delete ${checkedShowtimes.length} checked showtimes`}
+									<TrashIcon className="h-5 w-5" />
+								</>
+							)}
+						</button>
+					</div>
+
+					<div className="flex items-center gap-1 px-1 text-sm font-medium">
+						<InformationCircleIcon className="h-5 w-5" /> Showing {filteredShowtimes.length} filtered
+						showtimes
+					</div>
 				</div>
 
 				<div
@@ -327,6 +390,7 @@ const Utils = () => {
 						)
 					})}
 				</div>
+				{!isFetchingShowtimesDone && <Loading />}
 				<div className="flex items-center gap-2">
 					<p className="text-lg font-semibold">Delete all showtimes</p>
 					<button
