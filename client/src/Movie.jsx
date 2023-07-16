@@ -160,7 +160,7 @@ const Movie = () => {
 				</form>
 				{isFetchingMoviesDone ? (
 					!!movies.length && (
-						<div className="mt-6 flex flex-wrap gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md">
+						<div className="mt-6 grid grid-cols-1 gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1920px]:grid-cols-5">
 							{movies.map((movie, index) => {
 								return (
 									<div

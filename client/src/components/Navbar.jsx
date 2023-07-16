@@ -2,9 +2,9 @@ import {
 	ClockIcon,
 	FilmIcon,
 	HomeModernIcon,
+	MagnifyingGlassIcon,
 	TicketIcon,
-	VideoCameraIcon,
-	WrenchScrewdriverIcon
+	VideoCameraIcon
 } from '@heroicons/react/24/outline'
 import { Bars3Icon } from '@heroicons/react/24/solid'
 import axios from 'axios'
@@ -55,7 +55,7 @@ const Navbar = () => {
 				<div className="flex flex-col gap-2 lg:flex-row">
 					<Link
 						to={'/cinema'}
-						className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
+						className={`flex items-center justify-center gap-2 rounded-md px-2 py-1 text-white hover:bg-gray-500 ${
 							window.location.pathname === '/cinema'
 								? 'bg-gradient-to-br from-indigo-800 to-blue-700'
 								: 'bg-gray-600'
@@ -66,7 +66,7 @@ const Navbar = () => {
 					</Link>
 					<Link
 						to={'/schedule'}
-						className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
+						className={`flex items-center justify-center gap-2 rounded-md px-2 py-1 text-white hover:bg-gray-500 ${
 							window.location.pathname === '/schedule'
 								? 'bg-gradient-to-br from-indigo-800 to-blue-700'
 								: 'bg-gray-600'
@@ -77,40 +77,40 @@ const Navbar = () => {
 					</Link>
 					{auth.role && (
 						<Link
-							to={'/tickets'}
-							className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
+							to={'/ticket'}
+							className={`flex items-center justify-center gap-2 rounded-md px-2 py-1 text-white hover:bg-gray-500 ${
 								window.location.pathname === '/tickets'
 									? 'bg-gradient-to-br from-indigo-800 to-blue-700'
 									: 'bg-gray-600'
 							}`}
 						>
 							<TicketIcon className="h-6 w-6" />
-							<p>Tickets</p>
+							<p>Ticket</p>
 						</Link>
 					)}
 					{auth.role === 'admin' && (
 						<>
 							<Link
 								to={'/movie'}
-								className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
+								className={`flex items-center justify-center gap-2 rounded-md px-2 py-1 text-white hover:bg-gray-500 ${
 									window.location.pathname === '/movie'
 										? 'bg-gradient-to-br from-indigo-800 to-blue-700'
 										: 'bg-gray-600'
 								}`}
 							>
 								<VideoCameraIcon className="h-6 w-6" />
-								<p>Add Movie</p>
+								<p>Movie</p>
 							</Link>
 							<Link
-								to={'/utils'}
-								className={`flex items-center justify-center gap-2 rounded-md py-1 px-2 text-white hover:bg-gray-500 ${
-									window.location.pathname === '/utils'
+								to={'/search'}
+								className={`flex items-center justify-center gap-2 rounded-md px-2 py-1 text-white hover:bg-gray-500 ${
+									window.location.pathname === '/search'
 										? 'bg-gradient-to-br from-indigo-800 to-blue-700'
 										: 'bg-gray-600'
 								}`}
 							>
-								<WrenchScrewdriverIcon className="h-6 w-6" />
-								<p>Utility</p>
+								<MagnifyingGlassIcon className="h-6 w-6" />
+								<p>Search</p>
 							</Link>
 						</>
 					)}
@@ -121,14 +121,14 @@ const Navbar = () => {
 					)}
 					{auth.token ? (
 						<button
-							className="rounded-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-2 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+							className="rounded-lg bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => onLogout()}
 							disabled={isLoggingOut}
 						>
 							{isLoggingOut ? 'Processing...' : 'Logout'}
 						</button>
 					) : (
-						<button className="rounded-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-2 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400">
+						<button className="rounded-lg bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400">
 							<Link to={'/login'}>Login</Link>
 						</button>
 					)}
@@ -138,7 +138,7 @@ const Navbar = () => {
 	}
 
 	return (
-		<nav className="flex flex-col items-center justify-between gap-2 bg-gray-900 py-3 px-5 drop-shadow-lg lg:flex-row lg:justify-start">
+		<nav className="flex flex-col items-center justify-between gap-2 bg-gray-900 px-5 py-3 drop-shadow-lg lg:flex-row lg:justify-start">
 			<div className="flex w-full flex-row justify-between lg:w-fit">
 				<button className="flex flex-row items-center gap-2" onClick={() => navigate('/')}>
 					<FilmIcon className="h-8 w-8 text-white" />

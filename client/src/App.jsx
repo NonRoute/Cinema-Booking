@@ -11,7 +11,7 @@ import Register from './Register'
 import Schedule from './Schedule'
 import Showtime from './Showtime'
 import Tickets from './Tickets'
-import Utils from './Utils'
+import Search from './Search'
 
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL || 'http://localhost:8080'
 axios.defaults.withCredentials = true
@@ -34,16 +34,16 @@ function App() {
 					}
 				/>
 				<Route
-					path="/utils"
+					path="/search"
 					element={
 						<AdminRoute>
-							<Utils />
+							<Search />
 						</AdminRoute>
 					}
 				/>
 				<Route path="/showtime/:id" element={<Showtime />} />
 				<Route path="/purchase/:id" element={<Purchase />} />
-				<Route path="/tickets" element={<Tickets />} />
+				<Route path="/ticket" element={<Tickets />} />
 				<Route path="/schedule" element={<Schedule />} />
 			</Routes>
 		</>

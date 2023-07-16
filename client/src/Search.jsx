@@ -9,7 +9,7 @@ import Select from 'react-tailwindcss-select'
 import { FunnelIcon, InformationCircleIcon } from '@heroicons/react/24/outline'
 import Loading from './components/Loading'
 
-const Utils = () => {
+const Search = () => {
 	const { auth } = useContext(AuthContext)
 	const [isDeletingShowtimes, setIsDeletingShowtimes] = useState(false)
 	const [isDeletingShowtimesPrev, setIsDeletingShowtimesPrev] = useState(false)
@@ -441,4 +441,4 @@ const Utils = () => {
 	)
 }
 
-export default Utils
+export default Search
