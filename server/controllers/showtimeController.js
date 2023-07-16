@@ -72,26 +72,8 @@ exports.addShowtime = async (req, res, next) => {
 			return res.status(400).json({ success: false, message: `Movie not found with id of ${movieId}` })
 		}
 
-		const row = theater.seatPlan.row
-		const column = theater.seatPlan.column
-
-		let seats = []
-		for (let k = 64; k <= (row.length === 2 ? row.charCodeAt(0) : 64); k++) {
-			for (
-				let i = 65;
-				i <= (k === row.charCodeAt(0) || row.length === 1 ? row.charCodeAt(row.length - 1) : 90);
-				i++
-			) {
-				const letter = k === 64 ? String.fromCharCode(i) : String.fromCharCode(k) + String.fromCharCode(i)
-				for (let j = 1; j <= column; j++) {
-					const seat = { row: letter, number: j, status: 1 }
-					seats.push(seat)
-				}
-			}
-		}
-
 		for (let i = 0; i < repeat; i++) {
-			const showtimeDoc = await Showtime.create({ theater, movie: movie._id, showtime, seats })
+			const showtimeDoc = await Showtime.create({ theater, movie: movie._id, showtime })
 
 			showtimeIds.push(showtimeDoc._id)
 			showtimes.push(new Date(showtime))
@@ -119,27 +101,43 @@ exports.purchase = async (req, res, next) => {
 		const { seats } = req.body
 		const user = req.user
 
-		const showtime = await Showtime.findById(req.params.id)
+		const showtime = await Showtime.findById(req.params.id).populate({ path: 'theater', select: 'seatPlan' })
 
 		if (!showtime) {
 			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
 		}
 
+		const isSeatValid = seats.every((seatNumber) => {
+			const [row, number] = seatNumber.match(/([A-Za-z]+)(\d+)/).slice(1)
+			const maxRow = showtime.theater.seatPlan.row
+			const maxCol = showtime.theater.seatPlan.column
+
+			if (maxRow.length !== row.length) {
+				return maxRow.length > row.length
+			}
+
+			return maxRow.localeCompare(row) >= 0 && number <= maxCol
+		})
+
+		if (!isSeatValid) {
+			return res.status(400).json({ success: false, message: 'Seat is not valid' })
+		}
+
+		const isSeatAvailable = seats.every((seatNumber) => {
+			const [row, number] = seatNumber.match(/([A-Za-z]+)(\d+)/).slice(1)
+			return !showtime.seats.some((seat) => seat.row === row && seat.number === parseInt(number, 10))
+		})
+
+		if (!isSeatAvailable) {
+			return res.status(400).json({ success: false, message: 'Seat not available' })
+		}
+
 		const seatUpdates = seats.map((seatNumber) => {
 			const [row, number] = seatNumber.match(/([A-Za-z]+)(\d+)/).slice(1)
-			return { row, number: parseInt(number, 10) }
+			return { row, number: parseInt(number, 10), user: user._id }
 		})
 
-		showtime.seats.forEach((seat) => {
-			const matchingUpdate = seatUpdates.find(
-				(update) => update.row === seat.row && update.number === seat.number
-			)
-			if (matchingUpdate) {
-				seat.status = 2
-				seat.user = user._id
-			}
-		})
-
+		showtime.seats.push(...seatUpdates)
 		const updatedShowtime = await showtime.save()
 
 		const updatedUser = await User.findByIdAndUpdate(

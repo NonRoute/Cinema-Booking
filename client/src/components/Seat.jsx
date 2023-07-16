@@ -1,9 +1,9 @@
 import { CheckIcon } from '@heroicons/react/24/outline'
 import { memo, useState } from 'react'
 
-const Seat = ({ seat, setSelectedSeats, selectable }) => {
+const Seat = ({ seat, setSelectedSeats, selectable, isAvailable }) => {
 	const [isSelected, setIsSelected] = useState(false)
-	return seat.status === 2 ? (
+	return !isAvailable ? (
 		<button
 			title={`${seat.row}${seat.number}`}
 			className="flex h-8 w-8 cursor-not-allowed items-center justify-center"

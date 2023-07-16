@@ -77,7 +77,7 @@ const Showtime = () => {
 					<>
 						<ShowtimeDetails showtime={showtime} showDeleteBtn={true} />
 						<div className="flex flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
-							<div className="flex flex-col items-center gap-x-4 py-2 px-4 md:flex-row">
+							<div className="flex flex-col items-center gap-x-4 px-4 py-2 md:flex-row">
 								{!isPast && <p className="font-semibold">Selected Seats : </p>}
 								<p className="text-start">{sortedSelectedSeat.join(', ')}</p>
 								{!!selectedSeats.length && (
@@ -91,7 +91,7 @@ const Showtime = () => {
 										selectedSeats: sortedSelectedSeat,
 										showtime
 									}}
-									className="flex items-center justify-center gap-2 rounded-b-lg bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-4 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 md:rounded-none md:rounded-br-lg"
+									className="flex items-center justify-center gap-2 rounded-b-lg bg-gradient-to-br from-indigo-600 to-blue-500 px-4 py-1 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 md:rounded-none md:rounded-br-lg"
 								>
 									<p>Purchase</p>
 									<TicketIcon className="h-7 w-7 text-white" />
@@ -126,18 +126,17 @@ const Showtime = () => {
 													<div className="flex h-8 w-8 items-center">
 														<p className="w-8 text-xl font-semibold">{rowLetter}</p>
 													</div>
-													{showtime?.seats
-														.filter((seat) => seat.row === rowLetter)
-														.map((seat, index) => {
-															return (
-																<Seat
-																	key={index}
-																	seat={seat}
-																	setSelectedSeats={setSelectedSeats}
-																	selectable={!isPast}
-																/>
-															)
-														})}
+													{colNumber.map((col, index) => {
+														return (
+															<Seat
+																key={index}
+																seat={{row: rowLetter, number: col}}
+																setSelectedSeats={setSelectedSeats}
+																selectable={!isPast}
+																isAvailable={!showtime.seats.find((seat) => seat.row === rowLetter && seat.number === col)}
+															/>
+														)
+													})}
 													<div className="flex h-8 w-8 items-center">
 														<p className="w-8 text-xl font-semibold">{rowLetter}</p>
 													</div>
