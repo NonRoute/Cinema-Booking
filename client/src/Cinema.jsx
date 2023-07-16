@@ -12,11 +12,11 @@ const Cinema = () => {
 		parseInt(sessionStorage.getItem('selectedCinemaIndex')) || 0
 	)
 	const [cinemas, setCinemas] = useState([])
-	const [isFetchingCinemasDone, setIsFetchingCinemasDone] = useState(false)
+	const [isFetchingCinemas, setIsFetchingCinemas] = useState(true)
 
 	const fetchCinemas = async (newSelectedCinema) => {
 		try {
-			setIsFetchingCinemasDone(false)
+			setIsFetchingCinemas(true)
 			const response = await axios.get('/cinema')
 			// console.log(response.data.data)
 			setCinemas(response.data.data)
@@ -31,7 +31,7 @@ const Cinema = () => {
 		} catch (error) {
 			console.error(error)
 		} finally {
-			setIsFetchingCinemasDone(true)
+			setIsFetchingCinemas(false)
 		}
 	}
 
@@ -45,7 +45,7 @@ const Cinema = () => {
 		setSelectedCinemaIndex,
 		fetchCinemas,
 		auth,
-		isFetchingCinemasDone
+		isFetchingCinemas
 	}
 	return (
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">

@@ -16,18 +16,18 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 		parseInt(sessionStorage.getItem('selectedCinemaIndex'))
 	)
 	const [cinemas, setCinemas] = useState([])
-	const [isFetchingCinemasDone, setIsFetchingCinemasDone] = useState(false)
+	const [isFetchingCinemas, setIsFetchingCinemas] = useState(true)
 
 	const fetchCinemas = async (data) => {
 		try {
-			setIsFetchingCinemasDone(false)
+			setIsFetchingCinemas(true)
 			const response = await axios.get('/cinema')
 			// console.log(response.data.data)
 			setCinemas(response.data.data)
 		} catch (error) {
 			console.error(error)
 		} finally {
-			setIsFetchingCinemasDone(true)
+			setIsFetchingCinemas(false)
 		}
 	}
 
@@ -64,7 +64,7 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 		setSelectedCinemaIndex,
 		fetchCinemas,
 		auth,
-		isFetchingCinemasDone
+		isFetchingCinemas
 	}
 
 	const filteredTheaters = theaters.filter((theater) => {

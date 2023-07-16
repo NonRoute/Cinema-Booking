@@ -2,8 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useDraggable } from 'react-use-draggable-scroll'
 
-
-const ScheduleTable = ({ cinema, selectedDate, auth }) => {
+const ScheduleTable = ({ cinema, selectedDate }) => {
 	const ref = useRef(null)
 	const { events } = useDraggable(ref)
 

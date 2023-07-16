@@ -9,6 +9,7 @@ import { AuthContext } from './context/AuthContext'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import Select from 'react-tailwindcss-select'
+import Loading from './components/Loading'
 
 const Schedule = () => {
 	const { auth } = useContext(AuthContext)
@@ -26,21 +27,21 @@ const Schedule = () => {
 		parseInt(sessionStorage.getItem('selectedCinemaIndex')) || 0
 	)
 	const [cinemas, setCinemas] = useState([])
-	const [isFetchingCinemasDone, setIsFetchingCinemasDone] = useState(false)
+	const [isFetchingCinemas, setIsFetchingCinemas] = useState(true)
 	const [movies, setMovies] = useState()
 	const [isAddingShowtime, SetIsAddingShowtime] = useState(false)
 	const [selectedMovie, setSelectedMovie] = useState(null)
 
 	const fetchCinemas = async (data) => {
 		try {
-			setIsFetchingCinemasDone(false)
+			setIsFetchingCinemas(true)
 			const response = await axios.get('/cinema')
 			// console.log(response.data.data)
 			setCinemas(response.data.data)
 		} catch (error) {
 			console.error(error)
 		} finally {
-			setIsFetchingCinemasDone(true)
+			setIsFetchingCinemas(false)
 		}
 	}
 
@@ -102,7 +103,7 @@ const Schedule = () => {
 		setSelectedCinemaIndex,
 		fetchCinemas,
 		auth,
-		isFetchingCinemasDone
+		isFetchingCinemas
 	}
 
 	return (
@@ -192,12 +193,16 @@ const Schedule = () => {
 								</button>
 							</form>
 						)}
-						{cinemas[selectedCinemaIndex]?._id && (
-							<ScheduleTable
-								cinema={cinemas[selectedCinemaIndex]}
-								selectedDate={selectedDate}
-								auth={auth}
-							/>
+						{isFetchingCinemas ? (
+							<Loading />
+						) : (
+							cinemas[selectedCinemaIndex]?._id && (
+								<ScheduleTable
+									cinema={cinemas[selectedCinemaIndex]}
+									selectedDate={selectedDate}
+									auth={auth}
+								/>
+							)
 						)}
 					</div>
 				) : (

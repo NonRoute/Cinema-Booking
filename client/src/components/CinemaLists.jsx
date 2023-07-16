@@ -11,7 +11,7 @@ const CinemaLists = ({
 	setSelectedCinemaIndex,
 	fetchCinemas,
 	auth,
-	isFetchingCinemasDone = true
+	isFetchingCinemas = false
 }) => {
 	const {
 		register,
@@ -75,7 +75,9 @@ const CinemaLists = ({
 						</div>
 					)}
 				</form>
-				{isFetchingCinemasDone ? (
+				{isFetchingCinemas ? (
+					<Loading />
+				) : (
 					<div className="flex flex-wrap items-center gap-3 pt-4">
 						{cinemas?.map((cinema, index) => {
 							return cinemas[selectedCinemaIndex]?._id === cinema._id ? (
@@ -103,8 +105,6 @@ const CinemaLists = ({
 							)
 						})}
 					</div>
-				) : (
-					<Loading />
 				)}
 			</div>
 		</>
