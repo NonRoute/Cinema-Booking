@@ -3,7 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 function generateGridColumns(lastValue) {
 	let obj = {}
-	for (let i = 13; i <= lastValue; i++) {
+	for (let i = 0; i <= lastValue; i++) {
 		obj[`${i}`] = `repeat(${i}, minmax(160px, 1fr))`
 	}
 	return obj

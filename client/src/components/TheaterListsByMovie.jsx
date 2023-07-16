@@ -69,7 +69,7 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 
 	const filteredTheaters = theaters.filter((theater) => {
 		if (selectedCinemaIndex === 0 || !!selectedCinemaIndex) {
-			return theater.cinema.name === cinemas[selectedCinemaIndex].name
+			return theater.cinema?.name === cinemas[selectedCinemaIndex]?.name
 		}
 		return true
 	})

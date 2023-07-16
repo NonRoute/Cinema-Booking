@@ -141,7 +141,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 	const onDecreaseTheater = async () => {
 		try {
 			SetIsDecreasing(true)
-			const response = await axios.delete(`/theater/${cinemas[selectedCinemaIndex].theaters.slice(-1)[0]}`, {
+			const response = await axios.delete(`/theater/${cinemas[selectedCinemaIndex].theaters.slice(-1)[0]._id}`, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`
 				}
@@ -240,7 +240,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 						<button
 							title="Delete cinema"
 							disabled={isDeleting}
-							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600 disabled:from-slate-500 disabled:to-slate-400"
+							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600 disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleDelete(cinemas[selectedCinemaIndex])}
 						>
 							{isDeleting ? (
@@ -318,13 +318,13 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 					</div>
 				</form>
 				{cinemas[selectedCinemaIndex].theaters.map((theater, index) => {
-					return <Theater key={index} theaterId={theater} movies={movies} selectedDate={selectedDate} />
+					return <Theater key={index} theaterId={theater._id} movies={movies} selectedDate={selectedDate} />
 				})}
 				{auth.role === 'admin' && cinemas[selectedCinemaIndex].theaters.length > 0 && (
 					<div className="flex justify-center">
 						<button
 							title="Decrease theater"
-							className="w-fit rounded-md bg-gradient-to-r from-red-600 to-rose-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-500 hover:to-rose-400 disabled:from-slate-500 disabled:to-slate-400"
+							className="w-fit rounded-md bg-gradient-to-r from-red-700 to-rose-600 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-500 hover:to-rose-400 disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleDecreaseTheater()}
 							disabled={isDecreasing}
 						>

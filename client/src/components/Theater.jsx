@@ -1,4 +1,5 @@
 import { ArrowsRightLeftIcon, ArrowsUpDownIcon } from '@heroicons/react/24/solid'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -6,12 +7,15 @@ import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
 import Loading from './Loading'
 import Showtimes from './Showtimes'
+import Select from 'react-tailwindcss-select'
 
 const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 	const {
 		register,
 		handleSubmit,
 		reset,
+		setValue,
+		getValues,
 		formState: { errors }
 	} = useForm()
 
@@ -20,6 +24,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 	const [theater, setTheater] = useState({})
 	const [isFetchingTheaterDone, setIsFetchingTheaterDone] = useState(false)
 	const [isAddingShowtime, SetIsAddingShowtime] = useState(false)
+	const [selectedMovie, setSelectedMovie] = useState(null)
 
 	const fetchTheater = async (data) => {
 		try {
@@ -103,59 +108,67 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 			</div>
 			<div className="flex flex-col gap-4 rounded-b-md rounded-tr-md bg-gradient-to-br from-indigo-100 to-white py-4 sm:rounded-tr-none">
 				{auth.role === 'admin' && (
-					<form
-						className="mx-4 flex flex-col gap-y-2 gap-x-4 md:flex-row"
-						onSubmit={handleSubmit(onAddShowtime)}
-					>
-						<div className="flex grow-[5] items-center gap-2">
-							<label className="text-lg font-semibold leading-5">Movie :</label>
-							<select
-								className="w-12 flex-grow rounded-md bg-white px-2 py-1 font-medium text-gray-900 drop-shadow-sm"
-								{...register('movie', { required: true })}
-								required
-							>
-								<option value="" defaultValue>
-									Choose a movie
-								</option>
-								{movies?.map((movie, index) => {
-									return (
-										<option key={index} value={movie._id}>
-											{movie.name}
-										</option>
-									)
-								})}
-							</select>
-						</div>
-						<div className="flex items-center gap-2">
-							<label className="text-lg font-semibold leading-5">Showtime :</label>
-							<input
-								type="time"
-								className="w-24 flex-grow rounded px-2 py-1 font-semibold drop-shadow-sm"
-								required
-								{...register('showtime', { required: true })}
-							/>
-						</div>
-						<div className="flex items-center gap-2">
-							<label className="text-lg font-semibold leading-5">Repeat (Day) :</label>
-							<input
-								type="number"
-								min={1}
-								defaultValue={1}
-								max={31}
-								className="w-14 flex-grow rounded px-2 py-1 font-semibold drop-shadow-sm"
-								required
-								{...register('repeat', { required: true })}
-							/>
-						</div>
-						<button
-							title="Add showtime"
-							disabled={isAddingShowtime}
-							className="rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
-							type="submit"
+					<>
+						<form
+							className="mx-4 flex flex-col gap-x-4 gap-y-2 lg:flex-row"
+							onSubmit={handleSubmit(onAddShowtime)}
 						>
-							{isAddingShowtime ? 'Processing...' : 'ADD +'}
-						</button>
-					</form>
+							<div className="flex grow-[5] items-center gap-2">
+								<label className="whitespace-nowrap text-lg font-semibold leading-5">Movie :</label>
+								<Select
+									value={selectedMovie}
+									options={movies?.map((movie) => ({ value: movie._id, label: movie.name }))}
+									onChange={(value) => {
+										setValue('movie', value.value)
+										setSelectedMovie(value)
+									}}
+									isSearchable={true}
+									primaryColor="indigo"
+									classNames={{
+										menuButton: (value) =>
+											'flex font-semibold text-sm border border-gray-300 rounded shadow-sm transition-all duration-300 focus:outline-none bg-white hover:border-gray-400 focus:border-indigo-500 focus:ring focus:ring-indigo-500/20'
+									}}
+								/>
+							</div>
+							<div className="flex items-center gap-2">
+								<label className="whitespace-nowrap text-lg font-semibold leading-5">Showtime :</label>
+								<input
+									type="time"
+									className="h-full w-24 flex-grow rounded bg-white px-2 py-1 font-semibold drop-shadow-sm"
+									required
+									{...register('showtime', { required: true })}
+								/>
+							</div>
+							<div className="flex items-center gap-2">
+								<label className="whitespace-nowrap text-lg font-semibold leading-5">
+									Repeat (Day) :
+								</label>
+								<input
+									type="number"
+									min={1}
+									defaultValue={1}
+									max={31}
+									className="h-full w-14 flex-grow rounded bg-white px-2 py-1 font-semibold drop-shadow-sm"
+									required
+									{...register('repeat', { required: true })}
+								/>
+							</div>
+							<button
+								title="Add showtime"
+								disabled={isAddingShowtime}
+								className="rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+								type="submit"
+							>
+								{isAddingShowtime ? 'Processing...' : 'ADD +'}
+							</button>
+						</form>
+						{filterMovie?.name && (
+							<div className="mx-4 flex gap-2 rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 p-2 text-white">
+								<InformationCircleIcon className="h-6 w-6" />
+								{`You are viewing the showtimes of "${filterMovie?.name}"`}
+							</div>
+						)}
+					</>
 				)}
 				<Showtimes
 					showtimes={theater.showtimes}
