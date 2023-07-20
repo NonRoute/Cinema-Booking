@@ -12,8 +12,6 @@ import { useNavigate } from 'react-router-dom'
 
 const Search = () => {
 	const { auth } = useContext(AuthContext)
-	const [isDeletingShowtimes, setIsDeletingShowtimes] = useState(false)
-	const [isDeletingShowtimesPrev, setIsDeletingShowtimesPrev] = useState(false)
 	const [isDeletingCheckedShowtimes, setIsDeletingCheckedShowtimes] = useState(false)
 	const [deletedCheckedShowtimes, setDeletedCheckedShowtimes] = useState(0)
 	const [isFetchingShowtimesDone, setIsFetchingShowtimesDone] = useState(false)

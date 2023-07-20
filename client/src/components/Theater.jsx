@@ -1,5 +1,4 @@
-import { ArrowsRightLeftIcon, ArrowsUpDownIcon } from '@heroicons/react/24/solid'
-import { InformationCircleIcon } from '@heroicons/react/24/outline'
+import { InformationCircleIcon, UserIcon, ArrowsRightLeftIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline'
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -77,6 +76,15 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 		}
 	}
 
+	function rowToNumber(column) {
+		let result = 0
+		for (let i = 0; i < column.length; i++) {
+			const charCode = column.charCodeAt(i) - 64 // Convert character to ASCII and adjust to 1-based index
+			result = result * 26 + charCode
+		}
+		return result
+	}
+
 	if (!isFetchingTheaterDone) {
 		return <Loading />
 	}
@@ -89,7 +97,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 				</h3>
 				<div className="flex w-fit flex-col items-center gap-x-3 rounded-tr-2xl bg-gradient-to-br from-indigo-800 to-blue-700 px-4 py-0.5 font-semibold text-white sm:flex-row sm:gap-x-6 sm:rounded-t-2xl sm:text-lg sm:font-bold">
 					<div className="flex items-center gap-2">
-						<ArrowsUpDownIcon className="h-6 w-6" />
+						<ArrowsUpDownIcon className="h-5 w-5" />
 						{theater?.seatPlan?.row === 'A' ? (
 							<h4>Row : A</h4>
 						) : (
@@ -97,12 +105,16 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 						)}
 					</div>
 					<div className="flex items-center gap-2">
-						<ArrowsRightLeftIcon className="h-6 w-6" />
+						<ArrowsRightLeftIcon className="h-5 w-5" />
 						{theater?.seatPlan?.column === 1 ? (
 							<h4>Column : 1</h4>
 						) : (
 							<h4>Column : 1 - {theater?.seatPlan?.column}</h4>
 						)}
+					</div>
+					<div className="flex items-center gap-2">
+						<UserIcon className="h-5 w-5" />
+						{(rowToNumber(theater.seatPlan.row) * theater.seatPlan.column).toLocaleString("en-US")} Seats
 					</div>
 				</div>
 			</div>

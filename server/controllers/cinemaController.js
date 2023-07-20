@@ -15,7 +15,7 @@ exports.getCinemas = async (req, res, next) => {
 					populate: { path: 'movie', select: 'name length' },
 					select: 'movie showtime'
 				},
-				select: 'number showtimes'
+				select: 'number seatPlan showtimes'
 			})
 			.collation({ locale: 'en', strength: 2 })
 			.sort({ name: 1 })
@@ -37,7 +37,7 @@ exports.getCinema = async (req, res, next) => {
 				populate: { path: 'movie', select: 'name length' },
 				select: 'movie showtime'
 			},
-			select: 'number showtimes'
+			select: 'number seatPlan showtimes'
 		})
 
 		if (!cinema) {

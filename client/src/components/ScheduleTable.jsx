@@ -1,3 +1,4 @@
+import { ArrowsRightLeftIcon, ArrowsUpDownIcon, UserIcon } from '@heroicons/react/24/outline'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useDraggable } from 'react-use-draggable-scroll'
@@ -50,6 +51,15 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 				new Date(showtime.showtime).getYear() === selectedDate.getYear()
 			)
 		})
+	}
+
+	function rowToNumber(column) {
+		let result = 0
+		for (let i = 0; i < column.length; i++) {
+			const charCode = column.charCodeAt(i) - 64 // Convert character to ASCII and adjust to 1-based index
+			result = result * 26 + charCode
+		}
+		return result
 	}
 
 	const firstRowStart = getRowStartRange()[0]
@@ -130,12 +140,29 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 					</div>
 				)}
 
-				{[...Array(cinema.theaters?.length)].map((x, index) => (
+				{cinema.theaters.map((theater, index) => (
 					<div
 						key={index}
-						className="sticky top-0 row-span-1 row-start-1 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 text-center text-2xl font-semibold text-white"
+						className="sticky top-0 row-span-1 row-start-1 flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 text-white"
 					>
-						{index + 1}
+						<p className="text-2xl font-semibold leading-7">{index + 1}</p>
+						<div className="flex gap-1 text-xs">
+							<p className="flex items-center gap-1">
+								<ArrowsUpDownIcon className="h-3 w-3" />
+								{theater.seatPlan.row === 'A' ? theater.seatPlan.row : `A - ${theater.seatPlan.row}`}
+							</p>
+							<p className="flex items-center gap-1">
+								<ArrowsRightLeftIcon className="h-3 w-3" />
+								{theater.seatPlan.column === 1
+									? theater.seatPlan.column
+									: `1 - ${theater.seatPlan.column}`}
+							</p>
+						</div>
+						<p className="flex items-center gap-1 text-sm">
+							<UserIcon className="h-4 w-4" />
+							{(rowToNumber(theater.seatPlan.row) * theater.seatPlan.column).toLocaleString('en-US')}{' '}
+							Seats
+						</p>
 					</div>
 				))}
 			</div>
