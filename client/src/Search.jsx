@@ -27,6 +27,8 @@ const Search = () => {
 	const [filterToday, setFilterToday] = useState(null)
 	const [filterFutureDate, setFilterFutureDate] = useState(null)
 	const [filterTime, setFilterTime] = useState(null)
+	const [filterTimeFrom, setFilterTimeFrom] = useState(null)
+	const [filterTimeTo, setFilterTimeTo] = useState(null)
 	const [isCheckAll, setIsCheckAll] = useState(false)
 	const [checkedShowtimes, setCheckedShowtimes] = useState([])
 
@@ -56,7 +58,9 @@ const Search = () => {
 			(!filterFutureDate ||
 				new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) <
 					new Date(formattedDate)) &&
-			(!filterTime || filterTime.map((showtime) => showtime.value).includes(formattedTime))
+			(!filterTime || filterTime.map((showtime) => showtime.value).includes(formattedTime)) &&
+			(!filterTimeFrom || filterTimeFrom.value <= formattedTime) &&
+			(!filterTimeTo || filterTimeTo.value >= formattedTime)
 		)
 	})
 
@@ -119,13 +123,13 @@ const Search = () => {
 				pauseOnHover: false
 			})
 		resetState()
+		fetchShowtimes()
 		setIsDeletingCheckedShowtimes(false)
 	}
 
 	const resetState = () => {
 		setIsCheckAll(false)
 		setCheckedShowtimes([])
-		fetchShowtimes()
 	}
 
 	const navigate = useNavigate()
@@ -153,8 +157,7 @@ const Search = () => {
 							)}
 							onChange={(value) => {
 								setFilterCinema(value)
-								setIsCheckAll(false)
-								setCheckedShowtimes([])
+								resetState()
 							}}
 							isClearable={true}
 							isMultiple={true}
@@ -174,8 +177,7 @@ const Search = () => {
 							)}
 							onChange={(value) => {
 								setFilterTheater(value)
-								setIsCheckAll(false)
-								setCheckedShowtimes([])
+								resetState()
 							}}
 							isClearable={true}
 							isMultiple={true}
@@ -195,8 +197,7 @@ const Search = () => {
 							)}
 							onChange={(value) => {
 								setFilterMovie(value)
-								setIsCheckAll(false)
-								setCheckedShowtimes([])
+								resetState()
 							}}
 							isClearable={true}
 							isMultiple={true}
@@ -224,8 +225,7 @@ const Search = () => {
 							}))}
 							onChange={(value) => {
 								setFilterDate(value)
-								setIsCheckAll(false)
-								setCheckedShowtimes([])
+								resetState()
 							}}
 							isClearable={true}
 							isMultiple={true}
@@ -233,7 +233,7 @@ const Search = () => {
 							primaryColor="indigo"
 						/>
 						<div className="my-2 flex items-center gap-2">
-							<label className="text-lg font-semibold text-gray-800">From</label>
+							<label className="text-md font-semibold text-gray-800">From</label>
 							<Select
 								value={filterDateFrom}
 								options={Array.from(
@@ -254,14 +254,13 @@ const Search = () => {
 									}))}
 								onChange={(value) => {
 									setFilterDateFrom(value)
-									setIsCheckAll(false)
-									setCheckedShowtimes([])
+									resetState()
 								}}
 								isClearable={true}
 								isSearchable={true}
 								primaryColor="indigo"
 							/>
-							<label className="text-lg font-semibold text-gray-800">To</label>
+							<label className="text-md font-semibold text-gray-800">To</label>
 							<Select
 								value={filterDateTo}
 								options={Array.from(
@@ -282,8 +281,7 @@ const Search = () => {
 									}))}
 								onChange={(value) => {
 									setFilterDateTo(value)
-									setIsCheckAll(false)
-									setCheckedShowtimes([])
+									resetState()
 								}}
 								isClearable={true}
 								isSearchable={true}
@@ -291,7 +289,7 @@ const Search = () => {
 							/>
 						</div>
 						<div className="flex items-center gap-8">
-							<label className="flex items-center justify-between gap-2 text-lg font-semibold text-gray-800">
+							<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
 								Past Date
 								<input
 									type="checkbox"
@@ -301,12 +299,11 @@ const Search = () => {
 										setFilterPastDate(event.target.checked)
 										setFilterToday(false)
 										setFilterFutureDate(false)
-										setIsCheckAll(false)
-										setCheckedShowtimes([])
+										resetState()
 									}}
 								/>
 							</label>
-							<label className="flex items-center justify-between gap-2 text-lg font-semibold text-gray-800">
+							<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
 								Today
 								<input
 									type="checkbox"
@@ -316,12 +313,11 @@ const Search = () => {
 										setFilterPastDate(false)
 										setFilterToday(event.target.checked)
 										setFilterFutureDate(false)
-										setIsCheckAll(false)
-										setCheckedShowtimes([])
+										resetState()
 									}}
 								/>
 							</label>
-							<label className="flex items-center justify-between gap-2 text-lg font-semibold text-gray-800">
+							<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
 								Future Date
 								<input
 									type="checkbox"
@@ -331,8 +327,7 @@ const Search = () => {
 										setFilterPastDate(false)
 										setFilterToday(false)
 										setFilterFutureDate(event.target.checked)
-										setIsCheckAll(false)
-										setCheckedShowtimes([])
+										resetState()
 									}}
 								/>
 							</label>
@@ -357,14 +352,67 @@ const Search = () => {
 							}))}
 							onChange={(value) => {
 								setFilterTime(value)
-								setIsCheckAll(false)
-								setCheckedShowtimes([])
+								resetState()
 							}}
 							isClearable={true}
 							isMultiple={true}
 							isSearchable={true}
 							primaryColor="indigo"
 						/>
+						<div className="my-2 flex items-center gap-2">
+							<label className="text-md font-semibold text-gray-800">From</label>
+							<Select
+								value={filterTimeFrom}
+								options={Array.from(
+									new Set(
+										showtimes.map((showtime) => {
+											const showtimeDate = new Date(showtime.showtime)
+											const hours = showtimeDate.getHours().toString().padStart(2, '0')
+											const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
+											return `${hours} : ${minutes}`
+										})
+									)
+								)
+									.sort()
+									.map((value) => ({
+										value,
+										label: value
+									}))}
+								onChange={(value) => {
+									setFilterTimeFrom(value)
+									resetState()
+								}}
+								isClearable={true}
+								isSearchable={true}
+								primaryColor="indigo"
+							/>
+							<label className="text-md font-semibold text-gray-800">To</label>
+							<Select
+								value={filterTimeTo}
+								options={Array.from(
+									new Set(
+										showtimes.map((showtime) => {
+											const showtimeDate = new Date(showtime.showtime)
+											const hours = showtimeDate.getHours().toString().padStart(2, '0')
+											const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
+											return `${hours} : ${minutes}`
+										})
+									)
+								)
+									.sort()
+									.map((value) => ({
+										value,
+										label: value
+									}))}
+								onChange={(value) => {
+									setFilterTimeTo(value)
+									resetState()
+								}}
+								isClearable={true}
+								isSearchable={true}
+								primaryColor="indigo"
+							/>
+						</div>
 					</div>
 				</div>
 
@@ -434,7 +482,7 @@ const Search = () => {
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
 						Time
 					</p>
-					<p className="sticky top-0 flex items-center justify-center gap-2 rounded-tr-md bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+					<p className="sticky top-0 z-[1] flex items-center justify-center gap-2 rounded-tr-md bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
 						<MapIcon className="h-6 w-6" />
 						View
 					</p>
