@@ -346,10 +346,12 @@ const Search = () => {
 										return `${hours} : ${minutes}`
 									})
 								)
-							).map((value) => ({
-								value,
-								label: value
-							}))}
+							)
+								.sort()
+								.map((value) => ({
+									value,
+									label: value
+								}))}
 							onChange={(value) => {
 								setFilterTime(value)
 								resetState()
