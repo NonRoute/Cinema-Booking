@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 
-const Showtimes = ({ showtimes, movies, selectedDate, filterMovie }) => {
+const Showtimes = ({ showtimes, movies, selectedDate, filterMovie, showMovieDetail = true }) => {
 	const { auth } = useContext(AuthContext)
 
 	const navigate = useNavigate()
@@ -46,12 +46,14 @@ const Showtimes = ({ showtimes, movies, selectedDate, filterMovie }) => {
 					sortedShowtimes &&
 					sortedShowtimes[movie._id] && (
 						<div key={index} className="flex items-center">
-							<img src={movie.img} className="w-32 px-4 drop-shadow-md" />
-							<div className="mr-4 flex flex-col gap-2 py-4">
-								<div>
-									<h4 className="text-2xl font-semibold">{movie.name}</h4>
-									<p className="text-md font-medium">length : {movie.length || '-'} min</p>
-								</div>
+							{showMovieDetail && <img src={movie.img} className="w-32 px-4 drop-shadow-md" />}
+							<div className="mr-4 flex flex-col gap-2 pb-4 pt-2">
+								{showMovieDetail && (
+									<div>
+										<h4 className="text-2xl font-semibold">{movie.name}</h4>
+										<p className="text-md font-medium">length : {movie.length || '-'} min</p>
+									</div>
+								)}
 								<div className="flex flex-wrap items-center gap-2 pt-1">
 									{sortedShowtimes[movie._id]?.map((showtime, index) => {
 										return (
