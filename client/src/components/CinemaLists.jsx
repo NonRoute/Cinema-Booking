@@ -53,7 +53,7 @@ const CinemaLists = ({
 
 	const CinemaLists = ({ cinemas }) => {
 		const cinemasList = cinemas?.filter((cinema) =>
-			cinema.name.toLowerCase().includes(watch('search').toLowerCase())
+			cinema.name.toLowerCase().includes(watch('search')?.toLowerCase() || '')
 		)
 
 		return cinemasList.length ? (

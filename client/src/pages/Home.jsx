@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
-import MovieLists from '../components/MovieLists'
 import TheaterListsByMovie from '../components/TheaterListsByMovie'
 import { AuthContext } from '../context/AuthContext'
 import Navbar from '../components/Navbar'
+import NowShowing from '../components/NowShowing'
 
 const Home = () => {
 	const { auth } = useContext(AuthContext)
@@ -39,7 +39,7 @@ const Home = () => {
 	return (
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
 			<Navbar />
-			<MovieLists {...props} />
+			<NowShowing {...props} />
 			{movies[selectedMovieIndex]?.name && <TheaterListsByMovie {...props} />}
 		</div>
 	)

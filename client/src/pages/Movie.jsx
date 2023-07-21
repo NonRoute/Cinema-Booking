@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import Loading from '../components/Loading'
 import Navbar from '../components/Navbar'
 import { AuthContext } from '../context/AuthContext'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
 const Movie = () => {
 	const { auth } = useContext(AuthContext)
@@ -98,14 +99,47 @@ const Movie = () => {
 			})
 		}
 	}
+
+	const MovieLists = ({ movies }) => {
+		const moviesList = movies?.filter((movie) =>
+			movie.name.toLowerCase().includes(watch('search')?.toLowerCase() || '')
+		)
+
+		return !!moviesList.length ? (
+			<div className="grid grid-cols-1 gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1920px]:grid-cols-5">
+				{moviesList.map((movie, index) => {
+					return (
+						<div key={index} className="flex min-w-fit flex-grow rounded-md bg-white drop-shadow-md">
+							<img src={movie.img} className="h-36 rounded-md object-contain drop-shadow-md sm:h-48" />
+							<div className="flex flex-grow flex-col justify-between p-2">
+								<div>
+									<p className="text-lg font-semibold sm:text-xl">{movie.name}</p>
+									<p>length : {movie.length || '-'} min.</p>
+								</div>
+								<button
+									className="flex w-fit items-center gap-1 self-end rounded-md bg-gradient-to-br from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-700 hover:to-rose-600"
+									onClick={() => handleDelete(movie)}
+								>
+									DELETE
+									<TrashIcon className="h-5 w-5" />
+								</button>
+							</div>
+						</div>
+					)
+				})}
+			</div>
+		) : (
+			<div>No movies found</div>
+		)
+	}
 	return (
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 text-gray-900 sm:gap-8">
 			<Navbar />
-			<div className="mx-4 flex h-fit flex-col rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
+			<div className="mx-4 flex h-fit flex-col gap-4 rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
 				<h2 className="text-3xl font-bold text-gray-900">Movie Lists</h2>
 				<form
 					onSubmit={handleSubmit(onAddMovie)}
-					className="mt-4 flex flex-col items-center justify-end gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:flex-row"
+					className="flex flex-col items-center justify-end gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:flex-row"
 				>
 					<div className="flex w-full grow flex-col flex-wrap justify-start gap-4 lg:w-auto">
 						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
@@ -158,40 +192,18 @@ const Movie = () => {
 						</button>
 					</div>
 				</form>
-				{isFetchingMoviesDone ? (
-					!!movies.length && (
-						<div className="mt-6 grid grid-cols-1 gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1920px]:grid-cols-5">
-							{movies.map((movie, index) => {
-								return (
-									<div
-										key={index}
-										className="flex min-w-fit flex-grow rounded-md bg-white drop-shadow-md"
-									>
-										<img
-											src={movie.img}
-											className="h-36 rounded-md object-contain drop-shadow-md sm:h-48"
-										/>
-										<div className="flex flex-grow flex-col justify-between p-2">
-											<div>
-												<p className="text-lg font-semibold sm:text-xl">{movie.name}</p>
-												<p>length : {movie.length || '-'} min.</p>
-											</div>
-											<button
-												className="flex w-fit items-center gap-1 self-end rounded-md bg-gradient-to-br from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-700 hover:to-rose-600"
-												onClick={() => handleDelete(movie)}
-											>
-												DELETE
-												<TrashIcon className="h-5 w-5" />
-											</button>
-										</div>
-									</div>
-								)
-							})}
-						</div>
-					)
-				) : (
-					<Loading />
-				)}
+				<div className="relative">
+					<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+						<MagnifyingGlassIcon className="h-5 w-5 stroke-2 text-gray-500" />
+					</div>
+					<input
+						type="search"
+						className="block w-full rounded-lg border border-gray-300 p-2 pl-10 text-gray-900"
+						placeholder="Search a movie"
+						{...register('search')}
+					/>
+				</div>
+				{isFetchingMoviesDone ? <MovieLists movies={movies} /> : <Loading />}
 			</div>
 		</div>
 	)

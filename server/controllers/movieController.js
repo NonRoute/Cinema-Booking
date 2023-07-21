@@ -6,7 +6,7 @@ const Showtime = require('../models/Showtime')
 //@access   Public
 exports.getMovies = async (req, res, next) => {
 	try {
-		const movies = await Movie.find()
+		const movies = await Movie.find().sort({ createdAt: -1 })
 		res.status(200).json({ success: true, count: movies.length, data: movies })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })
