@@ -54,14 +54,17 @@ const CinemaLists = ({
 		<>
 			<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
 				<form
-					className="flex flex-wrap items-center justify-between gap-y-2 gap-x-4"
+					className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2"
 					onSubmit={handleSubmit(onAddCinema)}
 				>
-					<h2 className="text-3xl font-bold text-gray-900">Cinema Lists</h2>
+					<div className='flex flex-col'>
+						<h2 className="text-3xl font-bold text-gray-900">Cinema Lists</h2>
+						<h3 className="text-sm font-semibold text-gray-900">Click a cinema to view its showtimes</h3>
+					</div>
 					{auth.role === 'admin' && (
 						<div className="flex grow drop-shadow-md sm:justify-end">
 							<input
-								className="w-full grow rounded-l py-1 px-3 sm:max-w-xs"
+								className="w-full grow rounded-l px-3 py-1 sm:max-w-xs"
 								required
 								{...register('name', { required: true })}
 							/>

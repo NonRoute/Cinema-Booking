@@ -5,6 +5,7 @@ const MovieLists = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth, i
 	return (
 		<div className="mx-4 flex flex-col rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-md sm:mx-8 sm:p-6">
 			<h2 className="text-3xl font-bold text-gray-900">Now Showing</h2>
+			<h3 className="text-sm font-semibold text-gray-900">Click a movie to view its showtimes</h3>
 			{isFetchingMoviesDone ? (
 				movies.length ? (
 					<div className="mt-1 flex flex-wrap justify-center gap-4 sm:mt-3">
@@ -40,7 +41,7 @@ const MovieLists = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth, i
 										src={movie.img}
 										className="h-36 rounded-md object-cover drop-shadow-md sm:h-48"
 									/>
-									<p className="truncate pt-1 text-center text-sm font-semibold leading-4">
+									<p className="truncate pt-1 text-center text-sm font-semibold leading-4 text-gray-900">
 										{movie.name}
 									</p>
 								</div>
