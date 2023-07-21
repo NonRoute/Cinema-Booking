@@ -3,9 +3,8 @@ import Loading from './Loading'
 
 const MovieLists = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth, isFetchingMoviesDone }) => {
 	return (
-		<div className="mx-4 flex flex-col rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-md sm:mx-8 sm:p-6">
-			<h2 className="text-3xl font-bold text-gray-900">Now Showing</h2>
-			<h3 className="text-sm font-semibold text-gray-900">Click a movie to view its showtimes</h3>
+		<div className="mx-4 flex flex-col rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 text-gray-900 drop-shadow-md sm:mx-8 sm:p-6">
+			<h2 className="text-3xl font-bold">Now Showing</h2>
 			{isFetchingMoviesDone ? (
 				movies.length ? (
 					<div className="mt-1 flex flex-wrap justify-center gap-4 sm:mt-3">

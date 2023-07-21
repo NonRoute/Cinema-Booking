@@ -85,6 +85,13 @@ const Showtimes = ({ showtimes, movies, selectedDate, filterMovie, showMovieDeta
 																auth.role === 'admin' &&
 																'to-gray-100 hover:from-gray-200'
 														  }`
+														: new Date(showtime.showtime).getTime() ===
+														  new Date(
+																sortedShowtimes[movie._id].find(
+																	(s) => new Date(s.showtime) > new Date()
+																).showtime
+														  ).getTime()
+														? 'rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-lg text-white drop-shadow-sm hover:from-indigo-500 hover:to-blue-400'
 														: 'rounded-md bg-gradient-to-br from-gray-600 to-gray-500 px-2 py-1 text-lg text-white drop-shadow-sm hover:from-gray-500 hover:to-gray-400'
 												}
 												onClick={() => {
