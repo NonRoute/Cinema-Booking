@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
-import Loading from './components/Loading'
-import Navbar from './components/Navbar'
-import ShowtimeDetails from './components/ShowtimeDetails'
-import { AuthContext } from './context/AuthContext'
+import Loading from '../components/Loading'
+import Navbar from '../components/Navbar'
+import ShowtimeDetails from '../components/ShowtimeDetails'
+import { AuthContext } from '../context/AuthContext'
 
 const Tickets = () => {
 	const { auth } = useContext(AuthContext)

@@ -3,9 +3,9 @@ import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import Loading from './components/Loading'
-import Navbar from './components/Navbar'
-import { AuthContext } from './context/AuthContext'
+import Loading from '../components/Loading'
+import Navbar from '../components/Navbar'
+import { AuthContext } from '../context/AuthContext'
 
 const Movie = () => {
 	const { auth } = useContext(AuthContext)

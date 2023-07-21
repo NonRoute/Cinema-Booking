@@ -1,29 +1,12 @@
-import { InformationCircleIcon, UserIcon, ArrowsRightLeftIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline'
+import { UserIcon, ArrowsRightLeftIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline'
 import axios from 'axios'
-import { useContext, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
-import { AuthContext } from '../context/AuthContext'
+import { useEffect, useState } from 'react'
 import Loading from './Loading'
 import Showtimes from './Showtimes'
-import Select from 'react-tailwindcss-select'
 
 const TheaterShort = ({ theaterId, movies, selectedDate, filterMovie, rounded = false }) => {
-	const {
-		register,
-		handleSubmit,
-		reset,
-		setValue,
-		getValues,
-		formState: { errors }
-	} = useForm()
-
-	const { auth } = useContext(AuthContext)
-
 	const [theater, setTheater] = useState({})
 	const [isFetchingTheaterDone, setIsFetchingTheaterDone] = useState(false)
-	const [isAddingShowtime, SetIsAddingShowtime] = useState(false)
-	const [selectedMovie, setSelectedMovie] = useState(null)
 
 	const fetchTheater = async (data) => {
 		try {
@@ -41,40 +24,6 @@ const TheaterShort = ({ theaterId, movies, selectedDate, filterMovie, rounded = 
 	useEffect(() => {
 		fetchTheater()
 	}, [theaterId])
-
-	const onAddShowtime = async (data) => {
-		try {
-			SetIsAddingShowtime(true)
-			let showtime = new Date(selectedDate)
-			const [hours, minutes] = data.showtime.split(':')
-			showtime.setHours(hours, minutes, 0)
-			const response = await axios.post(
-				'/showtime',
-				{ movie: data.movie, showtime, theater: theater._id, repeat: data.repeat },
-				{
-					headers: {
-						Authorization: `Bearer ${auth.token}`
-					}
-				}
-			)
-			// console.log(response.data)
-			fetchTheater()
-			toast.success('Add showtime successful!', {
-				position: 'top-center',
-				autoClose: 2000,
-				pauseOnHover: false
-			})
-		} catch (error) {
-			console.error(error)
-			toast.error('Error', {
-				position: 'top-center',
-				autoClose: 2000,
-				pauseOnHover: false
-			})
-		} finally {
-			SetIsAddingShowtime(false)
-		}
-	}
 
 	function rowToNumber(column) {
 		let result = 0

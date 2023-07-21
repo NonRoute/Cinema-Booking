@@ -2,11 +2,11 @@ import { TicketIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import Loading from './components/Loading'
-import Navbar from './components/Navbar'
-import Seat from './components/Seat'
-import ShowtimeDetails from './components/ShowtimeDetails'
-import { AuthContext } from './context/AuthContext'
+import Loading from '../components/Loading'
+import Navbar from '../components/Navbar'
+import Seat from '../components/Seat'
+import ShowtimeDetails from '../components/ShowtimeDetails'
+import { AuthContext } from '../context/AuthContext'
 
 const Showtime = () => {
 	const { auth } = useContext(AuthContext)

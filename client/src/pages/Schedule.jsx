@@ -1,15 +1,15 @@
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
-import 'react-toastify/dist/ReactToastify.css'
-import CinemaLists from './components/CinemaLists'
-import DatePicker from './components/DatePicker'
-import Navbar from './components/Navbar'
-import ScheduleTable from './components/ScheduleTable'
-import { AuthContext } from './context/AuthContext'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
 import Select from 'react-tailwindcss-select'
-import Loading from './components/Loading'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import CinemaLists from '../components/CinemaLists'
+import DatePicker from '../components/DatePicker'
+import Loading from '../components/Loading'
+import Navbar from '../components/Navbar'
+import ScheduleTable from '../components/ScheduleTable'
+import { AuthContext } from '../context/AuthContext'
 
 const Schedule = () => {
 	const { auth } = useContext(AuthContext)

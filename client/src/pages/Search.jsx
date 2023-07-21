@@ -1,14 +1,13 @@
+import { FunnelIcon, InformationCircleIcon, MapIcon } from '@heroicons/react/24/outline'
 import { ArrowDownIcon, TrashIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
-import { useContext, useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import Navbar from './components/Navbar'
-import { AuthContext } from './context/AuthContext'
-import { Fragment } from 'react'
-import Select from 'react-tailwindcss-select'
-import { FunnelIcon, InformationCircleIcon, MapIcon } from '@heroicons/react/24/outline'
-import Loading from './components/Loading'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Select from 'react-tailwindcss-select'
+import { toast } from 'react-toastify'
+import Loading from '../components/Loading'
+import Navbar from '../components/Navbar'
+import { AuthContext } from '../context/AuthContext'
 
 const Search = () => {
 	const { auth } = useContext(AuthContext)

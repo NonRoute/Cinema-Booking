@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { AuthContext } from './context/AuthContext'
+import { AuthContext } from '../context/AuthContext'
 
 const Login = () => {
 	const navigate = useNavigate()
