@@ -12,7 +12,7 @@ const router = express.Router()
 const { protect, authorize } = require('../middleware/auth')
 
 router.route('/').get(getTheaters).post(protect, authorize('admin'), createTheater)
-router.route('/movie/:mid/:date').get(getTheaterByMovie)
+router.route('/movie/:mid/:date/:timezone').get(getTheaterByMovie)
 router
 	.route('/:id')
 	.get(getTheater)

@@ -39,7 +39,7 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 		try {
 			setIsFetchingTheatersDone(false)
 			const response = await axios.get(
-				`/theater/movie/${movies[selectedMovieIndex]._id}/${selectedDate.toISOString()}`
+				`/theater/movie/${movies[selectedMovieIndex]._id}/${selectedDate.toISOString()}/${new Date().getTimezoneOffset()}`
 			)
 			setTheaters(
 				response.data.data.sort((a, b) => {

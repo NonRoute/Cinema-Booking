@@ -40,7 +40,7 @@ const NowShowing = ({ movies, selectedMovieIndex, setSelectedMovieIndex, auth, i
 										src={movie.img}
 										className="h-36 rounded-md object-cover drop-shadow-md sm:h-48"
 									/>
-									<p className="truncate pt-1 text-center text-sm font-semibold leading-4 text-gray-900">
+									<p className="truncate pt-1 text-center text-sm font-semibold leading-4">
 										{movie.name}
 									</p>
 								</div>

@@ -38,33 +38,32 @@ exports.getTheater = async (req, res, next) => {
 	}
 }
 
-//@desc     GET theaters by movie
-//@route    GET /theater/movie/:mid/:date
+//@desc     GET theaters by movie and date
+//@route    GET /theater/movie/:mid/:date/:timezone
 //@access   Public
 exports.getTheaterByMovie = async (req, res, next) => {
 	try {
-		const { mid, date } = req.params
-
+		const { mid, date, timezone } = req.params
+		console.log(timezone)
 		let theaters = await Theater.find().populate([
 			{ path: 'showtimes', populate: { path: 'movie', select: 'name _id' }, select: 'movie showtime' },
 			{ path: 'cinema', select: 'name' }
 		])
 
-		// console.log(theaters)
 		theaters = theaters.filter((theater) => {
 			return theater.showtimes.some((showtime) => {
 				const d1 = new Date(showtime.showtime)
 				const d2 = new Date(date)
-				// console.log(showtime)
+				d1.setTime(d1.getTime() - timezone * 60 * 1000)
+				d2.setTime(d2.getTime() - timezone * 60 * 1000)
 				return (
 					showtime.movie._id.equals(mid) &&
-					d1.getFullYear() === d2.getFullYear() &&
-					d1.getMonth() === d2.getMonth() &&
-					d1.getDate() === d2.getDate()
+					d1.getUTCFullYear() === d2.getUTCFullYear() &&
+					d1.getUTCMonth() === d2.getUTCMonth() &&
+					d1.getUTCDate() === d2.getUTCDate()
 				)
 			})
 		})
-
 		res.status(200).json({ success: true, data: theaters })
 	} catch (err) {
 		console.log(err)
