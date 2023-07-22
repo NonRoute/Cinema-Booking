@@ -47,7 +47,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 	return (
 		<>
 			<div className="flex justify-between">
-				<div className="flex flex-col rounded-tl-lg bg-gradient-to-br from-gray-800 to-gray-700 px-4 py-0.5 text-center font-bold text-white sm:px-8">
+				<div className="flex flex-col justify-center rounded-tl-lg bg-gradient-to-br from-gray-800 to-gray-700 px-4 py-0.5 text-center font-bold text-white sm:px-8">
 					<p className="text-sm">Theater</p>
 					<p className="text-3xl">{showtime?.theater?.number}</p>
 				</div>
@@ -72,25 +72,25 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 					</div>
 				</div>
 				<div className="flex flex-col">
-					<div className="flex h-full min-w-max flex-col items-center justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-2 text-center text-xl font-semibold drop-shadow-lg sm:py-4 sm:text-2xl">
-						<p className="mx-4">
-							{showtime?.showtime
-								? `${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}
-                ${new Date(showtime?.showtime).getDate()}
-                ${new Date(showtime?.showtime).toLocaleString('default', { month: 'long' })}
-                ${new Date(showtime?.showtime).getFullYear()}
-                `
-								: ''}
+					<div className="flex h-full min-w-max flex-col items-start justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-2 text-center text-xl font-semibold drop-shadow-lg sm:py-4 sm:text-2xl">
+						<p className="mx-4 text-lg leading-4 ">
+							{showtime?.showtime &&
+								`${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}`}
+						</p>
+						<p className="mx-4 ">
+							{showtime?.showtime &&
+								`${new Date(showtime?.showtime).getDate()}
+               					 ${new Date(showtime?.showtime).toLocaleString('default', { month: 'long' })}
+                				${new Date(showtime?.showtime).getFullYear()}`}
 						</p>
 						<p className="mx-4 bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl">
-							{showtime?.showtime
-								? `${new Date(showtime?.showtime).getHours().toString().padStart(2, '0')} : ${new Date(
-										showtime?.showtime
-								  )
-										.getMinutes()
-										.toString()
-										.padStart(2, '0')}`
-								: ''}
+							{showtime?.showtime &&
+								`${new Date(showtime?.showtime).getHours().toString().padStart(2, '0')} : ${new Date(
+									showtime?.showtime
+								)
+									.getMinutes()
+									.toString()
+									.padStart(2, '0')}`}
 						</p>
 					</div>
 					{showDeleteBtn && auth.role === 'admin' && (

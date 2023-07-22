@@ -133,7 +133,15 @@ exports.logout = async (req, res, next) => {
 //@access	Private Admin
 exports.getAll = async (req, res, next) => {
 	try {
-		const user = await User.find()
+		const user = await User.find().populate({
+			path: 'tickets.showtime',
+			populate: [
+				'movie',
+				{ path: 'theater', populate: { path: 'cinema', select: 'name' }, select: 'cinema number' }
+			],
+			select: 'theater movie showtime'
+		})
+
 		res.status(200).json({
 			success: true,
 			data: user

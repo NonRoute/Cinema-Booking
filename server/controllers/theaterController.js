@@ -44,7 +44,6 @@ exports.getTheater = async (req, res, next) => {
 exports.getTheaterByMovie = async (req, res, next) => {
 	try {
 		const { mid, date, timezone } = req.params
-		console.log(timezone)
 		let theaters = await Theater.find().populate([
 			{ path: 'showtimes', populate: { path: 'movie', select: 'name _id' }, select: 'movie showtime' },
 			{ path: 'cinema', select: 'name' }

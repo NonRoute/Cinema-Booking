@@ -4,6 +4,7 @@ import {
 	HomeModernIcon,
 	MagnifyingGlassIcon,
 	TicketIcon,
+	UsersIcon,
 	VideoCameraIcon
 } from '@heroicons/react/24/outline'
 import { Bars3Icon } from '@heroicons/react/24/solid'
@@ -111,6 +112,17 @@ const Navbar = () => {
 							>
 								<MagnifyingGlassIcon className="h-6 w-6" />
 								<p>Search</p>
+							</Link>
+							<Link
+								to={'/user'}
+								className={`flex items-center justify-center gap-2 rounded-md px-2 py-1 text-white hover:bg-gray-500 ${
+									window.location.pathname === '/user'
+										? 'bg-gradient-to-br from-indigo-800 to-blue-700'
+										: 'bg-gray-600'
+								}`}
+							>
+								<UsersIcon className="h-6 w-6" />
+								<p>User</p>
 							</Link>
 						</>
 					)}
