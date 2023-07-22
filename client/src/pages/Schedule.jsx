@@ -66,6 +66,14 @@ const Schedule = () => {
 	const onAddShowtime = async (data) => {
 		try {
 			SetIsAddingShowtime(true)
+			if (!data.movie) {
+				toast.error('Please select a movie', {
+					position: 'top-center',
+					autoClose: 2000,
+					pauseOnHover: false
+				})
+				return
+			}
 			let showtime = new Date(selectedDate)
 			const [hours, minutes] = data.showtime.split(':')
 			showtime.setHours(hours, minutes, 0)

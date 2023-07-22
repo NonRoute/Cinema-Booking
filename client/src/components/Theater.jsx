@@ -45,6 +45,14 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 	const onAddShowtime = async (data) => {
 		try {
 			SetIsAddingShowtime(true)
+			if (!data.movie) {
+				toast.error('Please select a movie', {
+					position: 'top-center',
+					autoClose: 2000,
+					pauseOnHover: false
+				})
+				return
+			}
 			let showtime = new Date(selectedDate)
 			const [hours, minutes] = data.showtime.split(':')
 			showtime.setHours(hours, minutes, 0)
@@ -114,7 +122,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 					</div>
 					<div className="flex items-center gap-2">
 						<UserIcon className="h-5 w-5" />
-						{(rowToNumber(theater.seatPlan.row) * theater.seatPlan.column).toLocaleString("en-US")} Seats
+						{(rowToNumber(theater.seatPlan.row) * theater.seatPlan.column).toLocaleString('en-US')} Seats
 					</div>
 				</div>
 			</div>
