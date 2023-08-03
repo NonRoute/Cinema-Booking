@@ -166,3 +166,22 @@ exports.deleteUser = async (req, res, next) => {
 		res.status(400).json({ success: false, message: err })
 	}
 }
+
+//@desc     Update user
+//@route    PUT /auth/user/:id
+//@access   Private
+exports.updateUser = async (req, res, next) => {
+	try {
+		const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+			new: true,
+			runValidators: true
+		})
+
+		if (!user) {
+			return res.status(400).json({ success: false, message: `User not found with id of ${req.params.id}` })
+		}
+		res.status(200).json({ success: true, data: user })
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
+}

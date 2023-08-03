@@ -46,7 +46,14 @@ function App() {
 				<Route path="/purchase/:id" element={<Purchase />} />
 				<Route path="/ticket" element={<Tickets />} />
 				<Route path="/schedule" element={<Schedule />} />
-				<Route path="/user" element={<User />} />
+				<Route
+					path="/user"
+					element={
+						<AdminRoute>
+							<User />
+						</AdminRoute>
+					}
+				/>
 			</Routes>
 		</>
 	)

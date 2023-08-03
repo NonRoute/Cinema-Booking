@@ -72,7 +72,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 					</div>
 				</div>
 				<div className="flex flex-col">
-					<div className="flex h-full min-w-max flex-col items-start justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-2 text-center text-xl font-semibold drop-shadow-lg sm:py-4 sm:text-2xl">
+					<div className="flex h-full min-w-max flex-col items-center justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-2 text-center text-xl font-semibold drop-shadow-lg sm:py-4 sm:text-2xl md:items-start">
 						<p className="mx-4 text-lg leading-4 ">
 							{showtime?.showtime &&
 								`${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}`}

@@ -36,7 +36,7 @@ const Purchase = () => {
 			})
 		} catch (error) {
 			console.error(error)
-			toast.error('Error', {
+			toast.error(error.response.data.message || 'Error', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
@@ -52,7 +52,7 @@ const Purchase = () => {
 			<div className="mx-4 h-fit rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
 				<ShowtimeDetails showtime={showtime} />
 				<div className="flex flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
-					<div className="flex flex-col items-center gap-x-4 py-2 px-4 md:flex-row">
+					<div className="flex flex-col items-center gap-x-4 px-4 py-2 md:flex-row">
 						<p className="font-semibold">Selected Seats : </p>
 						<p className="text-start">{selectedSeats.join(', ')}</p>
 						{!!selectedSeats.length && <p className="whitespace-nowrap">({selectedSeats.length} seats)</p>}
@@ -60,7 +60,7 @@ const Purchase = () => {
 					{!!selectedSeats.length && (
 						<button
 							onClick={() => onPurchase()}
-							className="flex items-center justify-center gap-2 rounded-b-lg  bg-gradient-to-br from-indigo-600 to-blue-500 py-1 px-4 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 md:rounded-none md:rounded-br-lg"
+							className="flex items-center justify-center gap-2 rounded-b-lg  bg-gradient-to-br from-indigo-600 to-blue-500 px-4 py-1 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 md:rounded-none md:rounded-br-lg"
 							disabled={isPurchasing}
 						>
 							{isPurchasing ? (

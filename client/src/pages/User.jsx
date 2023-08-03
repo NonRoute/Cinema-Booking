@@ -4,12 +4,16 @@ import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
 import { ChevronDoubleDownIcon, ChevronDoubleUpIcon, TicketIcon, TrashIcon } from '@heroicons/react/24/outline'
 import ShowtimeDetails from '../components/ShowtimeDetails'
+import { toast } from 'react-toastify'
 
 const User = () => {
 	const { auth } = useContext(AuthContext)
 	const [users, setUsers] = useState(null)
 	const [ticketsUser, setTicketsUser] = useState(null)
 	const [tickets, setTickets] = useState([])
+	const [isUpdating, SetIsUpdating] = useState(false)
+	const [isDeleting, SetIsDeleting] = useState(false)
+
 	const fetchUsers = async (data) => {
 		try {
 			// setIsFetchingShowtimesDone(false)
@@ -30,6 +34,67 @@ const User = () => {
 	useEffect(() => {
 		fetchUsers()
 	}, [])
+
+	const onUpdateUser = async (data) => {
+		try {
+			SetIsUpdating(true)
+			const response = await axios.put(`/auth/user/${data.id}`, data, {
+				headers: {
+					Authorization: `Bearer ${auth.token}`
+				}
+			})
+			// console.log(response.data)
+			fetchUsers()
+			toast.success(`Update ${response.data.data.username} to ${response.data.data.role} successful!`, {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
+		} catch (error) {
+			console.error(error)
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
+		} finally {
+			SetIsUpdating(false)
+		}
+	}
+
+	const handleDelete = (data) => {
+		const confirmed = window.confirm(`Do you want to delete user ${data.username}?`)
+		if (confirmed) {
+			onDeleteUser(data)
+		}
+	}
+
+	const onDeleteUser = async (data) => {
+		try {
+			SetIsDeleting(true)
+			const response = await axios.delete(`/auth/user/${data.id}`, {
+				headers: {
+					Authorization: `Bearer ${auth.token}`
+				}
+			})
+			// console.log(response.data)
+			fetchUsers()
+			toast.success(`Delete successful!`, {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
+		} catch (error) {
+			console.error(error)
+			toast.error('Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
+		} finally {
+			SetIsDeleting(false)
+		}
+	}
 
 	return (
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 text-gray-900 sm:gap-8">
@@ -80,18 +145,29 @@ const User = () => {
 								</div>
 								<div className="flex gap-2 border-t-2 border-indigo-200 px-2 py-1">
 									{user.role === 'user' && (
-										<button className="flex w-[105px] items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400">
+										<button
+											className="flex w-[105px] items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+											onClick={() => onUpdateUser({ id: user._id, role: 'admin' })}
+											disabled={isUpdating}
+										>
 											Set Admin
 											<ChevronDoubleUpIcon className="h-5 w-5" />
 										</button>
 									)}
 									{user.role === 'admin' && (
-										<button className="flex w-[105px] items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400">
+										<button
+											className="flex w-[105px] items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+											onClick={() => onUpdateUser({ id: user._id, role: 'user' })}
+											disabled={isUpdating}
+										>
 											Set User
 											<ChevronDoubleDownIcon className="h-5 w-5" />
 										</button>
 									)}
-									<button className="flex items-center justify-center gap-1 rounded bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400">
+									<button
+										className="flex items-center justify-center gap-1 rounded bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400"
+										onClick={() => handleDelete({ id: user._id, username: user.username })}
+									>
 										DELETE
 										<TrashIcon className="h-5 w-5" />
 									</button>
