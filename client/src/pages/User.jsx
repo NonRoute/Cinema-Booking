@@ -167,6 +167,7 @@ const User = () => {
 									<button
 										className="flex items-center justify-center gap-1 rounded bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400"
 										onClick={() => handleDelete({ id: user._id, username: user.username })}
+										disabled={isDeleting}
 									>
 										DELETE
 										<TrashIcon className="h-5 w-5" />

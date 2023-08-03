@@ -45,6 +45,28 @@ exports.getShowtime = async (req, res, next) => {
 	}
 }
 
+//@desc     GET single showtime with user
+//@route    GET /showtime/user/:id
+//@access   Private Admin
+exports.getShowtimeWithUser = async (req, res, next) => {
+	try {
+		const showtime = await Showtime.findById(req.params.id).populate([
+			'movie',
+			{ path: 'theater', populate: { path: 'cinema', select: 'name' }, select: 'number cinema seatPlan' },
+			{ path: 'seats', populate: { path: 'user', select: 'username email role' } }
+		])
+
+		if (!showtime) {
+			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+		}
+
+		res.status(200).json({ success: true, data: showtime })
+	} catch (err) {
+		console.log(err)
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
 //@desc     Add Showtime
 //@route    POST /showtime
 //@access   Private
