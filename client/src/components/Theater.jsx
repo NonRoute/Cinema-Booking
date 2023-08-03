@@ -99,11 +99,11 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 
 	return (
 		<div className="flex flex-col">
-			<div className="flex sm:justify-between">
-				<h3 className="flex w-fit items-center rounded-tl-2xl bg-gradient-to-br from-gray-800 to-gray-700 px-4 py-0.5 text-2xl font-bold text-white sm:rounded-t-2xl sm:px-8">
+			<div className="flex md:justify-between">
+				<h3 className="flex w-fit items-center rounded-tl-2xl bg-gradient-to-br from-gray-800 to-gray-700 px-4 py-0.5 text-2xl font-bold text-white md:rounded-t-2xl md:px-8">
 					{theater.number}
 				</h3>
-				<div className="flex w-fit flex-col items-center gap-x-3 rounded-tr-2xl bg-gradient-to-br from-indigo-800 to-blue-700 px-4 py-0.5 font-semibold text-white sm:flex-row sm:gap-x-6 sm:rounded-t-2xl sm:text-lg sm:font-bold">
+				<div className="flex w-fit flex-col items-center gap-x-3 rounded-tr-2xl bg-gradient-to-br from-indigo-800 to-blue-700 px-4 py-0.5 font-semibold text-white md:flex-row md:gap-x-6 md:rounded-t-2xl md:text-lg md:font-bold">
 					<div className="flex items-center gap-2">
 						<ArrowsUpDownIcon className="h-5 w-5" />
 						{theater?.seatPlan?.row === 'A' ? (
@@ -126,7 +126,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 					</div>
 				</div>
 			</div>
-			<div className="flex flex-col gap-4 rounded-b-md rounded-tr-md bg-gradient-to-br from-indigo-100 to-white py-4 sm:rounded-tr-none">
+			<div className="flex flex-col gap-4 rounded-b-md rounded-tr-md bg-gradient-to-br from-indigo-100 to-white py-4 md:rounded-tr-none">
 				{auth.role === 'admin' && (
 					<>
 						<form

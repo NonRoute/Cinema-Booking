@@ -80,7 +80,7 @@ const Navbar = () => {
 						<Link
 							to={'/ticket'}
 							className={`flex items-center justify-center gap-2 rounded-md px-2 py-1 text-white hover:bg-gray-500 ${
-								window.location.pathname === '/tickets'
+								window.location.pathname === '/ticket'
 									? 'bg-gradient-to-br from-indigo-800 to-blue-700'
 									: 'bg-gray-600'
 							}`}

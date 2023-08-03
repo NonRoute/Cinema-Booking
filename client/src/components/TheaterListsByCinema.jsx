@@ -196,8 +196,8 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 	}
 
 	return (
-		<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 drop-shadow-md sm:mx-8">
-			<div className="flex items-center justify-center gap-2 rounded-t-md bg-gradient-to-br from-gray-900 to-gray-800 py-1.5 px-2 text-center text-2xl font-semibold text-white sm:py-2">
+		<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 text-gray-900 drop-shadow-md sm:mx-8">
+			<div className="flex items-center justify-center gap-2 rounded-t-md bg-gradient-to-br from-gray-900 to-gray-800 px-2 py-1.5 text-center text-2xl font-semibold text-white sm:py-2">
 				{isEditing ? (
 					<input
 						title="Cinema name"
@@ -257,11 +257,12 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 			</div>
 			<div className="flex flex-col gap-6 p-4 sm:p-6">
 				<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-				<form className="flex flex-col gap-2" onSubmit={handleSubmit(onIncreaseTheater)}>
-					<div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-						<h2 className="text-3xl font-bold text-gray-900">Theaters</h2>
-						{auth.role === 'admin' && (
-							<div className="flex flex-wrap items-center justify-end gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-2">
+				<form className="flex flex-col gap-4" onSubmit={handleSubmit(onIncreaseTheater)}>
+					<h2 className="text-3xl font-bold">Theaters</h2>
+					{auth.role === 'admin' && (
+						<div className="flex w-full flex-wrap justify-between gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4">
+							<h3 className="flex items-center text-xl font-bold">Increase Theater</h3>
+							<div className="flex grow flex-col gap-4 sm:justify-end md:flex-row">
 								<div className="flex flex-wrap justify-end gap-4">
 									<div className="flex flex-wrap gap-2">
 										<ArrowsUpDownIcon className="h-6 w-6" />
@@ -274,8 +275,8 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 											type="text"
 											maxLength="2"
 											required
-											className={`w-14 rounded py-1 px-3 text-2xl font-semibold drop-shadow-sm
-													${errors.row && 'border-2 border-red-500'}`}
+											className={`w-14 rounded px-3 py-1 text-2xl font-semibold drop-shadow-sm
+											${errors.row && 'border-2 border-red-500'}`}
 											{...register('row', {
 												required: true,
 												pattern: {
@@ -298,24 +299,32 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 											max="120"
 											maxLength="3"
 											required
-											className={`w-24 rounded py-1 px-3 text-2xl font-semibold drop-shadow-sm ${
+											className={`w-24 rounded px-3 py-1 text-2xl font-semibold drop-shadow-sm ${
 												errors.column && 'border-2 border-red-500'
 											}`}
 											{...register('column', { required: true })}
 										/>
 									</div>
 								</div>
-								<button
-									title="Increase theater"
-									disabled={isIncreasing}
-									className="flex items-center rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
-									type="submit"
-								>
-									{isIncreasing ? 'Processing...' : 'INCREASE +'}
-								</button>
+								<div className="flex grow md:grow-0">
+									<div className="flex flex-col items-center justify-center gap-1 rounded-l bg-gradient-to-br from-gray-800 to-gray-700 p-1 text-white">
+										<label className="text-xs font-semibold leading-3">Number</label>
+										<label className="text-2xl font-semibold leading-5">
+											{cinemas[selectedCinemaIndex].theaters.length + 1}
+										</label>
+									</div>
+									<button
+										title="Increase theater"
+										disabled={isIncreasing}
+										className="flex grow items-center justify-center whitespace-nowrap rounded-r bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:grow-0"
+										type="submit"
+									>
+										{isIncreasing ? 'Processing...' : 'INCREASE +'}
+									</button>
+								</div>
 							</div>
-						)}
-					</div>
+						</div>
+					)}
 				</form>
 				{cinemas[selectedCinemaIndex].theaters.map((theater, index) => {
 					return <Theater key={index} theaterId={theater._id} movies={movies} selectedDate={selectedDate} />
