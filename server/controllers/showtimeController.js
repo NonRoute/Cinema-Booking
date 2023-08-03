@@ -13,7 +13,7 @@ exports.getShowtimes = async (req, res, next) => {
 				'movie',
 				{ path: 'theater', populate: { path: 'cinema', select: 'name' }, select: 'number cinema seatPlan' }
 			])
-			.select('-seats')
+			.select('-seats.user -seats.row -seats.number')
 
 		res.status(200).json({ success: true, count: showtimes.length, data: showtimes })
 	} catch (err) {

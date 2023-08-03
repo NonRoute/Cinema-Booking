@@ -20,7 +20,6 @@ exports.getShowingMovies = async (req, res, next) => {
 	try {
 		const showingShowtime = await Showtime.aggregate([
 			{ $match: { showtime: { $gte: new Date() } } },
-
 			{
 				$lookup: {
 					from: 'movies', // Replace "movies" with the actual collection name of your movies

@@ -469,7 +469,7 @@ const Search = () => {
 
 				<div
 					className={`mb-4 grid max-h-screen overflow-auto rounded-md bg-gradient-to-br from-indigo-100 to-white`}
-					style={{ gridTemplateColumns: '34px repeat(5, minmax(max-content, 1fr)) 104px' }}
+					style={{ gridTemplateColumns: '34px repeat(6, minmax(max-content, 1fr)) 104px' }}
 				>
 					<p className="sticky top-0 flex items-center justify-center rounded-tl-md bg-gradient-to-br from-gray-800 to-gray-700 text-center text-xl font-semibold text-white">
 						<input
@@ -505,6 +505,9 @@ const Search = () => {
 					</p>
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
 						Time
+					</p>
+					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+						Booked
 					</p>
 					<p className="sticky top-0 z-[1] flex items-center justify-center gap-2 rounded-tr-md bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
 						<MapIcon className="h-6 w-6" />
@@ -545,6 +548,9 @@ const Search = () => {
 									<div className="border-t-2 border-indigo-200 px-2 py-1">{showtime.movie.name}</div>
 									<div className="border-t-2 border-indigo-200 px-2 py-1">{`${day} ${month} ${year}`}</div>
 									<div className="border-t-2 border-indigo-200 px-2 py-1">{`${hours} : ${minutes}`}</div>
+									<div className="border-t-2 border-indigo-200 px-2 py-1">
+										{showtime.seats.length}
+									</div>
 									<button
 										className="flex items-center justify-center gap-2 bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
 										onClick={() => navigate(`/showtime/${showtime._id}`)}
