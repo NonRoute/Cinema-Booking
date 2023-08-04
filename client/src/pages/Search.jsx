@@ -155,7 +155,7 @@ const Search = () => {
 					{isOpenFilter && (
 						<div className="">
 							<div className="flex flex-col">
-								<h4 className="pt-1 text-lg font-bold text-gray-800">Cinema</h4>
+								<h4 className="pt-1 text-lg font-bold text-gray-800">Cinema :</h4>
 								<Select
 									value={filterCinema}
 									options={Array.from(
@@ -176,7 +176,7 @@ const Search = () => {
 								/>
 							</div>
 							<div className="flex flex-col">
-								<h4 className="pt-1 text-lg font-bold text-gray-800">Theater</h4>
+								<h4 className="pt-1 text-lg font-bold text-gray-800">Theater :</h4>
 								<Select
 									value={filterTheater}
 									options={Array.from(
@@ -196,7 +196,7 @@ const Search = () => {
 								/>
 							</div>
 							<div className="flex flex-col">
-								<h4 className="pt-1 text-lg font-bold text-gray-800">Movie</h4>
+								<h4 className="pt-1 text-lg font-bold text-gray-800">Movie :</h4>
 								<Select
 									value={filterMovie}
 									options={Array.from(new Set(showtimes.map((showtime) => showtime.movie._id))).map(
@@ -216,7 +216,7 @@ const Search = () => {
 								/>
 							</div>
 							<div className="flex flex-col">
-								<h4 className="pt-1 text-lg font-bold text-gray-800">Date</h4>
+								<h4 className="pt-1 text-lg font-bold text-gray-800">Date :</h4>
 								<Select
 									value={filterDate}
 									options={Array.from(
@@ -242,7 +242,7 @@ const Search = () => {
 									isSearchable={true}
 									primaryColor="indigo"
 								/>
-								<div className="my-2 flex items-center gap-2">
+								<div className="my-2 flex flex-col items-start gap-x-2 gap-y-1 sm:flex-row sm:items-center">
 									<label className="text-md font-semibold text-gray-800">From</label>
 									<Select
 										value={filterDateFrom}
@@ -302,7 +302,7 @@ const Search = () => {
 										primaryColor="indigo"
 									/>
 								</div>
-								<div className="flex items-center gap-8">
+								<div className="flex flex-col items-start gap-x-8 gap-y-2 sm:flex-row sm:items-center">
 									<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
 										Past Date
 										<input
@@ -348,7 +348,7 @@ const Search = () => {
 								</div>
 							</div>
 							<div className="flex flex-col">
-								<h4 className="pt-1 text-lg font-bold text-gray-800">Time</h4>
+								<h4 className="pt-1 text-lg font-bold text-gray-800">Time :</h4>
 								<Select
 									value={filterTime}
 									options={Array.from(
@@ -375,7 +375,7 @@ const Search = () => {
 									isSearchable={true}
 									primaryColor="indigo"
 								/>
-								<div className="my-2 flex items-center gap-2">
+								<div className="my-2 flex flex-col items-start gap-x-2 gap-y-1 sm:flex-row sm:items-center">
 									<label className="text-md font-semibold text-gray-800">From</label>
 									<Select
 										value={filterTimeFrom}

@@ -42,6 +42,7 @@ const Movie = () => {
 
 	const onAddMovie = async (data) => {
 		try {
+			data.length = (parseInt(data.lengthHr) || 0) * 60 + (parseInt(data.lengthMin) || 0)
 			SetIsAddingMovie(true)
 			const response = await axios.post('/movie', data, {
 				headers: {
@@ -132,6 +133,13 @@ const Movie = () => {
 			<div>No movies found</div>
 		)
 	}
+
+	const inputHr = parseInt(watch('lengthHr')) || 0
+	const inputMin = parseInt(watch('lengthMin')) || 0
+	const sumMin = inputHr * 60 + inputMin
+	const hr = Math.floor(sumMin / 60)
+	const min = sumMin % 60
+
 	return (
 		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 text-gray-900 sm:gap-8">
 			<Navbar />
@@ -154,18 +162,32 @@ const Movie = () => {
 							/>
 						</div>
 						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
-							<label className="text-lg font-semibold leading-5">Length (min.):</label>
+							<label className="text-lg font-semibold leading-5">Length (hr.):</label>
 							<input
 								type="number"
-								min="1"
-								max="2000"
-								maxLength="3"
-								required
+								min="0"
+								max="20"
+								maxLength="2"
 								className="w-full flex-grow rounded px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
-								{...register('length', {
-									required: true
-								})}
+								{...register('lengthHr')}
 							/>
+						</div>
+						<div>
+							<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
+								<label className="text-lg font-semibold leading-5">Length (min.):</label>
+								<input
+									type="number"
+									min="0"
+									max="2000"
+									maxLength="4"
+									required
+									className="w-full flex-grow rounded px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
+									{...register('lengthMin', {
+										required: true
+									})}
+								/>
+							</div>
+							<div className="pt-1 text-right">{`${hr}h ${min}m / ${sumMin}m `}</div>
 						</div>
 						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
 							<label className="text-lg font-semibold leading-5">Poster URL :</label>
@@ -184,7 +206,7 @@ const Movie = () => {
 							<img src={watch('img')} className="h-32 rounded-md object-contain drop-shadow-md" />
 						)}
 						<button
-							className="w-full min-w-fit items-center rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:h-32 lg:w-20 xl:w-32 xl:text-xl"
+							className="w-full min-w-fit items-center rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:h-52 lg:w-20 xl:w-32 xl:text-xl"
 							type="submit"
 							disabled={isAddingMovie}
 						>
