@@ -17,7 +17,6 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 	const {
 		register,
 		handleSubmit,
-		getValues,
 		formState: { errors }
 	} = useForm()
 

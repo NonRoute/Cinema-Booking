@@ -17,7 +17,17 @@ const Cinema = () => {
 	const fetchCinemas = async (newSelectedCinema) => {
 		try {
 			setIsFetchingCinemas(true)
-			const response = await axios.get('/cinema')
+			let response
+			if (auth.role === 'admin') {
+				response = await axios.get('/cinema/unrelease', {
+					headers: {
+						Authorization: `Bearer ${auth.token}`
+					}
+				})
+			} else {
+				response = await axios.get('/cinema')
+			}
+
 			// console.log(response.data.data)
 			setCinemas(response.data.data)
 			if (newSelectedCinema) {

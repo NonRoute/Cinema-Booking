@@ -1,4 +1,11 @@
-import { ChevronDownIcon, ChevronUpIcon, FunnelIcon, InformationCircleIcon, MapIcon } from '@heroicons/react/24/outline'
+import {
+	ChevronDownIcon,
+	ChevronUpIcon,
+	EyeSlashIcon,
+	FunnelIcon,
+	InformationCircleIcon,
+	MapIcon
+} from '@heroicons/react/24/outline'
 import { ArrowDownIcon, TrashIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
 import { Fragment, useContext, useEffect, useState } from 'react'
@@ -67,7 +74,16 @@ const Search = () => {
 	const fetchShowtimes = async (data) => {
 		try {
 			setIsFetchingShowtimesDone(false)
-			const response = await axios.get('/showtime')
+			let response
+			if (auth.role === 'admin') {
+				response = await axios.get('/showtime/unrelease', {
+					headers: {
+						Authorization: `Bearer ${auth.token}`
+					}
+				})
+			} else {
+				response = await axios.get('/showtime')
+			}
 			// console.log(response.data.data)
 			setShowtimes(response.data.data)
 		} catch (error) {
@@ -469,7 +485,7 @@ const Search = () => {
 
 				<div
 					className={`mb-4 grid max-h-screen overflow-auto rounded-md bg-gradient-to-br from-indigo-100 to-white`}
-					style={{ gridTemplateColumns: '34px repeat(6, minmax(max-content, 1fr)) 104px' }}
+					style={{ gridTemplateColumns: '34px repeat(7, minmax(max-content, 1fr)) 104px' }}
 				>
 					<p className="sticky top-0 flex items-center justify-center rounded-tl-md bg-gradient-to-br from-gray-800 to-gray-700 text-center text-xl font-semibold text-white">
 						<input
@@ -508,6 +524,9 @@ const Search = () => {
 					</p>
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
 						Booked
+					</p>
+					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+						Release
 					</p>
 					<p className="sticky top-0 z-[1] flex items-center justify-center gap-2 rounded-tr-md bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
 						<MapIcon className="h-6 w-6" />
@@ -550,6 +569,12 @@ const Search = () => {
 									<div className="border-t-2 border-indigo-200 px-2 py-1">{`${hours} : ${minutes}`}</div>
 									<div className="border-t-2 border-indigo-200 px-2 py-1">
 										{showtime.seats.length}
+									</div>
+									<div className="flex items-center border-t-2 border-indigo-200 px-2 py-1">
+										{String(showtime.isRelease)}
+										{!showtime.isRelease && (
+											<EyeSlashIcon className="mx-auto h-5 w-5" title="Unrelease showtime" />
+										)}
 									</div>
 									<button
 										className="flex items-center justify-center gap-2 bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"

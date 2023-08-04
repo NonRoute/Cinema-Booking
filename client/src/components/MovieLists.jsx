@@ -1,6 +1,6 @@
 import { TrashIcon } from '@heroicons/react/24/solid'
 
-const MovieLists = ({ movies, search }) => {
+const MovieLists = ({ movies, search, handleDelete }) => {
 	const moviesList = movies?.filter((movie) => movie.name.toLowerCase().includes(search?.toLowerCase() || ''))
 
 	return !!moviesList.length ? (

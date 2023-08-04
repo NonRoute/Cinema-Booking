@@ -15,7 +15,16 @@ const Home = () => {
 	const fetchMovies = async (data) => {
 		try {
 			setIsFetchingMoviesDone(false)
-			const response = await axios.get('/movie/showing')
+			let response
+			if (auth.role === 'admin') {
+				response = await axios.get('/movie/unrelease/showing', {
+					headers: {
+						Authorization: `Bearer ${auth.token}`
+					}
+				})
+			} else {
+				response = await axios.get('/movie/showing')
+			}
 			// console.log(response.data.data)
 			setMovies(response.data.data)
 		} catch (error) {

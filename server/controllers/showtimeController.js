@@ -8,6 +8,25 @@ const User = require('../models/User')
 //@access   Public
 exports.getShowtimes = async (req, res, next) => {
 	try {
+		const showtimes = await Showtime.find({ isRelease: true })
+			.populate([
+				'movie',
+				{ path: 'theater', populate: { path: 'cinema', select: 'name' }, select: 'number cinema seatPlan' }
+			])
+			.select('-seats.user -seats.row -seats.number')
+
+		res.status(200).json({ success: true, count: showtimes.length, data: showtimes })
+	} catch (err) {
+		console.log(err)
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
+//@desc     GET showtimes with all unrelease showtime
+//@route    GET /showtime/unrelease
+//@access   Private admin
+exports.getUnreleaseShowtimes = async (req, res, next) => {
+	try {
 		const showtimes = await Showtime.find()
 			.populate([
 				'movie',
@@ -36,6 +55,10 @@ exports.getShowtime = async (req, res, next) => {
 
 		if (!showtime) {
 			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+		}
+
+		if (!showtime.isRelease) {
+			return res.status(400).json({ success: false, message: `Showtime is not released` })
 		}
 
 		res.status(200).json({ success: true, data: showtime })
@@ -72,7 +95,7 @@ exports.getShowtimeWithUser = async (req, res, next) => {
 //@access   Private
 exports.addShowtime = async (req, res, next) => {
 	try {
-		const { movie: movieId, showtime: showtimeString, theater: theaterId, repeat = 1 } = req.body
+		const { movie: movieId, showtime: showtimeString, theater: theaterId, repeat = 1, isRelease } = req.body
 
 		if (repeat > 31 || repeat < 1) {
 			return res.status(400).json({ success: false, message: `Repeat is not a valid number between 1 to 31` })
@@ -95,7 +118,7 @@ exports.addShowtime = async (req, res, next) => {
 		}
 
 		for (let i = 0; i < repeat; i++) {
-			const showtimeDoc = await Showtime.create({ theater, movie: movie._id, showtime })
+			const showtimeDoc = await Showtime.create({ theater, movie: movie._id, showtime, isRelease })
 
 			showtimeIds.push(showtimeDoc._id)
 			showtimes.push(new Date(showtime))

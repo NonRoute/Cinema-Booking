@@ -192,7 +192,11 @@ const Movie = () => {
 						{...register('search')}
 					/>
 				</div>
-				{isFetchingMoviesDone ? <MovieLists movies={movies} search={watch('search')} /> : <Loading />}
+				{isFetchingMoviesDone ? (
+					<MovieLists movies={movies} search={watch('search')} handleDelete={handleDelete} />
+				) : (
+					<Loading />
+				)}
 			</div>
 		</div>
 	)

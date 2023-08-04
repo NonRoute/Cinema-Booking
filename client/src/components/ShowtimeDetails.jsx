@@ -4,6 +4,7 @@ import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
+import { EyeSlashIcon } from '@heroicons/react/24/outline'
 
 const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 	const { auth } = useContext(AuthContext)
@@ -52,7 +53,8 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime }) => {
 					<p className="text-3xl">{showtime?.theater?.number}</p>
 				</div>
 				<div className="flex w-fit grow items-center justify-center rounded-tr-lg bg-gradient-to-br from-indigo-800 to-blue-700 px-4 py-0.5 text-center text-xl font-bold text-white sm:text-3xl">
-					<p>{showtime?.theater?.cinema.name}</p>
+					<p className="mx-auto">{showtime?.theater?.cinema.name}</p>
+					{!showtime.isRelease && <EyeSlashIcon className="h-8 w-8" title="Unrelease showtime" />}
 				</div>
 			</div>
 			<div className="flex flex-col md:flex-row">

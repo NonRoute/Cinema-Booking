@@ -8,10 +8,18 @@ const Theater = require('../models/Theater')
 //@access   Public
 exports.getTheaters = async (req, res, next) => {
 	try {
-		const theaters = await Theater.find().populate([
-			{ path: 'showtimes', select: 'movie showtime' },
-			{ path: 'cinema', select: 'name' }
-		])
+		const theaters = await Theater.find()
+			.populate([
+				{ path: 'showtimes', select: 'movie showtime isRelease' },
+				{ path: 'cinema', select: 'name' }
+			])
+			.then((theaters) => {
+				theaters.forEach((theater) => {
+					theater.showtimes = theater.showtimes.filter((showtime) => showtime.isRelease)
+				})
+				return theaters
+			})
+
 		res.status(200).json({ success: true, count: theaters.length, data: theaters })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })
@@ -23,8 +31,33 @@ exports.getTheaters = async (req, res, next) => {
 //@access   Public
 exports.getTheater = async (req, res, next) => {
 	try {
+		const theater = await Theater.findById(req.params.id)
+			.populate([
+				{ path: 'showtimes', select: 'movie showtime isRelease' },
+				{ path: 'cinema', select: 'name' }
+			])
+			.then((theater) => {
+				theater.showtimes = theater.showtimes.filter((showtime) => showtime.isRelease)
+				return theater
+			})
+
+		if (!theater) {
+			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
+		}
+
+		res.status(200).json({ success: true, data: theater })
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
+//@desc     GET single theater with all unrelease showtime
+//@route    GET /theater/unrelease/:id
+//@access   Private admin
+exports.getUnreleaseTheater = async (req, res, next) => {
+	try {
 		const theater = await Theater.findById(req.params.id).populate([
-			{ path: 'showtimes', select: 'movie showtime' },
+			{ path: 'showtimes', select: 'movie showtime isRelease' },
 			{ path: 'cinema', select: 'name' }
 		])
 
@@ -44,8 +77,55 @@ exports.getTheater = async (req, res, next) => {
 exports.getTheaterByMovie = async (req, res, next) => {
 	try {
 		const { mid, date, timezone } = req.params
+		let theaters = await Theater.find()
+			.populate([
+				{
+					path: 'showtimes',
+					populate: { path: 'movie', select: 'name _id' },
+					select: 'movie showtime isRelease'
+				},
+				{ path: 'cinema', select: 'name' }
+			])
+			.then((theaters) => {
+				theaters.forEach((theater) => {
+					theater.showtimes = theater.showtimes.filter((showtime) => showtime.isRelease)
+				})
+				return theaters
+			})
+
+		theaters = theaters.filter((theater) => {
+			return theater.showtimes.some((showtime) => {
+				const d1 = new Date(showtime.showtime)
+				const d2 = new Date(date)
+				d1.setTime(d1.getTime() - timezone * 60 * 1000)
+				d2.setTime(d2.getTime() - timezone * 60 * 1000)
+				return (
+					showtime.movie._id.equals(mid) &&
+					d1.getUTCFullYear() === d2.getUTCFullYear() &&
+					d1.getUTCMonth() === d2.getUTCMonth() &&
+					d1.getUTCDate() === d2.getUTCDate()
+				)
+			})
+		})
+		res.status(200).json({ success: true, data: theaters })
+	} catch (err) {
+		console.log(err)
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
+//@desc     GET theaters by movie and date with all unrelease showtime
+//@route    GET /theater/movie/unrelease/:mid/:date/:timezone
+//@access   Private admin
+exports.getUnreleaseTheaterByMovie = async (req, res, next) => {
+	try {
+		const { mid, date, timezone } = req.params
 		let theaters = await Theater.find().populate([
-			{ path: 'showtimes', populate: { path: 'movie', select: 'name _id' }, select: 'movie showtime' },
+			{
+				path: 'showtimes',
+				populate: { path: 'movie', select: 'name _id' },
+				select: 'movie showtime isRelease'
+			},
 			{ path: 'cinema', select: 'name' }
 		])
 

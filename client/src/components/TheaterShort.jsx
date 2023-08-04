@@ -1,17 +1,28 @@
 import { UserIcon, ArrowsRightLeftIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Loading from './Loading'
 import Showtimes from './Showtimes'
+import { AuthContext } from '../context/AuthContext'
 
 const TheaterShort = ({ theaterId, movies, selectedDate, filterMovie, rounded = false }) => {
+	const { auth } = useContext(AuthContext)
 	const [theater, setTheater] = useState({})
 	const [isFetchingTheaterDone, setIsFetchingTheaterDone] = useState(false)
 
 	const fetchTheater = async (data) => {
 		try {
 			setIsFetchingTheaterDone(false)
-			const response = await axios.get(`/theater/${theaterId}`)
+			let response
+			if (auth.role === 'admin') {
+				response = await axios.get(`/theater/unrelease/${theaterId}`, {
+					headers: {
+						Authorization: `Bearer ${auth.token}`
+					}
+				})
+			} else {
+				response = await axios.get(`/theater/${theaterId}`)
+			}
 			// console.log(response.data.data)
 			setTheater(response.data.data)
 		} catch (error) {

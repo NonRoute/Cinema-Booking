@@ -35,8 +35,17 @@ const Schedule = () => {
 	const fetchCinemas = async (data) => {
 		try {
 			setIsFetchingCinemas(true)
-			const response = await axios.get('/cinema')
-			// console.log(response.data.data)
+			let response
+			if (auth.role === 'admin') {
+				response = await axios.get('/cinema/unrelease', {
+					headers: {
+						Authorization: `Bearer ${auth.token}`
+					}
+				})
+			} else {
+				response = await axios.get('/cinema')
+			}
+			console.log(response.data.data)
 			setCinemas(response.data.data)
 		} catch (error) {
 			console.error(error)
@@ -79,7 +88,7 @@ const Schedule = () => {
 			showtime.setHours(hours, minutes, 0)
 			const response = await axios.post(
 				'/showtime',
-				{ movie: data.movie, showtime, theater: data.theater, repeat: data.repeat },
+				{ movie: data.movie, showtime, theater: data.theater, repeat: data.repeat, isRelease: data.isRelease },
 				{
 					headers: {
 						Authorization: `Bearer ${auth.token}`
@@ -120,15 +129,15 @@ const Schedule = () => {
 			<CinemaLists {...props} />
 			{selectedCinemaIndex !== null &&
 				(cinemas[selectedCinemaIndex]?.theaters?.length ? (
-					<div className="mx-4 flex h-screen flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
+					<div className="mx-4 flex flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
 						<h2 className="text-3xl font-bold text-gray-900">Schedule</h2>
 						<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 						{auth.role === 'admin' && (
 							<form
-								className="flex flex-col gap-2 rounded-lg md:flex-row md:items-end"
+								className="flex flex-col gap-2 rounded-lg lg:flex-row lg:items-stretch"
 								onSubmit={handleSubmit(onAddShowtime)}
 							>
-								<div className="flex grow items-center gap-x-2 gap-y-1 md:flex-col md:items-start">
+								<div className="flex grow items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
 									<label className="whitespace-nowrap text-lg font-semibold leading-5">
 										Theater :
 									</label>
@@ -149,7 +158,7 @@ const Schedule = () => {
 										})}
 									</select>
 								</div>
-								<div className="flex grow-[2] items-center gap-x-2 gap-y-1 md:flex-col md:items-start">
+								<div className="flex grow-[2] items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
 									<label className="whitespace-nowrap text-lg font-semibold leading-5">Movie :</label>
 									<Select
 										value={selectedMovie}
@@ -166,7 +175,7 @@ const Schedule = () => {
 										}}
 									/>
 								</div>
-								<div className="flex items-center gap-x-2 gap-y-1 md:flex-col md:items-start">
+								<div className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
 									<label className="whitespace-nowrap text-lg font-semibold leading-5">
 										Showtime :
 									</label>
@@ -177,7 +186,7 @@ const Schedule = () => {
 										{...register('showtime', { required: true })}
 									/>
 								</div>
-								<div className="flex items-center gap-x-2 gap-y-1 md:flex-col md:items-start">
+								<div className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
 									<label className="whitespace-nowrap text-lg font-semibold leading-5">
 										Repeat (Day) :
 									</label>
@@ -191,10 +200,18 @@ const Schedule = () => {
 										{...register('repeat', { required: true })}
 									/>
 								</div>
+								<label className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap text-lg font-semibold leading-5 lg:flex-col lg:items-start">
+									Release now :
+									<input
+										type="checkbox"
+										className="h-6 w-6 lg:h-9 lg:w-9"
+										{...register('isRelease')}
+									/>
+								</label>
 								<button
 									title="Add showtime"
 									disabled={isAddingShowtime}
-									className="h-9 whitespace-nowrap rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+									className="whitespace-nowrap rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
 									type="submit"
 								>
 									{isAddingShowtime ? 'Processing...' : 'ADD +'}

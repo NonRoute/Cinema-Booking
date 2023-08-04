@@ -28,7 +28,16 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 	const fetchTheater = async (data) => {
 		try {
 			setIsFetchingTheaterDone(false)
-			const response = await axios.get(`/theater/${theaterId}`)
+			let response
+			if (auth.role === 'admin') {
+				response = await axios.get(`/theater/unrelease/${theaterId}`, {
+					headers: {
+						Authorization: `Bearer ${auth.token}`
+					}
+				})
+			} else {
+				response = await axios.get(`/theater/${theaterId}`)
+			}
 			// console.log(response.data.data)
 			setTheater(response.data.data)
 		} catch (error) {
@@ -58,7 +67,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 			showtime.setHours(hours, minutes, 0)
 			const response = await axios.post(
 				'/showtime',
-				{ movie: data.movie, showtime, theater: theater._id, repeat: data.repeat },
+				{ movie: data.movie, showtime, theater: theater._id, repeat: data.repeat, isRelease: data.isRelease },
 				{
 					headers: {
 						Authorization: `Bearer ${auth.token}`
@@ -133,11 +142,14 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 							className="mx-4 flex flex-col gap-x-4 gap-y-2 lg:flex-row"
 							onSubmit={handleSubmit(onAddShowtime)}
 						>
-							<div className="flex grow-[5] items-center gap-2">
+							<div className="flex grow-[5] flex-row items-center gap-2 lg:flex-col lg:items-start">
 								<label className="whitespace-nowrap text-lg font-semibold leading-5">Movie :</label>
 								<Select
 									value={selectedMovie}
-									options={movies?.map((movie) => ({ value: movie._id, label: movie.name }))}
+									options={movies?.map((movie) => ({
+										value: movie._id,
+										label: movie.name
+									}))}
 									onChange={(value) => {
 										setValue('movie', value.value)
 										setSelectedMovie(value)
@@ -150,7 +162,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 									}}
 								/>
 							</div>
-							<div className="flex items-center gap-2">
+							<div className="flex flex-row items-center gap-2 lg:flex-col lg:items-start">
 								<label className="whitespace-nowrap text-lg font-semibold leading-5">Showtime :</label>
 								<input
 									type="time"
@@ -159,7 +171,7 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 									{...register('showtime', { required: true })}
 								/>
 							</div>
-							<div className="flex items-center gap-2">
+							<div className="flex flex-row items-center gap-2 lg:flex-col lg:items-start">
 								<label className="whitespace-nowrap text-lg font-semibold leading-5">
 									Repeat (Day) :
 								</label>
@@ -168,15 +180,19 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 									min={1}
 									defaultValue={1}
 									max={31}
-									className="h-full w-14 flex-grow rounded bg-white px-2 py-1 font-semibold drop-shadow-sm"
+									className="h-full w-full flex-grow rounded bg-white px-2 py-1 font-semibold drop-shadow-sm"
 									required
 									{...register('repeat', { required: true })}
 								/>
 							</div>
+							<label className="flex flex-row gap-2 whitespace-nowrap text-lg font-semibold leading-5 lg:flex-col">
+								Release now :
+								<input type="checkbox" className="h-6 w-6 lg:h-9 lg:w-9" {...register('isRelease')} />
+							</label>
 							<button
 								title="Add showtime"
 								disabled={isAddingShowtime}
-								className="rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+								className="whitespace-nowrap rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
 								type="submit"
 							>
 								{isAddingShowtime ? 'Processing...' : 'ADD +'}

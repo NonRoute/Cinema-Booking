@@ -10,7 +10,8 @@ const showtimeSchema = new mongoose.Schema({
 			number: { type: Number, required: [true, 'Please add a seat number'] },
 			user: { type: mongoose.Schema.ObjectId, ref: 'User' }
 		}
-	]
+	],
+	isRelease: Boolean
 })
 
 showtimeSchema.pre('remove', async function (next) {

@@ -21,7 +21,16 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 	const fetchCinemas = async (data) => {
 		try {
 			setIsFetchingCinemas(true)
-			const response = await axios.get('/cinema')
+			let response
+			if (auth.role === 'admin') {
+				response = await axios.get('/cinema/unrelease', {
+					headers: {
+						Authorization: `Bearer ${auth.token}`
+					}
+				})
+			} else {
+				response = await axios.get('/cinema')
+			}
 			// console.log(response.data.data)
 			setCinemas(response.data.data)
 		} catch (error) {
@@ -38,9 +47,25 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 	const fetchTheaters = async (data) => {
 		try {
 			setIsFetchingTheatersDone(false)
-			const response = await axios.get(
-				`/theater/movie/${movies[selectedMovieIndex]._id}/${selectedDate.toISOString()}/${new Date().getTimezoneOffset()}`
-			)
+			let response
+			if (auth.role === 'admin') {
+				response = await axios.get(
+					`/theater/movie/unrelease/${
+						movies[selectedMovieIndex]._id
+					}/${selectedDate.toISOString()}/${new Date().getTimezoneOffset()}`,
+					{
+						headers: {
+							Authorization: `Bearer ${auth.token}`
+						}
+					}
+				)
+			} else {
+				response = await axios.get(
+					`/theater/movie/${
+						movies[selectedMovieIndex]._id
+					}/${selectedDate.toISOString()}/${new Date().getTimezoneOffset()}`
+				)
+			}
 			setTheaters(
 				response.data.data.sort((a, b) => {
 					if (a.cinema.name > b.cinema.name) return 1

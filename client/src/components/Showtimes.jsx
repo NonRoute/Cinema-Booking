@@ -1,13 +1,14 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
+import { EyeSlashIcon } from '@heroicons/react/24/outline'
 
 const Showtimes = ({ showtimes, movies, selectedDate, filterMovie, showMovieDetail = true }) => {
 	const { auth } = useContext(AuthContext)
 
 	const navigate = useNavigate()
 	const sortedShowtimes = showtimes?.reduce((result, showtime) => {
-		const { movie, showtime: showDateTime, seats, _id } = showtime
+		const { movie, showtime: showDateTime, seats, _id, isRelease } = showtime
 
 		if (filterMovie && filterMovie._id !== movie) {
 			return result // skip
@@ -21,7 +22,7 @@ const Showtimes = ({ showtimes, movies, selectedDate, filterMovie, showMovieDeta
 			if (!result[movie]) {
 				result[movie] = []
 			}
-			result[movie].push({ showtime: showDateTime, seats, _id })
+			result[movie].push({ showtime: showDateTime, seats, _id, isRelease })
 		}
 		return result
 	}, {})
@@ -79,7 +80,7 @@ const Showtimes = ({ showtimes, movies, selectedDate, filterMovie, showMovieDeta
 														`}
 												className={
 													isPast(new Date(showtime.showtime))
-														? `rounded-md bg-gradient-to-br from-gray-100 to-white px-2 py-1 text-lg text-gray-900 ring-1 ring-inset ring-gray-800 drop-shadow-sm ${
+														? `flex items-center gap-1 rounded-md bg-gradient-to-br from-gray-100 to-white px-2 py-1 text-lg text-gray-900 ring-1 ring-inset ring-gray-800 drop-shadow-sm ${
 																auth.role !== 'admin' && 'cursor-not-allowed'
 														  } ${
 																auth.role === 'admin' &&
@@ -91,14 +92,17 @@ const Showtimes = ({ showtimes, movies, selectedDate, filterMovie, showMovieDeta
 																	(s) => new Date(s.showtime) > new Date()
 																).showtime
 														  ).getTime()
-														? 'rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-lg text-white drop-shadow-sm hover:from-indigo-500 hover:to-blue-400'
-														: 'rounded-md bg-gradient-to-br from-gray-600 to-gray-500 px-2 py-1 text-lg text-white drop-shadow-sm hover:from-gray-500 hover:to-gray-400'
+														? 'flex items-center gap-1 rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-lg text-white drop-shadow-sm hover:from-indigo-500 hover:to-blue-400'
+														: 'flex items-center gap-1 rounded-md bg-gradient-to-br from-gray-600 to-gray-500 px-2 py-1 text-lg text-white drop-shadow-sm hover:from-gray-500 hover:to-gray-400'
 												}
 												onClick={() => {
 													if (!isPast(new Date(showtime.showtime)) || auth.role === 'admin')
 														return navigate(`/showtime/${showtime._id}`)
 												}}
 											>
+												{!showtime.isRelease && (
+													<EyeSlashIcon className="h-6 w-6" title="Unrelease showtime" />
+												)}
 												{`${new Date(showtime.showtime)
 													.getHours()
 													.toString()

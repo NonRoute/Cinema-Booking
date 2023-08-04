@@ -8,6 +8,7 @@ import Seat from '../components/Seat'
 import ShowtimeDetails from '../components/ShowtimeDetails'
 import { AuthContext } from '../context/AuthContext'
 import Select from 'react-tailwindcss-select'
+import { toast } from 'react-toastify'
 
 const Showtime = () => {
 	const { auth } = useContext(AuthContext)
@@ -51,6 +52,11 @@ const Showtime = () => {
 			setShowtime(response.data.data)
 		} catch (error) {
 			console.error(error)
+			toast.error(error.response.data.message || 'Error', {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
 		}
 	}
 

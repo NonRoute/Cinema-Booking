@@ -1,4 +1,4 @@
-import { ArrowsRightLeftIcon, ArrowsUpDownIcon, UserIcon } from '@heroicons/react/24/outline'
+import { ArrowsRightLeftIcon, ArrowsUpDownIcon, EyeSlashIcon, UserIcon } from '@heroicons/react/24/outline'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useDraggable } from 'react-use-draggable-scroll'
@@ -71,7 +71,7 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 	return (
 		<>
 			<div
-				className={`grid h-screen overflow-x-auto grid-cols-${cinema.theaters?.length.toString()} grid-rows-${
+				className={`grid max-h-screen min-h-[50vh] overflow-x-auto grid-cols-${cinema.theaters?.length.toString()} grid-rows-${
 					gridRows + shiftEnd
 				} rounded-md bg-gradient-to-br from-indigo-100 to-white`}
 				{...events}
@@ -105,11 +105,16 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 										showtime.movie.length
 									)} row-start-${
 										getRowStart(showtime.showtime) - firstRowStart + shiftStart
-									} col-start-${
-										theater.number
-									} mx-1 rounded bg-white p-1 text-center drop-shadow-md hover:bg-gray-50`}
+									} col-start-${theater.number} mx-1 rounded p-1 text-center drop-shadow-md  ${
+										showtime.isRelease
+											? 'bg-white hover:bg-gray-100'
+											: 'bg-gray-200 hover:bg-gray-300'
+									}`}
 									to={`/showtime/${showtime._id}`}
 								>
+									{!showtime.isRelease && (
+										<EyeSlashIcon className="mx-auto h-5 w-5" title="Unrelease showtime" />
+									)}
 									<p className="text-sm font-bold">{showtime.movie.name}</p>
 									<p className="text-sm leading-3">{`${new Date(showtime.showtime)
 										.getHours()
