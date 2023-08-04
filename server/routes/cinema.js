@@ -5,14 +5,14 @@ const {
 	createCinema,
 	updateCinema,
 	deleteCinema,
-	getUnreleaseCinemas
+	getUnreleasedCinemas
 } = require('../controllers/cinemaController')
 const router = express.Router()
 
 const { protect, authorize } = require('../middleware/auth')
 
 router.route('/').get(getCinemas).post(protect, authorize('admin'), createCinema)
-router.route('/unrelease').get(protect, authorize('admin'), getUnreleaseCinemas)
+router.route('/unreleased').get(protect, authorize('admin'), getUnreleasedCinemas)
 router
 	.route('/:id')
 	.get(getCinema)

@@ -51,10 +51,10 @@ exports.getTheater = async (req, res, next) => {
 	}
 }
 
-//@desc     GET single theater with all unrelease showtime
-//@route    GET /theater/unrelease/:id
+//@desc     GET single theater with all unreleased showtime
+//@route    GET /theater/unreleased/:id
 //@access   Private admin
-exports.getUnreleaseTheater = async (req, res, next) => {
+exports.getUnreleasedTheater = async (req, res, next) => {
 	try {
 		const theater = await Theater.findById(req.params.id).populate([
 			{ path: 'showtimes', select: 'movie showtime isRelease' },
@@ -114,10 +114,10 @@ exports.getTheaterByMovie = async (req, res, next) => {
 	}
 }
 
-//@desc     GET theaters by movie and date with all unrelease showtime
-//@route    GET /theater/movie/unrelease/:mid/:date/:timezone
+//@desc     GET theaters by movie and date with all unreleased showtime
+//@route    GET /theater/movie/unreleased/:mid/:date/:timezone
 //@access   Private admin
-exports.getUnreleaseTheaterByMovie = async (req, res, next) => {
+exports.getUnreleasedTheaterByMovie = async (req, res, next) => {
 	try {
 		const { mid, date, timezone } = req.params
 		let theaters = await Theater.find().populate([

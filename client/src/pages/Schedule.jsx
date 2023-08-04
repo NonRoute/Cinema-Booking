@@ -37,7 +37,7 @@ const Schedule = () => {
 			setIsFetchingCinemas(true)
 			let response
 			if (auth.role === 'admin') {
-				response = await axios.get('/cinema/unrelease', {
+				response = await axios.get('/cinema/unreleased', {
 					headers: {
 						Authorization: `Bearer ${auth.token}`
 					}

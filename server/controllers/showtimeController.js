@@ -22,10 +22,10 @@ exports.getShowtimes = async (req, res, next) => {
 	}
 }
 
-//@desc     GET showtimes with all unrelease showtime
-//@route    GET /showtime/unrelease
+//@desc     GET showtimes with all unreleased showtime
+//@route    GET /showtime/unreleased
 //@access   Private admin
-exports.getUnreleaseShowtimes = async (req, res, next) => {
+exports.getUnreleasedShowtimes = async (req, res, next) => {
 	try {
 		const showtimes = await Showtime.find()
 			.populate([

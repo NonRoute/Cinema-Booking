@@ -101,7 +101,7 @@ const Showtimes = ({ showtimes, movies, selectedDate, filterMovie, showMovieDeta
 												}}
 											>
 												{!showtime.isRelease && (
-													<EyeSlashIcon className="h-6 w-6" title="Unrelease showtime" />
+													<EyeSlashIcon className="h-6 w-6" title="Unreleased showtime" />
 												)}
 												{`${new Date(showtime.showtime)
 													.getHours()

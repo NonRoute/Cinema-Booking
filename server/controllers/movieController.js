@@ -55,10 +55,10 @@ exports.getShowingMovies = async (req, res, next) => {
 	}
 }
 
-//@desc     GET showing movies with all unrelease showtime
-//@route    GET /movie/unrelease/showing
+//@desc     GET showing movies with all unreleased showtime
+//@route    GET /movie/unreleased/showing
 //@access   Private admin
-exports.getUnreleaseShowingMovies = async (req, res, next) => {
+exports.getUnreleasedShowingMovies = async (req, res, next) => {
 	try {
 		const showingShowtime = await Showtime.aggregate([
 			{ $match: { showtime: { $gte: new Date() } } },

@@ -17,7 +17,7 @@ const Home = () => {
 			setIsFetchingMoviesDone(false)
 			let response
 			if (auth.role === 'admin') {
-				response = await axios.get('/movie/unrelease/showing', {
+				response = await axios.get('/movie/unreleased/showing', {
 					headers: {
 						Authorization: `Bearer ${auth.token}`
 					}

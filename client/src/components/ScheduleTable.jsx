@@ -113,7 +113,7 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 									to={`/showtime/${showtime._id}`}
 								>
 									{!showtime.isRelease && (
-										<EyeSlashIcon className="mx-auto h-5 w-5" title="Unrelease showtime" />
+										<EyeSlashIcon className="mx-auto h-5 w-5" title="Unreleased showtime" />
 									)}
 									<p className="text-sm font-bold">{showtime.movie.name}</p>
 									<p className="text-sm leading-3">{`${new Date(showtime.showtime)

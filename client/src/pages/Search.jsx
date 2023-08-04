@@ -85,7 +85,7 @@ const Search = () => {
 			setIsFetchingShowtimesDone(false)
 			let response
 			if (auth.role === 'admin') {
-				response = await axios.get('/showtime/unrelease', {
+				response = await axios.get('/showtime/unreleased', {
 					headers: {
 						Authorization: `Bearer ${auth.token}`
 					}
@@ -152,6 +152,13 @@ const Search = () => {
 		setIsDeletingCheckedShowtimes(false)
 	}
 
+	const handleReleaseCheckedShowtimes = () => {
+		const confirmed = window.confirm(`Do you want to release ${checkedShowtimes.length} checked showtimes?`)
+		if (confirmed) {
+			onReleaseCheckedShowtimes()
+		}
+	}
+
 	const onReleaseCheckedShowtimes = async () => {
 		setIsReleasingCheckedShowtimes(true)
 		setReleasedCheckedShowtimes(0)
@@ -193,7 +200,14 @@ const Search = () => {
 		setIsReleasingCheckedShowtimes(false)
 	}
 
-	const onUnreleaseCheckedShowtimes = async () => {
+	const handleUnreleasedCheckedShowtimes = () => {
+		const confirmed = window.confirm(`Do you want to unreleased ${checkedShowtimes.length} checked showtimes?`)
+		if (confirmed) {
+			onUnreleasedCheckedShowtimes()
+		}
+	}
+
+	const onUnreleasedCheckedShowtimes = async () => {
 		setIsUnreleasingCheckedShowtimes(true)
 		setUnreleasedCheckedShowtimes(0)
 		let successCounter = 0
@@ -218,7 +232,7 @@ const Search = () => {
 			}
 		})
 		await Promise.all(releasePromises)
-		toast.success(`Unrelease ${successCounter} checked showtimes successful!`, {
+		toast.success(`Unreleased ${successCounter} checked showtimes successful!`, {
 			position: 'top-center',
 			autoClose: 2000,
 			pauseOnHover: false
@@ -581,6 +595,34 @@ const Search = () => {
 					<ArrowDownIcon className="h-8 min-h-[32px] w-8 min-w-[32px] px-1" />
 					<div className="flex flex-wrap items-center gap-2 px-1">
 						<button
+							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+							onClick={() => handleReleaseCheckedShowtimes()}
+							disabled={checkedShowtimes.length === 0 || isReleasingCheckedShowtimes}
+						>
+							{isReleasingCheckedShowtimes ? (
+								`${releasedCheckedShowtimes} / ${checkedShowtimes.length} showtimes released`
+							) : (
+								<>
+									<EyeIcon className="h-5 w-5" />
+									{`Release ${checkedShowtimes.length} checked showtimes`}
+								</>
+							)}
+						</button>
+						<button
+							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+							onClick={() => handleUnreleasedCheckedShowtimes()}
+							disabled={checkedShowtimes.length === 0 || isUnreleasingCheckedShowtimes}
+						>
+							{isUnreleasingCheckedShowtimes ? (
+								`${unreleasedCheckedShowtimes} / ${checkedShowtimes.length} showtimes unreleased`
+							) : (
+								<>
+									<EyeSlashIcon className="h-5 w-5" />
+									{`Unreleased ${checkedShowtimes.length} checked showtimes`}
+								</>
+							)}
+						</button>
+						<button
 							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
 							onClick={() => handleDeleteCheckedShowtimes()}
 							disabled={checkedShowtimes.length === 0 || isDeletingCheckedShowtimes}
@@ -589,36 +631,8 @@ const Search = () => {
 								`${deletedCheckedShowtimes} / ${checkedShowtimes.length} showtimes deleted`
 							) : (
 								<>
-									{`Delete ${checkedShowtimes.length} checked showtimes`}
 									<TrashIcon className="h-5 w-5" />
-								</>
-							)}
-						</button>
-						<button
-							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
-							onClick={() => onReleaseCheckedShowtimes()}
-							disabled={checkedShowtimes.length === 0 || isReleasingCheckedShowtimes}
-						>
-							{isReleasingCheckedShowtimes ? (
-								`${releasedCheckedShowtimes} / ${checkedShowtimes.length} showtimes released`
-							) : (
-								<>
-									{`Release ${checkedShowtimes.length} checked showtimes`}
-									<EyeIcon className="h-5 w-5" />
-								</>
-							)}
-						</button>
-						<button
-							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
-							onClick={() => onUnreleaseCheckedShowtimes()}
-							disabled={checkedShowtimes.length === 0 || isUnreleasingCheckedShowtimes}
-						>
-							{isUnreleasingCheckedShowtimes ? (
-								`${unreleasedCheckedShowtimes} / ${checkedShowtimes.length} showtimes unreleased`
-							) : (
-								<>
-									{`Unrelease ${checkedShowtimes.length} checked showtimes`}
-									<EyeSlashIcon className="h-5 w-5" />
+									{`Delete ${checkedShowtimes.length} checked showtimes`}
 								</>
 							)}
 						</button>
@@ -689,9 +703,14 @@ const Search = () => {
 							const day = showtimeDate.getDate().toString().padStart(2, '0')
 							const hours = showtimeDate.getHours().toString().padStart(2, '0')
 							const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
+							const isCheckedRow = checkedShowtimes.includes(showtime._id)
 							return (
 								<Fragment key={index}>
-									<div className="flex items-center justify-center border-t-2 border-indigo-200">
+									<div
+										className={`flex items-center justify-center border-t-2 border-indigo-200 ${
+											isCheckedRow && 'border-white bg-blue-200 text-blue-800'
+										}`}
+									>
 										<input
 											id={showtime._id}
 											type="checkbox"
@@ -707,23 +726,55 @@ const Search = () => {
 											disabled={!isFetchingShowtimesDone}
 										/>
 									</div>
-									<div className="border-t-2 border-indigo-200 px-2 py-1">
+									<div
+										className={`border-t-2 border-indigo-200 px-2 py-1 ${
+											isCheckedRow && 'border-white bg-blue-200 text-blue-800'
+										}`}
+									>
 										{showtime.theater.cinema.name}
 									</div>
-									<div className="border-t-2 border-indigo-200 px-2 py-1">
+									<div
+										className={`border-t-2 border-indigo-200 px-2 py-1 ${
+											isCheckedRow && 'border-white bg-blue-200 text-blue-800'
+										}`}
+									>
 										{showtime.theater.number}
 									</div>
-									<div className="border-t-2 border-indigo-200 px-2 py-1">{showtime.movie.name}</div>
-									<div className="border-t-2 border-indigo-200 px-2 py-1">{`${day} ${month} ${year}`}</div>
-									<div className="border-t-2 border-indigo-200 px-2 py-1">{`${hours} : ${minutes}`}</div>
-									<div className="border-t-2 border-indigo-200 px-2 py-1">
+									<div
+										className={`border-t-2 border-indigo-200 px-2 py-1 ${
+											isCheckedRow && 'border-white bg-blue-200 text-blue-800'
+										}`}
+									>
+										{showtime.movie.name}
+									</div>
+									<div
+										className={`border-t-2 border-indigo-200 px-2 py-1 ${
+											isCheckedRow && 'border-white bg-blue-200 text-blue-800'
+										}`}
+									>{`${day} ${month} ${year}`}</div>
+									<div
+										className={`border-t-2 border-indigo-200 px-2 py-1 ${
+											isCheckedRow && 'border-white bg-blue-200 text-blue-800'
+										}`}
+									>{`${hours} : ${minutes}`}</div>
+									<div
+										className={`border-t-2 border-indigo-200 px-2 py-1 ${
+											isCheckedRow && 'border-white bg-blue-200 text-blue-800'
+										}`}
+									>
 										{showtime.seats.length}
 									</div>
-									<div className="flex items-center border-t-2 border-indigo-200 px-2 py-1">
-										{String(showtime.isRelease).charAt(0).toUpperCase() +
-											String(showtime.isRelease).slice(1)}
+									<div
+										className={`flex items-center gap-2 border-t-2 border-indigo-200 px-2 py-1 ${
+											isCheckedRow && 'border-white bg-blue-200 text-blue-800'
+										}`}
+									>
+										<p>
+											{String(showtime.isRelease).charAt(0).toUpperCase() +
+												String(showtime.isRelease).slice(1)}
+										</p>
 										{!showtime.isRelease && (
-											<EyeSlashIcon className="mx-auto h-5 w-5" title="Unrelease showtime" />
+											<EyeSlashIcon className="h-5 w-5" title="Unreleased showtime" />
 										)}
 									</div>
 									<button

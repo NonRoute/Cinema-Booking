@@ -23,7 +23,7 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 			setIsFetchingCinemas(true)
 			let response
 			if (auth.role === 'admin') {
-				response = await axios.get('/cinema/unrelease', {
+				response = await axios.get('/cinema/unreleased', {
 					headers: {
 						Authorization: `Bearer ${auth.token}`
 					}
@@ -50,7 +50,7 @@ const TheaterListsByMovie = ({ movies, selectedMovieIndex, setSelectedMovieIndex
 			let response
 			if (auth.role === 'admin') {
 				response = await axios.get(
-					`/theater/movie/unrelease/${
+					`/theater/movie/unreleased/${
 						movies[selectedMovieIndex]._id
 					}/${selectedDate.toISOString()}/${new Date().getTimezoneOffset()}`,
 					{

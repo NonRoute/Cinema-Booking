@@ -15,7 +15,7 @@ const TheaterShort = ({ theaterId, movies, selectedDate, filterMovie, rounded = 
 			setIsFetchingTheaterDone(false)
 			let response
 			if (auth.role === 'admin') {
-				response = await axios.get(`/theater/unrelease/${theaterId}`, {
+				response = await axios.get(`/theater/unreleased/${theaterId}`, {
 					headers: {
 						Authorization: `Bearer ${auth.token}`
 					}

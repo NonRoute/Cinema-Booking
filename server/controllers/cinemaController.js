@@ -34,10 +34,10 @@ exports.getCinemas = async (req, res, next) => {
 	}
 }
 
-//@desc     GET all cinemas with all unrelease showtime
-//@route    GET /cinema/unrelease
+//@desc     GET all cinemas with all unreleased showtime
+//@route    GET /cinema/unreleased
 //@access   Private admin
-exports.getUnreleaseCinemas = async (req, res, next) => {
+exports.getUnreleasedCinemas = async (req, res, next) => {
 	try {
 		const cinemas = await Cinema.find()
 			.populate({
