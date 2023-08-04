@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import DatePicker from './DatePicker'
+import DateSelector from './DateSelector'
 import Theater from './Theater'
 
 const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaIndex, fetchCinemas, auth }) => {
@@ -256,7 +256,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 				)}
 			</div>
 			<div className="flex flex-col gap-6 p-4 sm:p-6">
-				<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+				<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit(onIncreaseTheater)}>
 					<h2 className="text-3xl font-bold">Theaters</h2>
 					{auth.role === 'admin' && (

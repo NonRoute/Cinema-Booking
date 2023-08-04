@@ -5,7 +5,7 @@ import Select from 'react-tailwindcss-select'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import CinemaLists from '../components/CinemaLists'
-import DatePicker from '../components/DatePicker'
+import DateSelector from '../components/DateSelector'
 import Loading from '../components/Loading'
 import Navbar from '../components/Navbar'
 import ScheduleTable from '../components/ScheduleTable'
@@ -122,7 +122,7 @@ const Schedule = () => {
 				(cinemas[selectedCinemaIndex]?.theaters?.length ? (
 					<div className="mx-4 flex h-screen flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
 						<h2 className="text-3xl font-bold text-gray-900">Schedule</h2>
-						<DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+						<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 						{auth.role === 'admin' && (
 							<form
 								className="flex flex-col gap-2 rounded-lg md:flex-row md:items-end"
