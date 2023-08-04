@@ -11,7 +11,8 @@ const {
 	getShowtimes,
 	deleteShowtimes,
 	getShowtimeWithUser,
-	getUnreleaseShowtimes
+	getUnreleaseShowtimes,
+	updateShowtime
 } = require('../controllers/showtimeController')
 
 router
@@ -22,6 +23,11 @@ router
 router.route('/unrelease').get(protect, authorize('admin'), getUnreleaseShowtimes)
 router.route('/previous').delete(protect, authorize('admin'), deletePreviousShowtime)
 router.route('/user/:id').get(protect, authorize('admin'), getShowtimeWithUser)
-router.route('/:id').get(getShowtime).post(protect, purchase).delete(protect, authorize('admin'), deleteShowtime)
+router
+	.route('/:id')
+	.get(getShowtime)
+	.post(protect, purchase)
+	.put(protect, authorize('admin'), updateShowtime)
+	.delete(protect, authorize('admin'), deleteShowtime)
 
 module.exports = router

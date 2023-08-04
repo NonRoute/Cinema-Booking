@@ -1,6 +1,7 @@
 import {
 	ChevronDownIcon,
 	ChevronUpIcon,
+	EyeIcon,
 	EyeSlashIcon,
 	FunnelIcon,
 	InformationCircleIcon,
@@ -21,6 +22,10 @@ const Search = () => {
 	const [isOpenFilter, setIsOpenFilter] = useState(true)
 	const [isDeletingCheckedShowtimes, setIsDeletingCheckedShowtimes] = useState(false)
 	const [deletedCheckedShowtimes, setDeletedCheckedShowtimes] = useState(0)
+	const [isReleasingCheckedShowtimes, setIsReleasingCheckedShowtimes] = useState(false)
+	const [releasedCheckedShowtimes, setReleasedCheckedShowtimes] = useState(0)
+	const [isUnreleasingCheckedShowtimes, setIsUnreleasingCheckedShowtimes] = useState(false)
+	const [unreleasedCheckedShowtimes, setUnreleasedCheckedShowtimes] = useState(0)
 	const [isFetchingShowtimesDone, setIsFetchingShowtimesDone] = useState(false)
 
 	const [showtimes, setShowtimes] = useState([])
@@ -36,6 +41,8 @@ const Search = () => {
 	const [filterTime, setFilterTime] = useState(null)
 	const [filterTimeFrom, setFilterTimeFrom] = useState(null)
 	const [filterTimeTo, setFilterTimeTo] = useState(null)
+	const [filterReleaseTrue, setFilterReleaseTrue] = useState(null)
+	const [filterReleaseFalse, setFilterReleaseFalse] = useState(null)
 	const [isCheckAll, setIsCheckAll] = useState(false)
 	const [checkedShowtimes, setCheckedShowtimes] = useState([])
 
@@ -67,7 +74,9 @@ const Search = () => {
 					new Date(formattedDate)) &&
 			(!filterTime || filterTime.map((showtime) => showtime.value).includes(formattedTime)) &&
 			(!filterTimeFrom || filterTimeFrom.value <= formattedTime) &&
-			(!filterTimeTo || filterTimeTo.value >= formattedTime)
+			(!filterTimeTo || filterTimeTo.value >= formattedTime) &&
+			(!filterReleaseTrue || showtime.isRelease) &&
+			(!filterReleaseFalse || !showtime.isRelease)
 		)
 	})
 
@@ -141,6 +150,88 @@ const Search = () => {
 		resetState()
 		fetchShowtimes()
 		setIsDeletingCheckedShowtimes(false)
+	}
+
+	const onReleaseCheckedShowtimes = async () => {
+		setIsReleasingCheckedShowtimes(true)
+		setReleasedCheckedShowtimes(0)
+		let successCounter = 0
+		let errorCounter = 0
+		const releasePromises = checkedShowtimes.map(async (checkedShowtime) => {
+			try {
+				const response = await axios.put(
+					`/showtime/${checkedShowtime}`,
+					{ isRelease: true },
+					{
+						headers: {
+							Authorization: `Bearer ${auth.token}`
+						}
+					}
+				)
+				setReleasedCheckedShowtimes((prev) => prev + 1)
+				successCounter++
+				return response
+			} catch (error) {
+				console.error(error)
+				errorCounter++
+			}
+		})
+		await Promise.all(releasePromises)
+		toast.success(`Release ${successCounter} checked showtimes successful!`, {
+			position: 'top-center',
+			autoClose: 2000,
+			pauseOnHover: false
+		})
+		errorCounter > 0 &&
+			toast.error(`Error releasing ${errorCounter} checked showtime`, {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
+		resetState()
+		fetchShowtimes()
+		setIsReleasingCheckedShowtimes(false)
+	}
+
+	const onUnreleaseCheckedShowtimes = async () => {
+		setIsUnreleasingCheckedShowtimes(true)
+		setUnreleasedCheckedShowtimes(0)
+		let successCounter = 0
+		let errorCounter = 0
+		const releasePromises = checkedShowtimes.map(async (checkedShowtime) => {
+			try {
+				const response = await axios.put(
+					`/showtime/${checkedShowtime}`,
+					{ isRelease: false },
+					{
+						headers: {
+							Authorization: `Bearer ${auth.token}`
+						}
+					}
+				)
+				setUnreleasedCheckedShowtimes((prev) => prev + 1)
+				successCounter++
+				return response
+			} catch (error) {
+				console.error(error)
+				errorCounter++
+			}
+		})
+		await Promise.all(releasePromises)
+		toast.success(`Unrelease ${successCounter} checked showtimes successful!`, {
+			position: 'top-center',
+			autoClose: 2000,
+			pauseOnHover: false
+		})
+		errorCounter > 0 &&
+			toast.error(`Error unreleasing ${errorCounter} checked showtime`, {
+				position: 'top-center',
+				autoClose: 2000,
+				pauseOnHover: false
+			})
+		resetState()
+		fetchShowtimes()
+		setIsUnreleasingCheckedShowtimes(false)
 	}
 
 	const resetState = () => {
@@ -452,13 +543,43 @@ const Search = () => {
 									/>
 								</div>
 							</div>
+							<div className="flex flex-col">
+								<h4 className="pt-1 text-lg font-bold text-gray-800">Release :</h4>
+								<div className="mt-1 flex flex-col items-start gap-x-8 gap-y-2 sm:flex-row sm:items-center">
+									<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
+										True
+										<input
+											type="checkbox"
+											className="h-6 w-6"
+											checked={filterReleaseTrue}
+											onClick={(event) => {
+												setFilterReleaseTrue(event.target.checked)
+												setFilterReleaseFalse(false)
+												resetState()
+											}}
+										/>
+									</label>
+									<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
+										False
+										<input
+											type="checkbox"
+											className="h-6 w-6"
+											checked={filterReleaseFalse}
+											onClick={(event) => {
+												setFilterReleaseTrue(false)
+												setFilterReleaseFalse(event.target.checked)
+												resetState()
+											}}
+										/>
+									</label>
+								</div>
+							</div>
 						</div>
 					)}
 				</div>
-
-				<div className="flex justify-between">
-					<div className="flex items-center gap-2 px-1">
-						<ArrowDownIcon className="h-6 w-6" />
+				<div className="flex items-end">
+					<ArrowDownIcon className="h-8 min-h-[32px] w-8 min-w-[32px] px-1" />
+					<div className="flex flex-wrap items-center gap-2 px-1">
 						<button
 							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
 							onClick={() => handleDeleteCheckedShowtimes()}
@@ -473,10 +594,38 @@ const Search = () => {
 								</>
 							)}
 						</button>
+						<button
+							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+							onClick={() => onReleaseCheckedShowtimes()}
+							disabled={checkedShowtimes.length === 0 || isReleasingCheckedShowtimes}
+						>
+							{isReleasingCheckedShowtimes ? (
+								`${releasedCheckedShowtimes} / ${checkedShowtimes.length} showtimes released`
+							) : (
+								<>
+									{`Release ${checkedShowtimes.length} checked showtimes`}
+									<EyeIcon className="h-5 w-5" />
+								</>
+							)}
+						</button>
+						<button
+							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+							onClick={() => onUnreleaseCheckedShowtimes()}
+							disabled={checkedShowtimes.length === 0 || isUnreleasingCheckedShowtimes}
+						>
+							{isUnreleasingCheckedShowtimes ? (
+								`${unreleasedCheckedShowtimes} / ${checkedShowtimes.length} showtimes unreleased`
+							) : (
+								<>
+									{`Unrelease ${checkedShowtimes.length} checked showtimes`}
+									<EyeSlashIcon className="h-5 w-5" />
+								</>
+							)}
+						</button>
 					</div>
 
 					{isFetchingShowtimesDone && (
-						<div className="flex items-center gap-1 px-1 text-sm font-medium">
+						<div className="ml-auto flex items-center gap-1 px-1 text-sm font-medium">
 							<InformationCircleIcon className="h-5 w-5" /> Showing {filteredShowtimes.length} filtered
 							showtimes
 						</div>
@@ -571,7 +720,8 @@ const Search = () => {
 										{showtime.seats.length}
 									</div>
 									<div className="flex items-center border-t-2 border-indigo-200 px-2 py-1">
-										{String(showtime.isRelease)}
+										{String(showtime.isRelease).charAt(0).toUpperCase() +
+											String(showtime.isRelease).slice(1)}
 										{!showtime.isRelease && (
 											<EyeSlashIcon className="mx-auto h-5 w-5" title="Unrelease showtime" />
 										)}

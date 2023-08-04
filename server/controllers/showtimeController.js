@@ -200,6 +200,25 @@ exports.purchase = async (req, res, next) => {
 	}
 }
 
+//@desc     Update showtime
+//@route    PUT /showtime/:id
+//@access   Private Admin
+exports.updateShowtime = async (req, res, next) => {
+	try {
+		const showtime = await Showtime.findByIdAndUpdate(req.params.id, req.body, {
+			new: true,
+			runValidators: true
+		})
+
+		if (!showtime) {
+			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+		}
+		res.status(200).json({ success: true, data: showtime })
+	} catch (err) {
+		res.status(400).json({ success: false, message: err })
+	}
+}
+
 //@desc     Delete single showtime
 //@route    DELETE /showtime/:id
 //@access   Private Admin
