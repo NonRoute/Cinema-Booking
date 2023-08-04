@@ -53,10 +53,10 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 					isThisDate
 						? 'bg-gradient-to-br from-indigo-800 to-blue-700 text-white'
 						: isToday
-						? 'bg-gradient-to-br from-indigo-100 to-white ring-2 ring-inset ring-indigo-800'
+						? 'bg-gradient-to-br from-indigo-100 to-white ring-2 ring-inset ring-indigo-800 hover:from-white hover:to-white'
 						: isPast(date)
-						? 'bg-gradient-to-br from-gray-600 to-gray-500 text-white'
-						: 'bg-gradient-to-br from-indigo-100 to-white'
+						? 'bg-gradient-to-br from-gray-600 to-gray-500 text-white hover:from-gray-500 hover:to-gray-400'
+						: 'bg-gradient-to-br from-indigo-100 to-white hover:from-white hover:to-white'
 				}`}
 				onClick={() => {
 					setSelectedDate(date)
@@ -74,7 +74,6 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 	}
 
 	const handleChange = (event) => {
-		console.log(event.target.value)
 		setSelectedDate(new Date(event.target.value))
 	}
 
@@ -136,6 +135,7 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 						<input
 							title="Cinema name"
 							type="Date"
+							min={auth.role !== 'admin' && new Date().toLocaleDateString('en-CA')}
 							required
 							autoFocus
 							className={`w-full rounded border border-white bg-gradient-to-br from-indigo-800 to-blue-700 px-1 text-center text-2xl font-semibold drop-shadow-sm sm:text-3xl`}
