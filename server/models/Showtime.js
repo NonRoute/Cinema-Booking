@@ -14,7 +14,7 @@ const showtimeSchema = new mongoose.Schema({
 	isRelease: Boolean
 })
 
-showtimeSchema.pre('remove', async function (next) {
+showtimeSchema.pre('deleteOne', { document: true, query: true }, async function (next) {
 	const showtimeId = this._id
 	await this.model('User').updateMany(
 		{ 'tickets.showtime': showtimeId },

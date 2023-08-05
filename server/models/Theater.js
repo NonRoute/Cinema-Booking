@@ -17,11 +17,11 @@ const theaterSchema = new mongoose.Schema({
 	showtimes: [{ type: mongoose.Schema.ObjectId, ref: 'Showtime' }]
 })
 
-theaterSchema.pre('remove', async function (next) {
+theaterSchema.pre('deleteOne', { document: true, query: true }, async function (next) {
 	const showtimes = await this.model('Showtime').find({ _id: { $in: this.showtimes } })
 
 	for (const showtime of showtimes) {
-		await showtime.remove()
+		await showtime.deleteOne()
 	}
 	next()
 })

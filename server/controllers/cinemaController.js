@@ -135,7 +135,7 @@ exports.deleteCinema = async (req, res, next) => {
 			return res.status(400).json({ success: false, message: `Cinema not found with id of ${req.params.id}` })
 		}
 
-		await cinema.remove()
+		await cinema.deleteOne()
 
 		res.status(200).json({ success: true })
 	} catch (err) {

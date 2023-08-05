@@ -214,7 +214,7 @@ exports.deleteTheater = async (req, res, next) => {
 			return res.status(400).json({ success: false, message: `Theater not found with id of ${req.params.id}` })
 		}
 
-		await theater.remove()
+		await theater.deleteOne()
 
 		await Cinema.updateMany({ theaters: theater._id }, { $pull: { theaters: theater._id } })
 

@@ -159,7 +159,7 @@ exports.deleteMovie = async (req, res, next) => {
 			return res.status(400).json({ success: false, message: `Movie not found with id of ${req.params.id}` })
 		}
 
-		await movie.remove()
+		await movie.deleteOne()
 		res.status(200).json({ success: true })
 	} catch (err) {
 		res.status(400).json({ success: false, message: err })

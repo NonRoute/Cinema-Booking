@@ -20,12 +20,12 @@ const movieSchema = new mongoose.Schema(
 	{ timestamps: true }
 )
 
-movieSchema.pre('remove', async function (next) {
+movieSchema.pre('deleteOne', { document: true, query: true }, async function (next) {
 	const movieId = this._id
 	const showtimes = await this.model('Showtime').find({ movie: movieId })
 
 	for (const showtime of showtimes) {
-		await showtime.remove()
+		await showtime.deleteOne()
 	}
 	next()
 })

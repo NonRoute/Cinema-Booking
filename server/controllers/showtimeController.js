@@ -230,7 +230,7 @@ exports.deleteShowtime = async (req, res, next) => {
 			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
 		}
 
-		await showtime.remove()
+		await showtime.deleteOne()
 
 		res.status(200).json({ success: true })
 	} catch (err) {
@@ -257,7 +257,7 @@ exports.deleteShowtimes = async (req, res, next) => {
 		}
 
 		for (const showtimeId of showtimesIds) {
-			await showtimeId.remove()
+			await showtimeId.deleteOne()
 		}
 
 		res.status(200).json({ success: true, count: showtimesIds.length })
@@ -278,7 +278,7 @@ exports.deletePreviousShowtime = async (req, res, next) => {
 		const showtimesIds = await Showtime.find({ showtime: { $lt: currentDate } }, '_id')
 
 		for (const showtimeId of showtimesIds) {
-			await showtimeId.remove()
+			await showtimeId.deleteOne()
 		}
 
 		res.status(200).json({ success: true, count: showtimesIds.length })

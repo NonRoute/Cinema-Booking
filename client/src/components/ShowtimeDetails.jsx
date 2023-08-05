@@ -182,7 +182,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 				</div>
 				<div className="flex w-fit grow items-center justify-center rounded-tr-lg bg-gradient-to-br from-indigo-800 to-blue-700 px-4 py-0.5 text-center text-xl font-bold text-white sm:text-3xl">
 					<p className="mx-auto">{showtime?.theater?.cinema.name}</p>
-					{!showtime.isRelease && <EyeSlashIcon className="h-8 w-8" title="Unreleased showtime" />}
+					{!showtime?.isRelease && <EyeSlashIcon className="h-8 w-8" title="Unreleased showtime" />}
 				</div>
 			</div>
 			<div className="flex flex-col md:flex-row">

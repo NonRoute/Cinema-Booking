@@ -171,7 +171,7 @@ const Movie = () => {
 					</div>
 					<div className="flex w-full flex-col gap-4 lg:w-auto lg:flex-row">
 						{watch('img') && (
-							<img src={watch('img')} className="h-36 rounded-md object-contain drop-shadow-md lg:h-52" />
+							<img src={watch('img')} className="h-48 rounded-md object-contain drop-shadow-md lg:h-64" />
 						)}
 						<button
 							className="w-full min-w-fit items-center rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:w-24 xl:w-32 xl:text-xl"
