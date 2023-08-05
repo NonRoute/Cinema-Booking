@@ -1,9 +1,9 @@
-import { UserIcon, ArrowsRightLeftIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline'
+import { ArrowsRightLeftIcon, ArrowsUpDownIcon, UserIcon } from '@heroicons/react/24/outline'
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../context/AuthContext'
 import Loading from './Loading'
 import Showtimes from './Showtimes'
-import { AuthContext } from '../context/AuthContext'
 
 const TheaterShort = ({ theaterId, movies, selectedDate, filterMovie, rounded = false }) => {
 	const { auth } = useContext(AuthContext)

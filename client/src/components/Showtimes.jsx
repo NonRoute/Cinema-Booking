@@ -1,7 +1,7 @@
+import { EyeSlashIcon } from '@heroicons/react/24/outline'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
-import { EyeSlashIcon } from '@heroicons/react/24/outline'
 
 const Showtimes = ({ showtimes, movies, selectedDate, filterMovie, showMovieDetail = true }) => {
 	const { auth } = useContext(AuthContext)

@@ -1,6 +1,4 @@
 const Cinema = require('../models/Cinema')
-const Movie = require('../models/Movie')
-const Showtime = require('../models/Showtime')
 const Theater = require('../models/Theater')
 
 //@desc     GET all theaters

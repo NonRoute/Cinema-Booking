@@ -1,12 +1,12 @@
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import Loading from '../components/Loading'
+import MovieLists from '../components/MovieLists'
 import Navbar from '../components/Navbar'
 import { AuthContext } from '../context/AuthContext'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
-import MovieLists from '../components/MovieLists'
 
 const Movie = () => {
 	const { auth } = useContext(AuthContext)

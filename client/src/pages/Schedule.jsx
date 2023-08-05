@@ -45,7 +45,7 @@ const Schedule = () => {
 			} else {
 				response = await axios.get('/cinema')
 			}
-			console.log(response.data.data)
+			// console.log(response.data.data)
 			setCinemas(response.data.data)
 		} catch (error) {
 			console.error(error)
@@ -222,7 +222,7 @@ const Schedule = () => {
 							<Loading />
 						) : (
 							<div>
-								<h2 class="text-2xl font-bold">Theaters</h2>
+								<h2 className="text-2xl font-bold">Theaters</h2>
 								{cinemas[selectedCinemaIndex]?._id && (
 									<ScheduleTable
 										cinema={cinemas[selectedCinemaIndex]}

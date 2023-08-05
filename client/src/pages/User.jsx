@@ -1,10 +1,10 @@
-import { Fragment, useContext, useEffect, useState } from 'react'
-import Navbar from '../components/Navbar'
-import { AuthContext } from '../context/AuthContext'
-import axios from 'axios'
 import { ChevronDoubleDownIcon, ChevronDoubleUpIcon, TicketIcon, TrashIcon } from '@heroicons/react/24/outline'
-import ShowtimeDetails from '../components/ShowtimeDetails'
+import axios from 'axios'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import Navbar from '../components/Navbar'
+import ShowtimeDetails from '../components/ShowtimeDetails'
+import { AuthContext } from '../context/AuthContext'
 
 const User = () => {
 	const { auth } = useContext(AuthContext)
@@ -139,7 +139,7 @@ const User = () => {
 											setTicketsUser(user.username)
 										}}
 									>
-										VIEW {user.tickets.length} TICKETS
+										View {user.tickets.length} Tickets
 										<TicketIcon className="h-6 w-6" />
 									</button>
 								</div>
@@ -150,7 +150,7 @@ const User = () => {
 											onClick={() => onUpdateUser({ id: user._id, role: 'admin' })}
 											disabled={isUpdating}
 										>
-											SET ADMIN
+											Set Admin
 											<ChevronDoubleUpIcon className="h-5 w-5" />
 										</button>
 									)}
@@ -160,7 +160,7 @@ const User = () => {
 											onClick={() => onUpdateUser({ id: user._id, role: 'user' })}
 											disabled={isUpdating}
 										>
-											SET USER
+											Set User
 											<ChevronDoubleDownIcon className="h-5 w-5" />
 										</button>
 									)}

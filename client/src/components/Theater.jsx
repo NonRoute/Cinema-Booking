@@ -1,12 +1,12 @@
-import { InformationCircleIcon, UserIcon, ArrowsRightLeftIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline'
+import { ArrowsRightLeftIcon, ArrowsUpDownIcon, InformationCircleIcon, UserIcon } from '@heroicons/react/24/outline'
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import Select from 'react-tailwindcss-select'
 import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
 import Loading from './Loading'
 import Showtimes from './Showtimes'
-import Select from 'react-tailwindcss-select'
 
 const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 	const {

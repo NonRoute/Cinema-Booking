@@ -1,10 +1,10 @@
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 import { TrashIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
 import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 
 const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 	const { auth } = useContext(AuthContext)
@@ -28,7 +28,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			console.log(response.data)
+			// console.log(response.data)
 			navigate('/cinema')
 			toast.success('Delete showtime successful!', {
 				position: 'top-center',

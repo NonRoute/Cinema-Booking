@@ -1,7 +1,6 @@
 import { ArrowPathIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
-import { CheckIcon } from '@heroicons/react/24/outline'
 
 const DateSelector = ({ selectedDate, setSelectedDate }) => {
 	const { auth } = useContext(AuthContext)

@@ -1,6 +1,4 @@
-const mongoose = require('mongoose')
 const Cinema = require('../models/Cinema')
-const User = require('../models/User')
 
 //@desc     GET all cinemas
 //@route    GET /cinema

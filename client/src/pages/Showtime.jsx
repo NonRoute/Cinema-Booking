@@ -2,13 +2,13 @@ import { TicketIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
 import { Fragment, useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import Select from 'react-tailwindcss-select'
+import { toast } from 'react-toastify'
 import Loading from '../components/Loading'
 import Navbar from '../components/Navbar'
 import Seat from '../components/Seat'
 import ShowtimeDetails from '../components/ShowtimeDetails'
 import { AuthContext } from '../context/AuthContext'
-import Select from 'react-tailwindcss-select'
-import { toast } from 'react-toastify'
 
 const Showtime = () => {
 	const { auth } = useContext(AuthContext)
