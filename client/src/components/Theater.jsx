@@ -112,28 +112,31 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie }) => {
 				<h3 className="flex w-fit items-center rounded-tl-2xl bg-gradient-to-br from-gray-800 to-gray-700 px-4 py-0.5 text-2xl font-bold text-white md:rounded-t-2xl md:px-8">
 					{theater.number}
 				</h3>
-				<div className="flex w-fit flex-col items-center gap-x-3 rounded-tr-2xl bg-gradient-to-br from-indigo-800 to-blue-700 px-4 py-0.5 font-semibold text-white md:flex-row md:gap-x-6 md:rounded-t-2xl md:text-lg md:font-bold">
-					<div className="flex items-center gap-2">
-						<ArrowsUpDownIcon className="h-5 w-5" />
-						{theater?.seatPlan?.row === 'A' ? (
-							<h4>Row : A</h4>
-						) : (
-							<h4>Row : A - {theater?.seatPlan?.row}</h4>
-						)}
+				{auth.role === 'admin' && (
+					<div className="flex w-fit flex-col gap-x-3 rounded-tr-2xl bg-gradient-to-br from-indigo-800 to-blue-700 px-4 py-0.5 font-semibold text-white md:flex-row md:gap-x-6 md:rounded-t-2xl md:text-lg md:font-bold">
+						<div className="flex items-center gap-2">
+							<ArrowsUpDownIcon className="h-5 w-5" />
+							{theater?.seatPlan?.row === 'A' ? (
+								<h4>Row : A</h4>
+							) : (
+								<h4>Row : A - {theater?.seatPlan?.row}</h4>
+							)}
+						</div>
+						<div className="flex items-center gap-2">
+							<ArrowsRightLeftIcon className="h-5 w-5" />
+							{theater?.seatPlan?.column === 1 ? (
+								<h4>Column : 1</h4>
+							) : (
+								<h4>Column : 1 - {theater?.seatPlan?.column}</h4>
+							)}
+						</div>
+						<div className="flex items-center gap-2">
+							<UserIcon className="h-5 w-5" />
+							{(rowToNumber(theater.seatPlan.row) * theater.seatPlan.column).toLocaleString('en-US')}{' '}
+							Seats
+						</div>
 					</div>
-					<div className="flex items-center gap-2">
-						<ArrowsRightLeftIcon className="h-5 w-5" />
-						{theater?.seatPlan?.column === 1 ? (
-							<h4>Column : 1</h4>
-						) : (
-							<h4>Column : 1 - {theater?.seatPlan?.column}</h4>
-						)}
-					</div>
-					<div className="flex items-center gap-2">
-						<UserIcon className="h-5 w-5" />
-						{(rowToNumber(theater.seatPlan.row) * theater.seatPlan.column).toLocaleString('en-US')} Seats
-					</div>
-				</div>
+				)}
 			</div>
 			<div className="flex flex-col gap-4 rounded-b-md rounded-tr-md bg-gradient-to-br from-indigo-100 to-white py-4 md:rounded-tr-none">
 				{auth.role === 'admin' && (

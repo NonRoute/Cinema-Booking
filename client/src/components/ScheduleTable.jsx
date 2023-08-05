@@ -1,11 +1,14 @@
 import { ArrowsRightLeftIcon, ArrowsUpDownIcon, EyeSlashIcon, UserIcon } from '@heroicons/react/24/outline'
-import { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useContext, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useDraggable } from 'react-use-draggable-scroll'
+import { AuthContext } from '../context/AuthContext'
 
 const ScheduleTable = ({ cinema, selectedDate }) => {
 	const ref = useRef(null)
+	const { auth } = useContext(AuthContext)
 	const { events } = useDraggable(ref)
+	const navigate = useNavigate()
 
 	const getRowStart = (showtime) => {
 		showtime = new Date(showtime)
@@ -68,6 +71,10 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 	const shiftStart = 3
 	const shiftEnd = 2
 
+	const isPast = (date) => {
+		return date < new Date()
+	}
+
 	return (
 		<>
 			<div
@@ -81,7 +88,7 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 					{
 						return getTodayShowtimes(theater)?.map((showtime, index) => {
 							return (
-								<Link
+								<button
 									title={`${showtime.movie.name}\n${new Date(showtime.showtime)
 										.getHours()
 										.toString()
@@ -101,19 +108,27 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 										.padStart(2, '0')}
 												`}
 									key={index}
-									className={`overflow-y-scroll row-span-${getRowSpan(
+									className={`flex flex-col items-center overflow-y-scroll row-span-${getRowSpan(
 										showtime.movie.length
 									)} row-start-${
 										getRowStart(showtime.showtime) - firstRowStart + shiftStart
-									} col-start-${theater.number} mx-1 rounded p-1 text-center drop-shadow-md  ${
-										showtime.isRelease
+									} col-start-${theater.number} mx-1 rounded p-1 text-center drop-shadow-md ${
+										!isPast(new Date(showtime.showtime))
 											? 'bg-white hover:bg-gray-100'
-											: 'bg-gray-200 hover:bg-gray-300'
-									}`}
-									to={`/showtime/${showtime._id}`}
+											: `bg-gray-200  ${
+													auth.role === 'admin' ? 'hover:bg-gray-300' : 'cursor-not-allowed'
+											  }`
+									} ${!showtime.isRelease && 'ring-2 ring-inset ring-gray-800'}`}
+									onClick={() => {
+										if (!isPast(new Date(showtime.showtime)) || auth.role === 'admin')
+											return navigate(`/showtime/${showtime._id}`)
+									}}
 								>
 									{!showtime.isRelease && (
-										<EyeSlashIcon className="mx-auto h-5 w-5" title="Unreleased showtime" />
+										<EyeSlashIcon
+											className="mx-auto h-5 w-5 stroke-2"
+											title="Unreleased showtime"
+										/>
 									)}
 									<p className="text-sm font-bold">{showtime.movie.name}</p>
 									<p className="text-sm leading-3">{`${new Date(showtime.showtime)
@@ -133,7 +148,7 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 										.getMinutes()
 										.toString()
 										.padStart(2, '0')}`}</p>
-								</Link>
+								</button>
 							)
 						})
 					}
@@ -148,26 +163,34 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 				{cinema.theaters.map((theater, index) => (
 					<div
 						key={index}
-						className="sticky top-0 row-span-1 row-start-1 flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 text-white"
+						className="sticky top-0 row-span-1 row-start-1 flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 py-1 text-white"
 					>
 						<p className="text-2xl font-semibold leading-7">{index + 1}</p>
-						<div className="flex gap-1 text-xs">
-							<p className="flex items-center gap-1">
-								<ArrowsUpDownIcon className="h-3 w-3" />
-								{theater.seatPlan.row === 'A' ? theater.seatPlan.row : `A - ${theater.seatPlan.row}`}
-							</p>
-							<p className="flex items-center gap-1">
-								<ArrowsRightLeftIcon className="h-3 w-3" />
-								{theater.seatPlan.column === 1
-									? theater.seatPlan.column
-									: `1 - ${theater.seatPlan.column}`}
-							</p>
-						</div>
-						<p className="flex items-center gap-1 text-sm">
-							<UserIcon className="h-4 w-4" />
-							{(rowToNumber(theater.seatPlan.row) * theater.seatPlan.column).toLocaleString('en-US')}{' '}
-							Seats
-						</p>
+						{auth.role === 'admin' && (
+							<>
+								<div className="flex gap-1 text-xs">
+									<p className="flex items-center gap-1">
+										<ArrowsUpDownIcon className="h-3 w-3" />
+										{theater.seatPlan.row === 'A'
+											? theater.seatPlan.row
+											: `A - ${theater.seatPlan.row}`}
+									</p>
+									<p className="flex items-center gap-1">
+										<ArrowsRightLeftIcon className="h-3 w-3" />
+										{theater.seatPlan.column === 1
+											? theater.seatPlan.column
+											: `1 - ${theater.seatPlan.column}`}
+									</p>
+								</div>
+								<p className="flex items-center gap-1 text-sm">
+									<UserIcon className="h-4 w-4" />
+									{(rowToNumber(theater.seatPlan.row) * theater.seatPlan.column).toLocaleString(
+										'en-US'
+									)}{' '}
+									Seats
+								</p>
+							</>
+						)}
 					</div>
 				))}
 			</div>

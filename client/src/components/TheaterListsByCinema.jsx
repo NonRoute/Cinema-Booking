@@ -222,7 +222,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 										SetIsEditing(false)
 									}}
 								>
-									Save
+									SAVE
 									<CheckIcon className="h-5 w-5" />
 								</button>
 							</form>
@@ -232,7 +232,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 								className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-indigo-600 to-blue-500  py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400"
 								onClick={() => SetIsEditing(true)}
 							>
-								Edit
+								EDIT
 								<PencilSquareIcon className="h-5 w-5" />
 							</button>
 						)}
@@ -260,7 +260,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 					<h2 className="text-3xl font-bold">Theaters</h2>
 					{auth.role === 'admin' && (
 						<div className="flex w-full flex-wrap justify-between gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4">
-							<h3 className="flex items-center text-xl font-bold">Increase Theater</h3>
+							<h3 className="flex items-center text-xl font-bold">Add Theater</h3>
 							<div className="flex grow flex-col gap-4 sm:justify-end md:flex-row">
 								<div className="flex flex-wrap justify-end gap-4">
 									<div className="flex flex-wrap gap-2">
@@ -318,7 +318,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 										className="flex grow items-center justify-center whitespace-nowrap rounded-r bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:grow-0"
 										type="submit"
 									>
-										{isIncreasing ? 'Processing...' : 'INCREASE +'}
+										{isIncreasing ? 'Processing...' : 'ADD +'}
 									</button>
 								</div>
 							</div>
@@ -331,12 +331,12 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 				{auth.role === 'admin' && cinemas[selectedCinemaIndex].theaters.length > 0 && (
 					<div className="flex justify-center">
 						<button
-							title="Decrease theater"
+							title="Delete last theater"
 							className="w-fit rounded-md bg-gradient-to-r from-red-700 to-rose-600 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-500 hover:to-rose-400 disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleDecreaseTheater()}
 							disabled={isDecreasing}
 						>
-							{isDecreasing ? 'Processing...' : 'DECREASE -'}
+							{isDecreasing ? 'Processing...' : 'DELETE LAST THEATER -'}
 						</button>
 					</div>
 				)}

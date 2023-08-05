@@ -12,7 +12,7 @@ function generateGridColumns(lastValue) {
 function generateGridRow(lastValue) {
 	let obj = {}
 	for (let i = 0; i <= lastValue; i++) {
-		obj[`${i}`] = `72px repeat(${i}, minmax(10px, 1fr))`
+		obj[`${i}`] = `max-content repeat(${i}, minmax(10px, 1fr))`
 	}
 	return obj
 }

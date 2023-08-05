@@ -38,7 +38,7 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 
 	const DateShort = ({ date, selectedDate }) => {
 		const day = date.getDate()
-		const month = date.toLocaleString('default', { month: 'short' })
+		const weekday = date.toLocaleString('default', { weekday: 'short' })
 
 		const isThisDate =
 			selectedDate.getDate() === date.getDate() &&
@@ -49,6 +49,7 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 
 		return (
 			<button
+				title={formatDate(date)}
 				className={`flex min-w-[48px] flex-col items-center justify-center rounded p-1 font-semibold ${
 					isThisDate
 						? 'bg-gradient-to-br from-indigo-800 to-blue-700 text-white'
@@ -63,7 +64,7 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 					sessionStorage.setItem('selectedDate', date)
 				}}
 			>
-				<p className="text-sm">{month}</p>
+				<p className="text-sm">{weekday}</p>
 				<p className="text-xl">{day}</p>
 			</button>
 		)

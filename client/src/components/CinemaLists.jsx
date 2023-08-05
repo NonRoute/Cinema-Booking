@@ -119,7 +119,7 @@ const CinemaLists = ({
 					<input
 						type="search"
 						className="block w-full rounded-lg border border-gray-300 p-2 pl-10 text-gray-900"
-						placeholder="Search a cinema"
+						placeholder="Search cinema"
 						{...register('search')}
 					/>
 				</div>

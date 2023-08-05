@@ -136,7 +136,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 								'Processing...'
 							) : (
 								<>
-									Release
+									RELEASE
 									<EyeIcon className="h-5 w-5" />
 								</>
 							)}
@@ -153,7 +153,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 								'Processing...'
 							) : (
 								<>
-									Unreleased
+									UNRELEASE
 									<EyeSlashIcon className="h-5 w-5" />
 								</>
 							)}

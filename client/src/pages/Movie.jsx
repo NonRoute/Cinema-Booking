@@ -114,9 +114,10 @@ const Movie = () => {
 				<h2 className="text-3xl font-bold text-gray-900">Movie Lists</h2>
 				<form
 					onSubmit={handleSubmit(onAddMovie)}
-					className="flex flex-col items-center justify-end gap-x-4 gap-y-2 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:flex-row"
+					className="flex flex-col items-stretch justify-end gap-x-4 gap-y-2 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:flex-row"
 				>
 					<div className="flex w-full grow flex-col flex-wrap justify-start gap-4 lg:w-auto">
+						<h3 className="text-xl font-bold">Add Movie</h3>
 						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
 							<label className="text-lg font-semibold leading-5">Name :</label>
 							<input
@@ -173,7 +174,7 @@ const Movie = () => {
 							<img src={watch('img')} className="h-36 rounded-md object-contain drop-shadow-md lg:h-52" />
 						)}
 						<button
-							className="w-full min-w-fit items-center rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:h-52 lg:w-20 xl:w-32 xl:text-xl"
+							className="w-full min-w-fit items-center rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:w-24 xl:w-32 xl:text-xl"
 							type="submit"
 							disabled={isAddingMovie}
 						>
@@ -181,14 +182,14 @@ const Movie = () => {
 						</button>
 					</div>
 				</form>
-				<div className="relative">
+				<div className="relative drop-shadow-sm">
 					<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
 						<MagnifyingGlassIcon className="h-5 w-5 stroke-2 text-gray-500" />
 					</div>
 					<input
 						type="search"
 						className="block w-full rounded-lg border border-gray-300 p-2 pl-10 text-gray-900"
-						placeholder="Search a movie"
+						placeholder="Search movie"
 						{...register('search')}
 					/>
 				</div>

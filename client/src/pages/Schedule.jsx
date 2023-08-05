@@ -221,13 +221,16 @@ const Schedule = () => {
 						{isFetchingCinemas ? (
 							<Loading />
 						) : (
-							cinemas[selectedCinemaIndex]?._id && (
-								<ScheduleTable
-									cinema={cinemas[selectedCinemaIndex]}
-									selectedDate={selectedDate}
-									auth={auth}
-								/>
-							)
+							<div>
+								<h2 class="text-2xl font-bold">Theaters</h2>
+								{cinemas[selectedCinemaIndex]?._id && (
+									<ScheduleTable
+										cinema={cinemas[selectedCinemaIndex]}
+										selectedDate={selectedDate}
+										auth={auth}
+									/>
+								)}
+							</div>
 						)}
 					</div>
 				) : (

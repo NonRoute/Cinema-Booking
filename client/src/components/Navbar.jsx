@@ -150,7 +150,7 @@ const Navbar = () => {
 	}
 
 	return (
-		<nav className="flex flex-col items-center justify-between gap-2 bg-gray-900 px-5 py-3 drop-shadow-lg lg:flex-row lg:justify-start">
+		<nav className="flex flex-col items-center justify-between gap-2 bg-gray-900 px-4 py-3 drop-shadow-lg lg:flex-row lg:justify-start sm:px-8">
 			<div className="flex w-full flex-row justify-between lg:w-fit">
 				<button className="flex flex-row items-center gap-2" onClick={() => navigate('/')}>
 					<FilmIcon className="h-8 w-8 text-white" />
