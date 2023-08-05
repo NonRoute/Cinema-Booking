@@ -99,7 +99,7 @@ const Showtime = () => {
 			<div className="mx-4 h-fit rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
 				{showtime.showtime ? (
 					<>
-						<ShowtimeDetails showtime={showtime} showDeleteBtn={true} />
+						<ShowtimeDetails showtime={showtime} showDeleteBtn={true} fetchShowtime={fetchShowtime} />
 						<div className="flex flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
 							<div className="flex flex-col items-center gap-x-4 px-4 py-2 md:flex-row">
 								{!isPast && <p className="font-semibold">Selected Seats : </p>}
