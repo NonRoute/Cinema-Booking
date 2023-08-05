@@ -254,7 +254,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 					</>
 				)}
 			</div>
-			<div className="flex flex-col gap-6 p-4 sm:p-6">
+			<div className="flex flex-col gap-6 p-4 sm:p-6 overflow-y-auto">
 				<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit(onIncreaseTheater)}>
 					<h2 className="text-3xl font-bold">Theaters</h2>
@@ -326,7 +326,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 					)}
 				</form>
 				{cinemas[selectedCinemaIndex].theaters.map((theater, index) => {
-					return <Theater key={index} theaterId={theater._id} movies={movies} selectedDate={selectedDate} />
+					return <Theater key={index} theaterId={theater._id} movies={movies} selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
 				})}
 				{auth.role === 'admin' && cinemas[selectedCinemaIndex].theaters.length > 0 && (
 					<div className="flex justify-center">
