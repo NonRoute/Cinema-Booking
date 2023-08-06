@@ -141,10 +141,10 @@ const User = () => {
 						Role
 					</p>
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Tickets
+						Ticket
 					</p>
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Actions
+						Action
 					</p>
 					{users
 						?.filter((user) => user.username.toLowerCase().includes(watch('search')?.toLowerCase() || ''))

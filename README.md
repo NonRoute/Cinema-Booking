@@ -10,14 +10,14 @@ Demo: https://cinema-booking-client.vercel.app/
 * [How to run the app](#how-to-run-the-app)
 
 ## Technologies
-* React 18.2.0
-* React Router Dom 6.14.2
-* React Hook Form 7.45.4
-* Tailwind CSS 3.3.3
-* Vite 4.4.8
+* React v18.2.0
+* React Router Dom v6.14.2
+* React Hook Form v7.45.4
+* Tailwind CSS v3.3.3
+* Vite v4.4.8
 * NodeJS
-* Mongoose 7.4.2
-* Express 4.18.2
+* Mongoose v7.4.2
+* Express v4.18.2
 * MongoDB
 * And more...
 
@@ -37,7 +37,7 @@ Demo: https://cinema-booking-client.vercel.app/
 ### Schedule page
 <img src="./images/schedule.png" width="600">
 
-### Showtime page
+### Showtime/Booking page
 <img src="./images/showtime.png" width="600">
 
 ### Ticket page
