@@ -21,6 +21,9 @@ Demo: https://cinema-booking-client.vercel.app/
 **For User**    
 <img src="./images/cinema_user.png" width="600">
 
+### Schedule page
+<img src="./images/schedule.png" width="600">
+
 ### Showtime page
 <img src="./images/showtime.png" width="600">
 
