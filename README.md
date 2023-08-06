@@ -5,8 +5,8 @@ Cinema Booking Web App with MERN stack (MongoDB, Express, React, NodeJS) & Tailw
 Demo: https://cinema-booking-client.vercel.app/
 
 ## Table of Contents
-1. [Screenshot](#Screenshot)
-2. [How to run the app](#How-to-run-the-app)
+1. [Screenshot](#screenshot)
+2. [How to run the app](#how-to-run-the-app)
 
 ## Screenshot
 ### Home page
