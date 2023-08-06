@@ -76,6 +76,7 @@ const Schedule = () => {
 	useEffect(() => {
 		setValue('autoIncrease', true)
 		setValue('rounding5', true)
+		setValue('gap', '00:10')
 	}, [])
 
 	const onAddShowtime = async (data) => {
@@ -130,8 +131,10 @@ const Schedule = () => {
 						).padStart(2, '0')}`
 					)
 				}
-				setSelectedDate(nextShowtime)
-				sessionStorage.setItem('selectedDate', nextShowtime)
+				if (data.autoIncreaseDate) {
+					setSelectedDate(nextShowtime)
+					sessionStorage.setItem('selectedDate', nextShowtime)
+				}
 			}
 			toast.success('Add showtime successful!', {
 				position: 'top-center',
@@ -177,7 +180,7 @@ const Schedule = () => {
 									<div className="flex flex-col gap-2 rounded-lg lg:flex-row lg:items-stretch">
 										<div className="flex grow items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
 											<label className="whitespace-nowrap text-lg font-semibold leading-5">
-												Theater :
+												Theater:
 											</label>
 											<select
 												className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm"
@@ -198,7 +201,7 @@ const Schedule = () => {
 										</div>
 										<div className="flex grow-[2] items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
 											<label className="whitespace-nowrap text-lg font-semibold leading-5">
-												Movie :
+												Movie:
 											</label>
 											<Select
 												value={selectedMovie}
@@ -220,7 +223,7 @@ const Schedule = () => {
 										</div>
 										<div className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
 											<label className="whitespace-nowrap text-lg font-semibold leading-5">
-												Showtime :
+												Showtime:
 											</label>
 											<input
 												type="time"
@@ -233,7 +236,7 @@ const Schedule = () => {
 									<div className="flex flex-col gap-2 rounded-lg lg:flex-row lg:items-stretch">
 										<div className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
 											<label className="whitespace-nowrap text-lg font-semibold leading-5">
-												Repeat (Day) :
+												Repeat (Day):
 											</label>
 											<input
 												type="number"
@@ -246,31 +249,44 @@ const Schedule = () => {
 											/>
 										</div>
 										<label className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap text-lg font-semibold leading-5 lg:flex-col lg:items-start">
-											Release now :
+											Release now:
 											<input
 												type="checkbox"
 												className="h-6 w-6 lg:h-9 lg:w-9"
 												{...register('isRelease')}
 											/>
 										</label>
-										<label
-											className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
-											title="After add, update showtime value to the movie ending time"
-										>
-											Auto increase time :
-											<input
-												type="checkbox"
-												className="h-6 w-6 lg:h-9 lg:w-9"
-												{...register('autoIncrease')}
-											/>
-										</label>
+										<div className="flex flex-col items-start gap-2 lg:flex-row lg:items-end">
+											<p className="font-semibold text-right underline">Auto increase</p>
+											<label
+												className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
+												title="After add, update showtime value to the movie ending time"
+											>
+												Showtime:
+												<input
+													type="checkbox"
+													className="h-6 w-6 lg:h-9 lg:w-9"
+													{...register('autoIncrease')}
+												/>
+											</label>
+											<label
+												className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
+												title="After add, update date value to the movie ending time"
+											>
+												Date:
+												<input
+													type="checkbox"
+													className="h-6 w-6 lg:h-9 lg:w-9"
+													disabled={!watch('autoIncrease')}
+													{...register('autoIncreaseDate')}
+												/>
+											</label>
+										</div>
 										<div
 											className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start"
 											title="Gap between showtimes"
 										>
-											<label className="whitespace-nowrap font-semibold leading-5">
-												Showtime gap :
-											</label>
+											<label className="whitespace-nowrap font-semibold leading-5">Gap:</label>
 											<input
 												type="time"
 												className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm disabled:bg-gray-300"
@@ -278,34 +294,37 @@ const Schedule = () => {
 												{...register('gap')}
 											/>
 										</div>
-										<label
-											className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
-											title="Rounding up to the nearest five minutes"
-										>
-											5-min rounding :
-											<input
-												type="checkbox"
-												className="h-6 w-6 lg:h-9 lg:w-9"
-												disabled={!watch('autoIncrease')}
-												{...register('rounding5', {
-													onChange: () => setValue('rounding10', false)
-												})}
-											/>
-										</label>
-										<label
-											className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
-											title="Rounding up to the nearest ten minutes"
-										>
-											10-min rounding :
-											<input
-												type="checkbox"
-												className="h-6 w-6 lg:h-9 lg:w-9"
-												disabled={!watch('autoIncrease')}
-												{...register('rounding10', {
-													onChange: () => setValue('rounding5', false)
-												})}
-											/>
-										</label>
+										<div className="flex flex-col items-start gap-2 lg:flex-row lg:items-end">
+											<p className="font-semibold text-right underline">Rounding</p>
+											<label
+												className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
+												title="Rounding up to the nearest five minutes"
+											>
+												5-min:
+												<input
+													type="checkbox"
+													className="h-6 w-6 lg:h-9 lg:w-9"
+													disabled={!watch('autoIncrease')}
+													{...register('rounding5', {
+														onChange: () => setValue('rounding10', false)
+													})}
+												/>
+											</label>
+											<label
+												className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
+												title="Rounding up to the nearest ten minutes"
+											>
+												10-min:
+												<input
+													type="checkbox"
+													className="h-6 w-6 lg:h-9 lg:w-9"
+													disabled={!watch('autoIncrease')}
+													{...register('rounding10', {
+														onChange: () => setValue('rounding5', false)
+													})}
+												/>
+											</label>
+										</div>
 									</div>
 								</div>
 								<button

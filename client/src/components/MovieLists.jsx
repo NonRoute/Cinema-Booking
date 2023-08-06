@@ -15,7 +15,7 @@ const MovieLists = ({ movies, search, handleDelete }) => {
 								<p>length : {movie.length || '-'} min.</p>
 							</div>
 							<button
-								className="flex w-fit items-center gap-1 self-end rounded-md bg-gradient-to-br from-red-700 to-rose-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-700 hover:to-rose-600"
+								className="flex w-fit items-center gap-1 self-end rounded-md bg-gradient-to-br from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500"
 								onClick={() => handleDelete(movie)}
 							>
 								DELETE

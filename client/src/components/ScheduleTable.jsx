@@ -14,11 +14,12 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 		showtime = new Date(showtime)
 		const hour = showtime.getHours()
 		const min = showtime.getMinutes()
-		return Math.round((60 * hour + min) / 10)
+		console.log(hour, min, Math.round((60 * hour + min) / 5))
+		return Math.round((60 * hour + min) / 5)
 	}
 
 	const getRowSpan = (length) => {
-		return Math.round(length / 10)
+		return Math.round(length / 5)
 	}
 
 	const getRowStartRange = () => {
@@ -78,7 +79,7 @@ const ScheduleTable = ({ cinema, selectedDate }) => {
 	return (
 		<>
 			<div
-				className={`grid max-h-screen min-h-[50vh] overflow-x-auto grid-cols-${cinema.theaters?.length.toString()} grid-rows-${
+				className={`grid min-h-[50vh] max-h-screen overflow-x-auto grid-cols-${cinema.theaters?.length.toString()} grid-rows-${
 					gridRows + shiftEnd
 				} rounded-md bg-gradient-to-br from-indigo-100 to-white`}
 				{...events}

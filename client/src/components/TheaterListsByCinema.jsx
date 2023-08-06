@@ -274,7 +274,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 											type="text"
 											maxLength="2"
 											required
-											className={`w-14 rounded px-3 py-1 text-2xl font-semibold drop-shadow-sm
+											className={`w-14 rounded px-3 py-1 text-2xl font-semibold drop-shadow-sm leading-3
 											${errors.row && 'border-2 border-red-500'}`}
 											{...register('row', {
 												required: true,
@@ -298,7 +298,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 											max="120"
 											maxLength="3"
 											required
-											className={`w-24 rounded px-3 py-1 text-2xl font-semibold drop-shadow-sm ${
+											className={`w-24 rounded px-3 py-1 text-2xl font-semibold drop-shadow-sm leading-3 ${
 												errors.column && 'border-2 border-red-500'
 											}`}
 											{...register('column', { required: true })}
@@ -326,13 +326,21 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 					)}
 				</form>
 				{cinemas[selectedCinemaIndex].theaters.map((theater, index) => {
-					return <Theater key={index} theaterId={theater._id} movies={movies} selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
+					return (
+						<Theater
+							key={index}
+							theaterId={theater._id}
+							movies={movies}
+							selectedDate={selectedDate}
+							setSelectedDate={setSelectedDate}
+						/>
+					)
 				})}
 				{auth.role === 'admin' && cinemas[selectedCinemaIndex].theaters.length > 0 && (
 					<div className="flex justify-center">
 						<button
 							title="Delete last theater"
-							className="w-fit rounded-md bg-gradient-to-r from-red-700 to-rose-600 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-500 hover:to-rose-400 disabled:from-slate-500 disabled:to-slate-400"
+							className="w-fit rounded-md bg-gradient-to-r from-red-700 to-rose-600 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleDecreaseTheater()}
 							disabled={isDecreasing}
 						>

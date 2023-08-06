@@ -144,7 +144,7 @@ const Showtime = () => {
 												)
 											})}
 										</div>
-										{rowLetters.map((rowLetter, index) => {
+										{rowLetters.reverse().map((rowLetter, index) => {
 											return (
 												<div key={index} className="flex">
 													<div className="flex h-8 w-8 items-center">

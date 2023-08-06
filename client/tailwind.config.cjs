@@ -12,7 +12,7 @@ function generateGridColumns(lastValue) {
 function generateGridRow(lastValue) {
 	let obj = {}
 	for (let i = 0; i <= lastValue; i++) {
-		obj[`${i}`] = `max-content repeat(${i}, minmax(10px, 1fr))`
+		obj[`${i}`] = `max-content repeat(${i}, minmax(5px, 1fr))`
 	}
 	return obj
 }
@@ -52,19 +52,19 @@ module.exports = {
 				sans: ['IBM Plex Sans Thai', ...defaultTheme.fontFamily.sans]
 			},
 			gridTemplateRows: {
-				...generateGridRow(200)
+				...generateGridRow(400)
 			},
 			gridTemplateColumns: {
 				...generateGridColumns(100)
 			},
 			gridRowStart: {
-				...generateRowColStart(150)
+				...generateRowColStart(300)
 			},
 			gridColumnStart: {
-				...generateRowColStart(100)
+				...generateRowColStart(300)
 			},
 			gridRow: {
-				...generateRowSpan(145)
+				...generateRowSpan(300)
 			}
 		}
 	},
