@@ -5,8 +5,21 @@ Cinema Booking Web App with MERN stack (MongoDB, Express, React, NodeJS) & Tailw
 Demo: https://cinema-booking-client.vercel.app/
 
 ## Table of Contents
-1. [Screenshot](#screenshot)
-2. [How to run the app](#how-to-run-the-app)
+* [Technologies](#technologies)
+* [Screenshot](#screenshot)
+* [How to run the app](#how-to-run-the-app)
+
+## Technologies
+* React 18.2.0
+* React Router Dom 6.14.2
+* React Hook Form 7.45.4
+* Tailwind CSS 3.3.3
+* Vite 4.4.8
+* NodeJS
+* Mongoose 7.4.2
+* Express 4.18.2
+* MongoDB
+* And more...
 
 ## Screenshot
 ### Home page
