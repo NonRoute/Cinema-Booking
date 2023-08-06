@@ -300,12 +300,12 @@ const Search = () => {
 								<h4 className="pt-1 text-lg font-bold text-gray-800">Theater :</h4>
 								<Select
 									value={filterTheater}
-									options={Array.from(
-										new Set(showtimes.map((showtime) => showtime.theater.number))
-									).map((value) => ({
-										value,
-										label: value.toString()
-									}))}
+									options={Array.from(new Set(showtimes.map((showtime) => showtime.theater.number)))
+										.sort((a, b) => a - b)
+										.map((value) => ({
+											value,
+											label: value.toString()
+										}))}
 									onChange={(value) => {
 										setFilterTheater(value)
 										resetState()
