@@ -111,7 +111,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 			)
 			fetchCinemas()
 			// console.log(response.data)
-			toast.success('Increase theater successful!', {
+			toast.success('Add theater successful!', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
@@ -313,7 +313,7 @@ const TheaterListsByCinema = ({ cinemas, selectedCinemaIndex, setSelectedCinemaI
 										</label>
 									</div>
 									<button
-										title="Increase theater"
+										title="Add theater"
 										disabled={isIncreasing}
 										className="flex grow items-center justify-center whitespace-nowrap rounded-r bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:grow-0"
 										type="submit"
