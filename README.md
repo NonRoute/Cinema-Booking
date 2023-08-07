@@ -5,10 +5,14 @@ Cinema Booking Web App with MERN stack (MongoDB, Express, React, NodeJS) & Tailw
 Demo: https://cinema-booking-client.vercel.app/
 
 ## Table of Contents
+* [Project Purpose](#project-purpose)
 * [Technologies](#technologies)
 * [Quick Tour](#quick-tour)
 * [Guide](#guide)
 * [How to run the app](#how-to-run-the-app)
+
+## Project Purpose
+The purpose of this project is to improve my full-stack web development skills, learning front-end technologies like React and Tailwind CSS, and backend technologies like Node.js, Express, and MongoDB.
 
 ## Technologies
 * React v18.2.0
@@ -40,27 +44,32 @@ Demo: https://cinema-booking-client.vercel.app/
 
 <h2 align="center">View Schedule 🕙</h2>
 <p align="center">
-<img src="./images/screenshot4.png" width="600">
+    <img src="./images/screenshot4.png" width="600">
 </p>
 
 <h2 align="center">Book seats 💺</h2>
 <p align="center">
-<img src="./images/screenshot5.png" width="600">
+    <img src="./images/screenshot5.png" width="600">
 </p>
 
 <h2 align="center">View Tickets 🎫</h2>
 <p align="center">
-<img src="./images/screenshot6.png" width="600">
+    <img src="./images/screenshot6.png" width="600">
+</p>
+
+<h2 align="center">Add movie 🍿</h2>
+<p align="center">
+    <img src="./images/screenshot7.png" width="600">
 </p>
 
 <h2 align="center">Search showtimes 🔎</h2>
 <p align="center">
-<img src="./images/search2.png" width="600">
+    <img src="./images/search2.png" width="600">
 </p>
 
 <h2 align="center">Manage user 🕵️</h2>
 <p align="center">
-<img src="./images/user1.png" width="600">
+    <img src="./images/user1.png" width="600">
 </p>
 
 ## Guide
@@ -297,10 +306,16 @@ Admin have all permission.
 
 <br>
 
-**Add movie**
+**Add a movie**
 1. Fill in the movie name, URL of the poster, and the length in hours (optional) and minutes. Then, click "Add" to add the movie.
 
 <img src="./images/movie2.png" width="600">
+
+<br>
+
+**Delete a movie**
+
+1. Click the "Delete" button and confirm by clicking "OK"
 
 </details>
 
