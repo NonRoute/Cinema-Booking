@@ -148,7 +148,11 @@ const Theater = ({ theaterId, movies, selectedDate, filterMovie, setSelectedDate
 	return (
 		<div className="flex flex-col">
 			<div className="flex md:justify-between">
-				<h3 className="flex w-fit items-center rounded-tl-2xl bg-gradient-to-br from-gray-800 to-gray-700 px-4 py-0.5 text-2xl font-bold text-white md:rounded-t-2xl md:px-8">
+				<h3
+					className={`flex w-fit items-center rounded-tl-2xl bg-gradient-to-br from-gray-800 to-gray-700 px-6 py-0.5 text-2xl font-bold text-white md:rounded-t-2xl md:px-8 ${
+						auth.role !== 'admin' && 'rounded-t-2xl'
+					}`}
+				>
 					{theater.number}
 				</h3>
 				{auth.role === 'admin' && (

@@ -22,6 +22,47 @@ Demo: https://cinema-booking-client.vercel.app/
 * MongoDB
 * And more...
 
+## Screenshots & Main Features
+<h2 align="center">Home page 🎥</h2>
+<p align="center">
+    <img src="./images/screenshot1.png" width="600">
+</p>
+
+<h2 align="center">Responsive design 📱</h2>
+<p align="center">
+    <img src="./images/screenshot2.png" width="180">
+</p>
+
+<h2 align="center">Cinema page 🏢</h2>
+<p align="center">
+    <img src="./images/screenshot3.png" width="600">
+</p>
+
+<h2 align="center">View Schedule 🕙</h2>
+<p align="center">
+<img src="./images/screenshot4.png" width="600">
+</p>
+
+<h2 align="center">Book seats 💺</h2>
+<p align="center">
+<img src="./images/screenshot5.png" width="600">
+</p>
+
+<h2 align="center">View Tickets 🎫</h2>
+<p align="center">
+<img src="./images/screenshot6.png" width="600">
+</p>
+
+<h2 align="center">Search showtimes 🔎</h2>
+<p align="center">
+<img src="./images/search2.png" width="600">
+</p>
+
+<h2 align="center">Manage user 🕵️</h2>
+<p align="center">
+<img src="./images/user1.png" width="600">
+</p>
+
 ## Guide
 
 ### Role / Feature

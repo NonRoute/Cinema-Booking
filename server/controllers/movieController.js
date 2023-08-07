@@ -30,7 +30,8 @@ exports.getShowingMovies = async (req, res, next) => {
 			},
 			{
 				$group: {
-					_id: '$movie'
+					_id: '$movie',
+					count: { $sum: 1 }
 				}
 			},
 			{
@@ -44,7 +45,7 @@ exports.getShowingMovies = async (req, res, next) => {
 				}
 			},
 			{
-				$sort: { updatedAt: -1 }
+				$sort: { count: -1 }
 			}
 		])
 
@@ -61,7 +62,7 @@ exports.getShowingMovies = async (req, res, next) => {
 exports.getUnreleasedShowingMovies = async (req, res, next) => {
 	try {
 		const showingShowtime = await Showtime.aggregate([
-			{ $match: { showtime: { $gte: new Date() } } },
+			{ $match: { showtime: { $gte: new Date() }, isRelease: true } },
 			{
 				$lookup: {
 					from: 'movies', // Replace "movies" with the actual collection name of your movies
@@ -72,7 +73,8 @@ exports.getUnreleasedShowingMovies = async (req, res, next) => {
 			},
 			{
 				$group: {
-					_id: '$movie'
+					_id: '$movie',
+					count: { $sum: 1 }
 				}
 			},
 			{
@@ -86,7 +88,7 @@ exports.getUnreleasedShowingMovies = async (req, res, next) => {
 				}
 			},
 			{
-				$sort: { updatedAt: -1 }
+				$sort: { count: -1, updatedAt: -1 }
 			}
 		])
 
