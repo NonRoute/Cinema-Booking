@@ -88,7 +88,7 @@ There are 3 roles on this website with corresponding permissions:
 Viewer have access to these pages for viewing released showtimes.
 
 <details>
-    <summary>Home page</summary>
+    <summary>Home page</summary><br>
 
 1. Select a movie
 
@@ -109,7 +109,7 @@ Viewer have access to these pages for viewing released showtimes.
 </details>
 
 <details>
-    <summary>Cinema page</summary>
+    <summary>Cinema page</summary><br>
 
 1. Select a cinema
 
@@ -124,7 +124,7 @@ Viewer have access to these pages for viewing released showtimes.
 </details>
 
 <details>
-    <summary>Schedule page</summary>
+    <summary>Schedule page</summary><br>
 
 1. Select a cinema
 
@@ -141,7 +141,7 @@ Viewer have access to these pages for viewing released showtimes.
 </details>
 
 <details>
-    <summary>Showtime page</summary>
+    <summary>Showtime page</summary><br>
 
 1. View available seats (white boxes) and unavailable seats (gray boxes)
 
@@ -155,7 +155,7 @@ Viewer have access to these pages for viewing released showtimes.
 User have all viewer permission. Including, the ability to purchase and view their own tickets
 
 <details>
-    <summary>Register / Login</summary>
+    <summary>Register / Login</summary><br>
 
 1. To create an user account, fill in a username, email, and password, then click "Register"
 
@@ -168,7 +168,7 @@ User have all viewer permission. Including, the ability to purchase and view the
 </details>
 
 <details>
-    <summary>Showtime page / Purchase tickets</summary>
+    <summary>Showtime page / Purchase tickets</summary><br>
 
 1. Select available seats 
 
@@ -181,7 +181,7 @@ User have all viewer permission. Including, the ability to purchase and view the
 </details>
 
 <details>
-    <summary>Ticket page</summary>
+    <summary>Ticket page</summary><br>
 
 1. View purchased tickets
 
@@ -193,7 +193,7 @@ User have all viewer permission. Including, the ability to purchase and view the
 Admin have all permission.
 
 <details>
-    <summary>Home page</summary>
+    <summary>Home page</summary><br>
 
 1. Admin can view theater's row, column, seats information.
 
@@ -206,11 +206,9 @@ Admin have all permission.
 </details>
 
 <details>
-    <summary>Cinema page</summary>
+    <summary>Cinema page</summary><br>
 
-<img src="./images/cinema_admin1.png" width="600">
-
-<br>
+<img src="./images/cinema_admin1.png" width="600"><br>
 
 **Add a new cinema**
 1. Type the cinema's name.
@@ -219,9 +217,7 @@ Admin have all permission.
 
 2. Click the "Add" button
 
-<img src="./images/add_cinema2.png" width="600">
-
-<br>
+<img src="./images/add_cinema2.png" width="600"><br>
 
 **Edit a cinema's name**
 1. Click the "Edit" button
@@ -230,30 +226,22 @@ Admin have all permission.
 
 2. Enter the new cinema name and click "Save"
 
-<img src="./images/edit_cinema2.png" width="600">
-
-<br>
+<img src="./images/edit_cinema2.png" width="600"><br>
 
 **Delete a cinema**
 1. Click the "Delete" button and confirm by clicking "OK"
 
-<img src="./images/delete_cinema1.png" width="600">
-
-<br>
+<img src="./images/delete_cinema1.png" width="600"><br>
 
 **Add a theater to the cinema**
 1. Fill the letter of the last row and the number of the last column seat, then click "Add"
 
-<img src="./images/add_theater1.png" width="600">
-
-<br>
+<img src="./images/add_theater1.png" width="600"><br>
 
 **Delete the last added theater**
 1. Click the "Delete" button at the bottom of the page
 
-<img src="./images/add_theater2.png" width="600">
-
-<br>
+<img src="./images/add_theater2.png" width="600"><br>
 
 **Add showtimes**
 1. Select a movie
@@ -282,7 +270,7 @@ Admin have all permission.
 </details>
 
 <details>
-    <summary>Schedule page</summary>
+    <summary>Schedule page</summary><br>
 
 <img src="./images/schedule_admin1.png" width="600">
 
@@ -290,7 +278,7 @@ Admin have all permission.
 
 
 <details>
-    <summary>Showtime page</summary>
+    <summary>Showtime page</summary><br>
 
 1. View details of booked seats
 2. Release, unrelease, or delete the showtime by clicking the button in the top-right corner
@@ -300,18 +288,14 @@ Admin have all permission.
 </details>
 
 <details>
-    <summary>Movie page</summary>
+    <summary>Movie page</summary><br>
 
-<img src="./images/movie1.png" width="600">
-
-<br>
+<img src="./images/movie1.png" width="600"><br>
 
 **Add a movie**
 1. Fill in the movie name, URL of the poster, and the length in hours (optional) and minutes. Then, click "Add" to add the movie.
 
-<img src="./images/movie2.png" width="600">
-
-<br>
+<img src="./images/movie2.png" width="600"><br>
 
 **Delete a movie**
 
@@ -320,7 +304,7 @@ Admin have all permission.
 </details>
 
 <details>
-    <summary>Search page</summary>
+    <summary>Search page</summary><br>
 
 <img src="./images/search1.png" width="600">
 
@@ -332,7 +316,7 @@ Admin have all permission.
 </details>
 
 <details>
-    <summary>User page</summary>
+    <summary>User page</summary><br>
 
 1. View usernames, email addresses, roles, and tickets of users.
 2. Click the "View Tickets" button to see a user's purchased tickets.
