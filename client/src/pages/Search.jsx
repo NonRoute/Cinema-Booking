@@ -1,5 +1,6 @@
 import {
 	ChevronDownIcon,
+	ChevronUpDownIcon,
 	ChevronUpIcon,
 	EyeIcon,
 	EyeSlashIcon,
@@ -46,39 +47,93 @@ const Search = () => {
 	const [isCheckAll, setIsCheckAll] = useState(false)
 	const [checkedShowtimes, setCheckedShowtimes] = useState([])
 
-	const filteredShowtimes = showtimes.filter((showtime) => {
-		const showtimeDate = new Date(showtime.showtime)
-		const year = showtimeDate.getFullYear()
-		const month = showtimeDate.toLocaleString('default', { month: 'short' })
-		const day = showtimeDate.getDate().toString().padStart(2, '0')
-		const formattedDate = `${day} ${month} ${year}`
-		const hours = showtimeDate.getHours().toString().padStart(2, '0')
-		const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
-		const formattedTime = `${hours} : ${minutes}`
-		return (
-			(!filterCinema || filterCinema.map((cinema) => cinema.value).includes(showtime.theater.cinema._id)) &&
-			(!filterTheater || filterTheater.map((theater) => theater.value).includes(showtime.theater.number)) &&
-			(!filterMovie || filterMovie.map((movie) => movie.value).includes(showtime.movie._id)) &&
-			(!filterDate || filterDate.map((showtime) => showtime.value).includes(formattedDate)) &&
-			(!filterDateFrom || new Date(filterDateFrom.value) <= new Date(formattedDate)) &&
-			(!filterDateTo || new Date(filterDateTo.value) >= new Date(formattedDate)) &&
-			(!filterPastDate ||
-				new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) >
-					new Date(formattedDate)) &&
-			(!filterToday ||
-				(new Date().getFullYear() === new Date(formattedDate).getFullYear() &&
-					new Date().getMonth() === new Date(formattedDate).getMonth() &&
-					new Date().getDate() === new Date(formattedDate).getDate())) &&
-			(!filterFutureDate ||
-				new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) <
-					new Date(formattedDate)) &&
-			(!filterTime || filterTime.map((showtime) => showtime.value).includes(formattedTime)) &&
-			(!filterTimeFrom || filterTimeFrom.value <= formattedTime) &&
-			(!filterTimeTo || filterTimeTo.value >= formattedTime) &&
-			(!filterReleaseTrue || showtime.isRelease) &&
-			(!filterReleaseFalse || !showtime.isRelease)
-		)
-	})
+	const [sortCinema, setSortCinema] = useState(0) // -1: descending, 0 no sort, 1 ascending
+	const [sortTheater, setSortTheater] = useState(0)
+	const [sortMovie, setSortMovie] = useState(0)
+	const [sortDate, setSortDate] = useState(0)
+	const [sortTime, setSortTime] = useState(0)
+	const [sortBooked, setSortBooked] = useState(0)
+	const [sortRelease, setSortRelease] = useState(0)
+
+	const resetSort = () => {
+		setSortCinema(0)
+		setSortTheater(0)
+		setSortMovie(0)
+		setSortDate(0)
+		setSortTime(0)
+		setSortBooked(0)
+		setSortRelease(0)
+	}
+
+	const filteredShowtimes = showtimes
+		.filter((showtime) => {
+			const showtimeDate = new Date(showtime.showtime)
+			const year = showtimeDate.getFullYear()
+			const month = showtimeDate.toLocaleString('default', { month: 'short' })
+			const day = showtimeDate.getDate().toString().padStart(2, '0')
+			const formattedDate = `${day} ${month} ${year}`
+			const hours = showtimeDate.getHours().toString().padStart(2, '0')
+			const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
+			const formattedTime = `${hours} : ${minutes}`
+			return (
+				(!filterCinema || filterCinema.map((cinema) => cinema.value).includes(showtime.theater.cinema._id)) &&
+				(!filterTheater || filterTheater.map((theater) => theater.value).includes(showtime.theater.number)) &&
+				(!filterMovie || filterMovie.map((movie) => movie.value).includes(showtime.movie._id)) &&
+				(!filterDate || filterDate.map((showtime) => showtime.value).includes(formattedDate)) &&
+				(!filterDateFrom || new Date(filterDateFrom.value) <= new Date(formattedDate)) &&
+				(!filterDateTo || new Date(filterDateTo.value) >= new Date(formattedDate)) &&
+				(!filterPastDate ||
+					new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) >
+						new Date(formattedDate)) &&
+				(!filterToday ||
+					(new Date().getFullYear() === new Date(formattedDate).getFullYear() &&
+						new Date().getMonth() === new Date(formattedDate).getMonth() &&
+						new Date().getDate() === new Date(formattedDate).getDate())) &&
+				(!filterFutureDate ||
+					new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) <
+						new Date(formattedDate)) &&
+				(!filterTime || filterTime.map((showtime) => showtime.value).includes(formattedTime)) &&
+				(!filterTimeFrom || filterTimeFrom.value <= formattedTime) &&
+				(!filterTimeTo || filterTimeTo.value >= formattedTime) &&
+				(!filterReleaseTrue || showtime.isRelease) &&
+				(!filterReleaseFalse || !showtime.isRelease)
+			)
+		})
+		.sort((a, b) => {
+			if (sortCinema) {
+				return sortCinema * a.theater.cinema.name.localeCompare(b.theater.cinema.name)
+			}
+			if (sortTheater) {
+				return sortTheater * (a.theater.number - b.theater.number)
+			}
+			if (sortMovie) {
+				return sortMovie * a.movie.name.localeCompare(b.movie.name)
+			}
+			if (sortDate) {
+				return sortDate * (new Date(a.showtime) - new Date(b.showtime))
+			}
+			if (sortTime) {
+				return (
+					sortTime *
+					(new Date(a.showtime)
+						.getHours()
+						.toString()
+						.padStart(2, '0')
+						.concat(new Date(a.showtime).getMinutes().toString().padStart(2, '0')) -
+						new Date(b.showtime)
+							.getHours()
+							.toString()
+							.padStart(2, '0')
+							.concat(new Date(b.showtime).getMinutes().toString().padStart(2, '0')))
+				)
+			}
+			if (sortBooked) {
+				return sortBooked * (a.seats.length - b.seats.length)
+			}
+			if (sortRelease) {
+				return sortRelease * (a.isRelease - b.isRelease)
+			}
+		})
 
 	const fetchShowtimes = async (data) => {
 		try {
@@ -670,27 +725,97 @@ const Search = () => {
 							disabled={!isFetchingShowtimesDone}
 						/>
 					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Cinema
-					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Theater
-					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Movie
-					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Date
-					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Time
-					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Booked
-					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Release
-					</p>
+					<button
+						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						onClick={() => {
+							let prevValue = sortCinema
+							resetSort()
+							setSortCinema(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
+						}}
+					>
+						<p className="ml-auto">Cinema</p>
+						{sortCinema === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
+						{sortCinema === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
+						{sortCinema === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
+					</button>
+					<button
+						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						onClick={() => {
+							let prevValue = sortTheater
+							resetSort()
+							setSortTheater(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
+						}}
+					>
+						<p className="ml-auto">Theater</p>
+						{sortTheater === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
+						{sortTheater === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
+						{sortTheater === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
+					</button>
+					<button
+						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						onClick={() => {
+							let prevValue = sortMovie
+							resetSort()
+							setSortMovie(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
+						}}
+					>
+						<p className="ml-auto">Movie</p>
+						{sortMovie === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
+						{sortMovie === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
+						{sortMovie === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
+					</button>
+					<button
+						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						onClick={() => {
+							let prevValue = sortDate
+							resetSort()
+							setSortDate(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
+						}}
+					>
+						<p className="ml-auto">Date</p>
+						{sortDate === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
+						{sortDate === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
+						{sortDate === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
+					</button>
+					<button
+						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						onClick={() => {
+							let prevValue = sortTime
+							resetSort()
+							setSortTime(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
+						}}
+					>
+						<p className="ml-auto">Time</p>
+						{sortTime === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
+						{sortTime === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
+						{sortTime === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
+					</button>
+					<button
+						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						onClick={() => {
+							let prevValue = sortBooked
+							resetSort()
+							setSortBooked(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
+						}}
+					>
+						<p className="ml-auto">Booked</p>
+						{sortBooked === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
+						{sortBooked === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
+						{sortBooked === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
+					</button>
+					<button
+						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						onClick={() => {
+							let prevValue = sortRelease
+							resetSort()
+							setSortRelease(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
+						}}
+					>
+						<p className="ml-auto">Release</p>
+						{sortRelease === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
+						{sortRelease === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
+						{sortRelease === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
+					</button>
 					<p className="sticky top-0 z-[1] flex items-center justify-center gap-2 rounded-tr-md bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
 						<MapIcon className="h-6 w-6" />
 						View
