@@ -133,7 +133,7 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 				{isEditing ? (
 					<div className="w-full" ref={wrapperRef}>
 						<input
-							title="Cinema name"
+							title="Select date"
 							type="Date"
 							min={auth.role !== 'admin' && new Date().toLocaleDateString('en-CA')}
 							required

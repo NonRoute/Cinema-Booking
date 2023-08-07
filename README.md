@@ -85,7 +85,7 @@ Viewer have access to these pages for viewing released showtimes.
 
 <img src="./images/home_viewer1.png" width="600">
 
-2. Select a date to view showtimes
+2. Select a date by either typing it into the input or selecting from the calendar to view showtimes 
 
 <img src="./images/home_viewer2.png" width="600">
 
@@ -190,7 +190,7 @@ Admin have all permission.
 
 <img src="./images/home_admin1.png" width="600">
 
-2. Select a date by either typing it into the input or selecting from the calendar.
+2. Admin can view all showtimes for any date
 
 <img src="./images/home_admin2.png" width="600">
 
@@ -201,8 +201,10 @@ Admin have all permission.
 
 <img src="./images/cinema_admin1.png" width="600">
 
+<br>
+
 **Add a new cinema**
-1. type the cinema's name.
+1. Type the cinema's name.
 
 <img src="./images/add_cinema1.png" width="600">
 
@@ -210,8 +212,10 @@ Admin have all permission.
 
 <img src="./images/add_cinema2.png" width="600">
 
+<br>
+
 **Edit a cinema's name**
-1. click the "Edit" button
+1. Click the "Edit" button
 
 <img src="./images/edit_cinema1.png" width="600">
 
@@ -219,22 +223,30 @@ Admin have all permission.
 
 <img src="./images/edit_cinema2.png" width="600">
 
+<br>
+
 **Delete a cinema**
 1. Click the "Delete" button and confirm by clicking "OK"
 
 <img src="./images/delete_cinema1.png" width="600">
+
+<br>
 
 **Add a theater to the cinema**
 1. Fill the letter of the last row and the number of the last column seat, then click "Add"
 
 <img src="./images/add_theater1.png" width="600">
 
+<br>
+
 **Delete the last added theater**
 1. Click the "Delete" button at the bottom of the page
 
 <img src="./images/add_theater2.png" width="600">
 
-**Add showtime**
+<br>
+
+**Add showtimes**
 1. Select a movie
 2. Fill in the following values:
     * **Showtime:** Movie start time
@@ -254,7 +266,7 @@ Admin have all permission.
 
 <img src="./images/add_showtime1.png" width="600">
 
-4. The new showtime will added to the theater. An eye-slash icon indicates that this showtime is not yet released
+4. The new showtimes will added to the theater. An eye-slash icon indicates that this showtime is not yet released
 
 <img src="./images/add_showtime2.png" width="600">
 
@@ -272,6 +284,7 @@ Admin have all permission.
     <summary>Showtime page</summary>
 
 1. View details of booked seats
+2. Release, unrelease, or delete the showtime by clicking the button in the top-right corner
 
 <img src="./images/showtime_admin1.png" width="600">
 
@@ -282,7 +295,10 @@ Admin have all permission.
 
 <img src="./images/movie1.png" width="600">
 
-1. To add a movie, fill in the movie name, URL of the poster, and the length in hours (optional) and minutes. Then, click "Add" to add the movie.
+<br>
+
+**Add movie**
+1. Fill in the movie name, URL of the poster, and the length in hours (optional) and minutes. Then, click "Add" to add the movie.
 
 <img src="./images/movie2.png" width="600">
 
