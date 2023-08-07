@@ -7,6 +7,7 @@ Demo: https://cinema-booking-client.vercel.app/
 ## Table of Contents
 * [Technologies](#technologies)
 * [Screenshot](#screenshot)
+* [Guide](#guide)
 * [How to run the app](#how-to-run-the-app)
 
 ## Technologies
@@ -21,22 +22,20 @@ Demo: https://cinema-booking-client.vercel.app/
 * MongoDB
 * And more...
 
-## Screenshot & Guide
-<details>
-  <summary>Role</summary>
+## Guide
+
+### Role / Feature
 
 There are 3 roles on this website with corresponding permissions:
 
-| Role  | Permisson |
+| Role  | Permisson / Feature |
 |-------------|-------------|
-| Viewer (Not logged)  | 1. View released showtimes by selecting a movie (Home page) <br> 2. View released showtimes by selecting a cinema (Cinema page) <br> 3. View released showtimes by selecting a date in the future <br> 4. View released showtimes by cinema's schedule (Schedule page) <br> 5. View seats in released showtimes (Showtime page)|
-| User  | 1. All Viewer's permissions <br> 2. Purchase tickets (Showtime page). <br> 3. View purchased tickets (Ticket page)|
-| Admin  | 1. All User's permissions <br> 2. View any showtime by selecting a date <br> 3. Add / edit / delete cinema <br> 4. Add / delete theater <br> 5. View theater details (amount of row, column, seats) <br> 6. Add / release / unreleased / delete showtime <br> 7. View booked seats details in each showtime (Showtime page) <br> 8. View / Add / delete movies (Movie page) <br> 9. Search showtimes and view / release / unreleased / delete (Search page) <br> 10. View username, email, role, tickets / change role / delete user and admin (User page)|
-
-</details>
+|[Viewer (Not logged in)](#viewer)  | **1. View released showtimes by choosing from** <br> &emsp;- Movie in home page <br>  &emsp;- Cinema's theater in cinema page <br> &emsp;- Cinema's schedule in schedule page <br> **2. View released showtimes for today and the future** <br> **3. View seats for released showtimes on the Showtime page**|
+| [User](#user)   | **1. All Viewer permissions** <br> **2. Purchase tickets on the showtime page** <br> **3. View purchased tickets on the ticket page**|
+| [Admin](#admin)   | **1. All User permissions** <br> **2. View all showtimes for any date** <br> **3. Manage cinemas** <br> **4. Manage theaters** <br> &emsp;- View theater's row, column, seats information <br> **5. Manage showtimes** <br> &emsp;- Search & filter showtimes <br> &emsp;- View details of booked seats <br> **6. Manage movies** <br> **7. Manage user & admin**|
 
 ### Viewer
-Viewer have access to 3 pages for viewing released showtimes.
+Viewer have access to these pages for viewing released showtimes.
 
 <details>
     <summary>Home page</summary>
@@ -98,17 +97,17 @@ Viewer have access to 3 pages for viewing released showtimes.
 
 <img src="./images/showtime_viewer1.png" width="600">
 
-2. You will be redirected to the login page if you click "Purchase"
+2. Viewer will be redirected to the login page if they click "Purchase"
 
 </details>
 
 ### User
-User have all viewer permission. Furthermore, user can purchase and view their own tickets.
+User have all viewer permission. Including, the ability to purchase and view their own tickets
 
 <details>
     <summary>Register / Login</summary>
 
-1. To create an account, fill in your username, email, and password, then click "Register"
+1. To create an user account, fill in a username, email, and password, then click "Register"
 
 <img src="./images/register1.png" width="600">
 
@@ -146,22 +145,18 @@ Admin have all permission.
 <details>
     <summary>Home page</summary>
 
-* View showtimes by selecting a movie, date and cinema
-* Add cinema
-* View theater details (amount of row, column, seats)
+1. Admin have the additional ability to view theater's row, column, seats information.
 
 <img src="./images/home_admin1.png" width="600">
+
+2. Select a date by either typing it into the input or selecting from the calendar.
+
+<img src="./images/home_admin2.png" width="600">
 
 </details>
 
 <details>
     <summary>Cinema page</summary>
-
-* Add / edit / delete cinema
-* Add / delete theater
-* View theater details (amount of row, column, seats)
-* View showtime by selecting a cinema and date
-* Add showtime
 
 <img src="./images/cinema_admin1.png" width="600">
 
@@ -203,7 +198,7 @@ Admin have all permission.
         **Auto increase**
         * **Showtime:** Check to automatically update the showtime value based on the ending time of this showtime, along with a specified gap. This is useful when adding consecutive movies, ensuring appropriate spacing between showtimes.
         * **Date:** Check to enable automatic increase of showtime to the next day if it exceeds 24 hours
-        * **Gap:** The gap between movie showtimes
+        * **Gap:** The minimum duration between movie showtimes
 
         **Rounding**
         * **5-min:** Round up the auto-increased showtime value to the nearest 5 minutes, e.g., 12:21 -> 12:25
@@ -213,7 +208,7 @@ Admin have all permission.
 
 <img src="./images/add_showtime1.png" width="600">
 
-7. The new showtime will added to the theater. An eye-slash icon indicates that this showtime is not yet released
+9. The new showtime will added to the theater. An eye-slash icon indicates that this showtime is not yet released
 
 <img src="./images/add_showtime2.png" width="600">
 
@@ -221,11 +216,6 @@ Admin have all permission.
 
 <details>
     <summary>Schedule page</summary>
-
-* Add cinema
-* View theater details (amount of row, column, seats)
-* View showtimes by cinema's schedule
-* Add showtime
 
 <img src="./images/schedule_admin1.png" width="600">
 
@@ -235,11 +225,44 @@ Admin have all permission.
 <details>
     <summary>Showtime page</summary>
 
-* View seats & booked seats details in showtimes
-* Release / unreleased / delete showtime
-* Purchase tickets
+1. View details of booked seats
 
 <img src="./images/showtime_admin1.png" width="600">
+
+</details>
+
+<details>
+    <summary>Movie page</summary>
+
+<img src="./images/movie1.png" width="600">
+
+1. To add a movie, fill in the movie name, URL of the poster, and the length in hours (optional) and minutes. Then, click "Add" to add the movie.
+
+<img src="./images/movie2.png" width="600">
+
+</details>
+
+<details>
+    <summary>Search page</summary>
+
+<img src="./images/search1.png" width="600">
+
+1. Filter showtime and select to release / unreleased / delete them
+2. Click a "View" button to view seats
+
+<img src="./images/search2.png" width="600">
+
+</details>
+
+<details>
+    <summary>User page</summary>
+
+1. View usernames, email addresses, roles, and tickets of users.
+2. Click the "View Tickets" button to see a user's purchased tickets.
+3. Click the "Set Admin" or "Set User" button to change the user's role.
+4. Click the "Delete" button to delete the account.
+
+<img src="./images/user1.png" width="600">
 
 </details>
 
