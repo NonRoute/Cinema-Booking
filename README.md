@@ -6,7 +6,7 @@ Demo: https://cinema-booking-client.vercel.app/
 
 ## Table of Contents
 * [Technologies](#technologies)
-* [Screenshot](#screenshot)
+* [Quick Tour](#quick-tour)
 * [Guide](#guide)
 * [How to run the app](#how-to-run-the-app)
 
@@ -22,7 +22,7 @@ Demo: https://cinema-booking-client.vercel.app/
 * MongoDB
 * And more...
 
-## Screenshots & Main Features
+## Quick Tour
 <h2 align="center">Home page 🎥</h2>
 <p align="center">
     <img src="./images/screenshot1.png" width="600">
