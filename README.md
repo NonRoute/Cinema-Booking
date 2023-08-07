@@ -82,7 +82,7 @@ There are 3 roles on this website with corresponding permissions:
 |-------------|-------------|
 |👀 Viewer (Not logged in)  | **1. View released showtimes by choosing from** <br> &emsp;- Movie in home page <br>  &emsp;- Cinema's theater in cinema page <br> &emsp;- Cinema's schedule in schedule page <br> **2. View released showtimes for today and the future** <br> **3. View seats for released showtimes on the showtime page**|
 |👤 User   | **1. All Viewer permissions** <br> **2. Purchase tickets on the showtime page** <br> **3. View purchased tickets on the ticket page**|
-|👑 Admin   | **1. All User permissions** <br> **2. View all showtimes for any date** <br> **3. Manage cinemas** <br> **4. Manage theaters** <br> &emsp;- View theater's row, column, seats information <br> **5. Manage showtimes** <br> &emsp;- Search & filter showtimes <br> &emsp;- View details of booked seats <br> **6. Manage movies** <br> **7. Manage user & admin**|
+|👑 Admin   | **1. All User permissions** <br> **2. View all showtimes for any date** <br> **3. Manage cinemas** <br> **4. Manage theaters** <br> &emsp;- View theater's row, column, seats information <br> **5. Manage showtimes** <br> &emsp;- Search & filter & sort showtimes <br> &emsp;- View details of booked seats <br> **6. Manage movies** <br> **7. Manage user & admin**|
 
 ### 👀 Viewer
 Viewer have access to these pages for viewing released showtimes.
@@ -308,7 +308,7 @@ Admin have all permission.
 
 <img src="./images/search1.png" width="600">
 
-1. Filter showtime and select to release / unreleased / delete them
+1. Filter & sort showtime and select to release / unreleased / delete them
 2. Click a "View" button to view seats
 
 <img src="./images/search2.png" width="600">
