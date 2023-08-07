@@ -65,17 +65,17 @@ Demo: https://cinema-booking-client.vercel.app/
 
 ## Guide
 
-### Role / Feature
+### 🧩 Role / Feature
 
 There are 3 roles on this website with corresponding permissions:
 
 | Role  | Permisson / Feature |
 |-------------|-------------|
-|[Viewer (Not logged in)](#viewer)  | **1. View released showtimes by choosing from** <br> &emsp;- Movie in home page <br>  &emsp;- Cinema's theater in cinema page <br> &emsp;- Cinema's schedule in schedule page <br> **2. View released showtimes for today and the future** <br> **3. View seats for released showtimes on the Showtime page**|
-| [User](#user)   | **1. All Viewer permissions** <br> **2. Purchase tickets on the showtime page** <br> **3. View purchased tickets on the ticket page**|
-| [Admin](#admin)   | **1. All User permissions** <br> **2. View all showtimes for any date** <br> **3. Manage cinemas** <br> **4. Manage theaters** <br> &emsp;- View theater's row, column, seats information <br> **5. Manage showtimes** <br> &emsp;- Search & filter showtimes <br> &emsp;- View details of booked seats <br> **6. Manage movies** <br> **7. Manage user & admin**|
+|👀 Viewer (Not logged in)  | **1. View released showtimes by choosing from** <br> &emsp;- Movie in home page <br>  &emsp;- Cinema's theater in cinema page <br> &emsp;- Cinema's schedule in schedule page <br> **2. View released showtimes for today and the future** <br> **3. View seats for released showtimes on the showtime page**|
+|👤 User   | **1. All Viewer permissions** <br> **2. Purchase tickets on the showtime page** <br> **3. View purchased tickets on the ticket page**|
+|👑 Admin   | **1. All User permissions** <br> **2. View all showtimes for any date** <br> **3. Manage cinemas** <br> **4. Manage theaters** <br> &emsp;- View theater's row, column, seats information <br> **5. Manage showtimes** <br> &emsp;- Search & filter showtimes <br> &emsp;- View details of booked seats <br> **6. Manage movies** <br> **7. Manage user & admin**|
 
-### Viewer
+### 👀 Viewer
 Viewer have access to these pages for viewing released showtimes.
 
 <details>
@@ -142,7 +142,7 @@ Viewer have access to these pages for viewing released showtimes.
 
 </details>
 
-### User
+### 👤 User
 User have all viewer permission. Including, the ability to purchase and view their own tickets
 
 <details>
@@ -180,13 +180,13 @@ User have all viewer permission. Including, the ability to purchase and view the
 
 </details>
 
-### Admin
+### 👑 Admin
 Admin have all permission.
 
 <details>
     <summary>Home page</summary>
 
-1. Admin have the additional ability to view theater's row, column, seats information.
+1. Admin can view theater's row, column, seats information.
 
 <img src="./images/home_admin1.png" width="600">
 
@@ -201,7 +201,8 @@ Admin have all permission.
 
 <img src="./images/cinema_admin1.png" width="600">
 
-1. To add a new cinema, type the cinema's name.
+**Add a new cinema**
+1. type the cinema's name.
 
 <img src="./images/add_cinema1.png" width="600">
 
@@ -209,47 +210,51 @@ Admin have all permission.
 
 <img src="./images/add_cinema2.png" width="600">
 
-3. To edit a cinema's name, click the "Edit" button
+**Edit a cinema's name**
+1. click the "Edit" button
 
 <img src="./images/edit_cinema1.png" width="600">
 
-4. Enter the new cinema name and click "Save"
+2. Enter the new cinema name and click "Save"
 
 <img src="./images/edit_cinema2.png" width="600">
 
-5. To delete a cinema, click the "Delete" button and confirm by clicking "OK"
+**Delete a cinema**
+1. Click the "Delete" button and confirm by clicking "OK"
 
 <img src="./images/delete_cinema1.png" width="600">
 
-6. To add a theater to the cinema, fill the letter of the last row and the number of the last column seat, then click "Add"
+**Add a theater to the cinema**
+1. Fill the letter of the last row and the number of the last column seat, then click "Add"
 
 <img src="./images/add_theater1.png" width="600">
 
-7. To delete the last added theater, use the "Delete" button at the bottom of the page
+**Delete the last added theater**
+1. Click the "Delete" button at the bottom of the page
 
 <img src="./images/add_theater2.png" width="600">
 
-8. To add showtime, 
-    * Select a movie
-    * Fill in the following values:
-        * **Showtime:** Movie start time
-        * **Repeat:** For example, 1 means the showtime is added for today only, while 4  mean the showtime is added for today and the next 3 days.
-        * **Release now:** Check to release this showtime for viewers and users to view or book
-        
-        **Auto increase**
-        * **Showtime:** Check to automatically update the showtime value based on the ending time of this showtime, along with a specified gap. This is useful when adding consecutive movies, ensuring appropriate spacing between showtimes.
-        * **Date:** Check to enable automatic increase of showtime to the next day if it exceeds 24 hours
-        * **Gap:** The minimum duration between movie showtimes
+**Add showtime**
+1. Select a movie
+2. Fill in the following values:
+    * **Showtime:** Movie start time
+    * **Repeat:** For example, 1 means the showtime is added for today only, while 4  mean the showtime is added for today and the next 3 days.
+    * **Release now:** Check to release this showtime for viewers and users to view or book
+    
+    **Auto increase**
+    * **Showtime:** Check to automatically update the showtime value based on the ending time of this showtime, along with a specified gap. This is useful when adding consecutive movies, ensuring appropriate spacing between showtimes.
+    * **Date:** Check to enable automatic increase of showtime to the next day if it exceeds 24 hours
+    * **Gap:** The minimum duration between movie showtimes
+    
+    **Rounding**
+    * **5-min:** Round up the auto-increased showtime value to the nearest 5 minutes, e.g., 12:21 -> 12:25
+    * **10-min:** Round up the auto-increased showtime value to the nearest 10 minutes, e.g., 12:21 -> 12:30
 
-        **Rounding**
-        * **5-min:** Round up the auto-increased showtime value to the nearest 5 minutes, e.g., 12:21 -> 12:25
-        * **10-min:** Round up the auto-increased showtime value to the nearest 10 minutes, e.g., 12:21 -> 12:30
-
-    * Click the "Add" button
+3.  Click the "Add" button
 
 <img src="./images/add_showtime1.png" width="600">
 
-9. The new showtime will added to the theater. An eye-slash icon indicates that this showtime is not yet released
+4. The new showtime will added to the theater. An eye-slash icon indicates that this showtime is not yet released
 
 <img src="./images/add_showtime2.png" width="600">
 
