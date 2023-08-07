@@ -27,17 +27,17 @@ The purpose of this project is to improve my full-stack web development skills, 
 * And more...
 
 ## Quick Tour
-<h2 align="center">Home page 🎥</h2>
+<h2 align="center">Home Page 🎥</h2>
 <p align="center">
     <img src="./images/screenshot1.png" width="600">
 </p>
 
-<h2 align="center">Responsive design 📱</h2>
+<h2 align="center">Responsive Design 📱</h2>
 <p align="center">
     <img src="./images/screenshot2.png" width="180">
 </p>
 
-<h2 align="center">Cinema page 🏢</h2>
+<h2 align="center">Cinema Page 🏢</h2>
 <p align="center">
     <img src="./images/screenshot3.png" width="600">
 </p>
@@ -47,7 +47,7 @@ The purpose of this project is to improve my full-stack web development skills, 
     <img src="./images/screenshot4.png" width="600">
 </p>
 
-<h2 align="center">Book seats 💺</h2>
+<h2 align="center">Book Seats 💺</h2>
 <p align="center">
     <img src="./images/screenshot5.png" width="600">
 </p>
@@ -57,17 +57,17 @@ The purpose of this project is to improve my full-stack web development skills, 
     <img src="./images/screenshot6.png" width="600">
 </p>
 
-<h2 align="center">Add movie 🍿</h2>
+<h2 align="center">Add a Movie 🍿</h2>
 <p align="center">
     <img src="./images/screenshot7.png" width="600">
 </p>
 
-<h2 align="center">Search showtimes 🔎</h2>
+<h2 align="center">Search Showtimes 🔎</h2>
 <p align="center">
     <img src="./images/search2.png" width="600">
 </p>
 
-<h2 align="center">Manage user 🕵️</h2>
+<h2 align="center">Manage Users 🕵️</h2>
 <p align="center">
     <img src="./images/user1.png" width="600">
 </p>
