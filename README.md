@@ -1,6 +1,6 @@
 <h1 align="center">Cinema-Booking</h1>
 
-Cinema Booking Web App with MERN stack (MongoDB, Express, React, NodeJS) & Tailwind CSS
+Movie ticket booking web application with MERN stack (MongoDB, Express, React, NodeJS) & Tailwind CSS
 
 Demo: https://cinema-booking-client.vercel.app/
 
