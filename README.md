@@ -193,6 +193,18 @@ User have all viewer permission. Including, the ability to purchase and view the
 Admin have all permission.
 
 <details>
+    <summary>Create an admin account</summary><br>
+
+1. Register a new user.
+2. Access MongoDB and locate the user's data.
+3. Update the user's role to `admin`.
+4. The user will now become admin.
+   
+Note: After obtaining the first admin account, this user can assign admin roles to others using the User page.
+
+</details>
+    
+<details>
     <summary>Home page</summary><br>
 
 1. Admin can view theater's row, column, seats information.
